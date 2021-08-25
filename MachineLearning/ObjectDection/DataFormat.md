@@ -43,7 +43,9 @@ license{
 }
 ```
 
- 下面描述了特定于各种标注类型的数据结构。
+[coco api example](./examples/coco_api_detection_example.ipynb)
+
+下面描述了特定于各种标注类型的数据结构。
 
 ### 1. Object Detection
 
