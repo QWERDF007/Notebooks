@@ -31,7 +31,7 @@
 ## :dog: 图像分割
 
 - [x] [MMSegmentation 使用说明](./MachineLearning/OpenMMLab/mmseg自定义数据训练.md)
-- [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./MachineLearning/mmseg自定义数据训练SwinTransformer.md)
+- [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./MachineLearning/OpenMMLab/mmseg自定义数据训练SwinTransformer.md)
 
 
 
