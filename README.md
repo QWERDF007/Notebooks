@@ -16,6 +16,8 @@
 
 ## What's New
 
+- 2022.03.17 - mmseg 自定义数据训练 SwinTransformer
+
 - 2021.12.02 - ESRGAN 论文翻译解读 (未完 - 补充材料)
 - 2021.11.30 - MAE 论文翻译解读 (未完)
 - 2021.09.14 - mmseg, mmdet 使用说明; 目标检测数据格式 (COCO、VOC、YOLO)
