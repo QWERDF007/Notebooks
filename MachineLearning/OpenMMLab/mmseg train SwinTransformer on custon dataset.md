@@ -207,7 +207,9 @@ you need to correctly set `classes`, `palette`,  `dataset_type`,  `data_root`, `
 
 And you can use `TensorboardLoggerHook` and `WandbLoggerHook` to trace you model and visualize the metrics.
 
-如果需要 `tensorboard`、`wandb` 可视化追踪，需要安装对应的包，并在配置文件中的 `log_config` 的 `hooks` 中添加 `TensorboardLoggerHook` 和 `WandbLoggerHook`。
+
+
+install wandb & tensorboard
 
 ```shell
 python -m pip install wandb tensorboard
@@ -216,10 +218,10 @@ python -m pip install wandb tensorboard
 - [WandbLoggerHook](https://mmcv.readthedocs.io/en/latest/_modules/mmcv/runner/hooks/logger/wandb.html)
 - [TensorboardLoggerHook](https://mmcv.readthedocs.io/en/latest/_modules/mmcv/runner/hooks/logger/tensorboard.html)
 
-## 训练
+## Train
 
 ```shell
 python tools/train.py configs/swin/upernet_swin_base_patch4_window7_512x512_160k_custom.py  --work-dir ${WORK_DIR}
 ```
 
-日志和 Checkpoints 会保存到指定的 `WORK_DIR` 内。
+logs and checkpoints will be saved on `WORK_DIR`
