@@ -16,6 +16,8 @@
 
 ## What's New
 
+- 2022.0412 - AlexNet 论文翻译解读 (未完)
+
 - 2022.03.17 - mmseg 自定义数据训练 SwinTransformer
 
 - 2021.12.02 - ESRGAN 论文翻译解读 (未完 - 补充材料)
@@ -28,6 +30,8 @@
 
 ## :cat: 图像分类
 
+
+- [ ] [AlexNet 论文翻译解读 (未完)](./Papers/Classification/AlexNet.md)
 
 
 ## :dog: 图像分割
