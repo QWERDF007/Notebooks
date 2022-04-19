@@ -162,7 +162,25 @@ conda create -n ctf python=3.8 numpy
 conda activate ctf
 ```
 
-进入 `tensorflow` 源码目录，配置编译选项
+下载 `tensorflow`
+
+```bash
+git clone https://github.com/tensorflow/tensorflow.git
+```
+
+进入源码目录
+
+```bash
+cd tensorflow
+```
+
+切换到 v2.5.0
+
+```
+git checkout v2.5.0
+```
+
+配置编译选项
 
 ```bash
 ./configure
