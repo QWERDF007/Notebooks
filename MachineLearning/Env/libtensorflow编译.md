@@ -9,104 +9,13 @@
 - cudnn 8.1.1
 - NVIDIA driver 460.39
 - gcc & g++ 8.4.0
+- TensorFlow 2.5.0
 - protobuf 3.9.2
 - bazel 3.7.2
 
-## gcc & g++ 8.4.0 安装
+[gcc&g++安装](gcc&g++安装.md)
 
-添加 apt 源并更新：
-
-```bash
-sudo apt-get install -y software-properties-common
-```
-
-```bash
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-```
-
-```bash
-sudo apt update
-```
-
-安装 gcc
-
-```bash
-sudo apt install gcc-8
-```
-
-安装 g++
-
-```bash
-sudo apt install g++-8
-```
-
-生成 gcc & g++ 软连接
-
-```
-sudo ln -s /usr/bin/gcc-8 /usr/bin/gcc
-```
-
-```bash
-sudo ln -s /usr/bin/g++-8 /usr/bin/g++
-```
-
-## NVIDIA 相关依赖安装
-
-下载 NVIDIA 驱动
-
-```
-wget https://us.download.nvidia.com/XFree86/Linux-x86_64/460.39/NVIDIA-Linux-x86_64-460.39.run
-```
-
-禁止 nouveau。创建文件 `/etc/modprobe.d/blacklist-nouveau.conf`，并添加下面的内容
-
-```
-blacklist nouveau
-options nouveau modeset=0
-```
-
-重新生成内核 initramfs
-
-```bash
-sudo update-initramfs -u
-```
-
-安装 NVIDIA 驱动
-
-```bash
-sudo sh NVIDIA-Linux-x86_64-460.39.run
-```
-
-下载 CUDA 11.2
-
-```bash
-wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
-```
-
-安装 CUDA
-
-```bash
-sudo sh cuda_11.2.0_460.27.04_linux.run
-```
-
-下载 cudnn 8.1.1
-
-```
-```
-
-解压 cudnn 并复制到 cuda 安装目录
-
-```bash
-tar -zxvf cudnn-11.2-linux-x64-v8.1.1.33.tgz
-```
-
-```bash
-sudo cp -r cuda/include/* /usr/local/cuda/include
-```
-
-```
-sudo cp -r cuda/lib64/* /usr/local/cuda/lib64
-```
+[NVIDIA驱动&CUDA&CUDNN安装](NVIDIA驱动&CUDA&CUDNN安装.md)
 
 ## TensorFlow 编译
 
@@ -252,6 +161,6 @@ bazel --output_user_root=/home/14T/bazel_build  build --config=opt --config=mono
 
 编译完成后将生成的头文件所在目录 `bazel-bin/tensorflow/include` 的绝对路径添加到项目的 `CMakeList.txt` 的 `include_directories`
 
-将生成的 `libtensorflow_cc.so` 所在目录 `bazel-bin/tensorflow` 的绝对路径添加到项目的 `CMakeList.txt` 的 `include_directories`，
+将生成的 `libtensorflow_cc.so` 所在目录 `bazel-bin/tensorflow` 的绝对路径添加到项目的 `CMakeList.txt` 的 `link_directories`
 
 最后将 `tensorflow_cc` 添加到 `CMakeLists.txt` 的 `link_libraries` 编译项目即可
