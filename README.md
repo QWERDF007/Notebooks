@@ -16,9 +16,11 @@
 
 ## What's New
 
+- 2022.04.19 - gcc & g++ 8.4 安装、pytorch 1.10.0 c++ 编译、Nvidia 驱动、CUDA、cudnn 安装
+
 - 2022.04.19 - tensorflow 2.5.0 c++ 编译
 
-- 2022.04.12 - AlexNet 论文翻译解读 (未完)
+- 2022.04.12 - AlexNet 论文翻译解读
 
 - 2022.03.17 - mmseg 自定义数据训练 SwinTransformer
 
@@ -33,7 +35,7 @@
 ## :cat: 图像分类
 
 
-- [ ] [AlexNet 论文翻译解读 (未完)](./Papers/Classification/AlexNet.md)
+- [x] [AlexNet 论文翻译解读](./Papers/Classification/AlexNet.md)
 
 
 ## :dog: 图像分割
@@ -76,4 +78,7 @@
 
 ## :dragon: 环境依赖
 
-- [x] [TensorFlow 2.5.0 C++ 编译](./MachineLearning/TensorFlow/libtensorflow编译.md)
+- [x] [TensorFlow 2.5.0 C++ 编译](./MachineLearning/Env/libtensorflow编译.md)
+- [x] [PyTorch 1.10.0 C++ 编译](./MachineLearning/Env/libtorch编译.md)
+- [x] [gcc & g++ 8.4 安装](./MachineLearning/Env/gcc&g++安装.md)
+- [x] [Nvidia 驱动、CUDA、cudnn 安装](./MachineLearning/Env/NVIDIA驱动&CUDA&CUDNN安装.md)
