@@ -84,3 +84,5 @@ cp -r torch/include build
 **注意：** `"-Wl,--no-as-needed -ltorch_cuda"`，`--no-as-needed` 就是不忽略链接时没有用到的动态库这，句是不要忽略链接时没有用到的 `torch_cuda`，为啥没用到是个 :bug:。
 
 [issue#42018](https://github.com/pytorch/pytorch/issues/42018#issuecomment-664526309) 在 `CMakeLists.txt` 添加 `set(CMAKE_LINK_WHAT_YOU_USE TRUE)` 这个也行。
+
+[issue#36437](https://github.com/pytorch/pytorch/issues/36437#issuecomment-612992717)
