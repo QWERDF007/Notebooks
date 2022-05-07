@@ -1,4 +1,4 @@
-# Barbershop 替换发型
+# Barbershop 替换发型、发色
 
 [Barbershop Github](https://github.com/ZPdesu/Barbershop)
 
@@ -37,7 +37,9 @@ conda activate Barbershop
 
 ## 准备数据
 
-准备一堆正脸照片，将其放到项目下的目录 `unprocessed` 中，可以通过参数修改至其他目录。
+下载 [II2S](https://drive.google.com/drive/folders/15jsR9yy_pfDHiS9aE3HcYDgwtBbAneId) 图像，已经对齐，可以用来作模板，放到 `input/face` 目录。
+
+准备一堆待处理的正脸照片，将其放到项目下的目录 `unprocessed` 中，可以通过参数修改至其他目录。
 
 正脸照片要求：脸部不要有任何遮挡，眼镜如无必要也尽可能摘掉。(歪脸或者遮挡会导致效果变差)
 
@@ -53,4 +55,31 @@ python align_face.py
 python align_face.py -unprocessed_dir ${INPUT_DIR} -output_dir ${OUTPUT_DIR}
 ```
 
-执行上述命令会自动下载 dlib 的脸部检测模型，若因为网络原因无法下载，可通过科学手段下载，或者[这里]()
+执行上述命令会自动下载 dlib 的脸部检测模型，若因为网络原因无法下载，可通过科学手段下载，或者[百度网盘](https://pan.baidu.com/s/1Eq7egs0-jRr5IH8HlS_7jA) (6dfr)
+
+## 运行
+
+生成真实的结果
+
+```bash
+python main.py --input_dir input/face --im_path1 90.png --im_path2 15.png --im_path3 117.png --sign realistic --smooth 5 --output_dir output
+```
+
+其中 `--input_dir` 是存放待处理的图像的目录，`--im_path1` 是待处理的图像，`--im_path2` 是结构图像，即发型模板，`--im_path3` 是外观图像，即发色模板，`--output_dir` 是输出目录。
+
+生成忠于 mask 的图像
+
+```bash
+python main.py --im_path1 90.png --im_path2 15.png --im_path3 117.png --sign fidelity --smooth 5
+```
+
+执行上述命令，会自动下载 stylegan2 的 pretrained 模型，可以手动下载后放到 `pretrained_models` 目录，也可[手动下载](https://github.com/ZPdesu/Barbershop/issues/7)。
+
+## 效果
+
+```bash
+python main.py --input_dir input/face --im_path1 41.png --im_path2 7.png --im_path3 44.png --sign realistic --smooth 5 --output_dir output
+```
+
+
+
