@@ -81,5 +81,5 @@ python main.py --im_path1 90.png --im_path2 15.png --im_path3 117.png --sign fid
 python main.py --input_dir input/face --im_path1 41.png --im_path2 7.png --im_path3 44.png --sign realistic --smooth 5 --output_dir output
 ```
 
-
+<img src="assets/barbershop_concat.png" title="图1">>
 
