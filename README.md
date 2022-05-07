@@ -16,6 +16,8 @@
 
 ## What's New
 
+- 2022.05.04 - ResNet 论文翻译解读
+
 - 2022.04.19 - gcc & g++ 8.4 安装、pytorch 1.10.0 c++ 编译、Nvidia 驱动、CUDA、cudnn 安装
 
 - 2022.04.19 - tensorflow 2.5.0 c++ 编译
@@ -36,6 +38,7 @@
 
 
 - [x] [AlexNet 论文翻译解读](./Papers/Classification/AlexNet.md)
+- [x] [ResNet 论文翻译解读](./Papers/Classification/ResNet.md)
 
 
 ## :dog: 图像分割
