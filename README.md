@@ -8,9 +8,9 @@
 | ------------------------ | -------- | -------- | -------- | -------- |
 | [:cat:](#cat-图像分类) | [:dog:](#dog-图像分割) | [:car:](#car-目标检测) | [:cow:](#cow-超分辨率) | [:cake:](#cake-自监督) |
 
-| 阴影去除                       | 图像变形                 | 环境依赖               |        |         |
+| 阴影去除                       | 图像变形                 | 环境依赖               | 图像生成 |         |
 | ------------------------------ | ------------------------ | ---------------------- | ------ | ------- |
-| [:hamster:](#hamster-阴影去除) | [:deer:](#deer-图像变形) | [:dragon:](#dragon-环境依赖) | :pear: | :peach: |
+| [:hamster:](#hamster-阴影去除) | [:deer:](#deer-图像变形) | [:dragon:](#dragon-环境依赖) | [:fire:](#fire-图像生成) | :peach: |
 
 
 
@@ -85,3 +85,10 @@
 - [x] [PyTorch 1.10.0 C++ 编译](./MachineLearning/Env/libtorch编译.md)
 - [x] [gcc & g++ 8.4 安装](./MachineLearning/Env/gcc&g++安装.md)
 - [x] [Nvidia 驱动、CUDA、cudnn 安装](./MachineLearning/Env/NVIDIA驱动&CUDA&CUDNN安装.md)
+
+
+
+## :fire: 图像生成
+
+- [x] [Barbershop 发型替换指北](./MachineLearning/GAN/Barbershop替换发型指北.md)
+

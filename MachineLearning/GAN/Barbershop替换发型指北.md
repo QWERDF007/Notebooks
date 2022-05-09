@@ -65,7 +65,7 @@ python align_face.py -unprocessed_dir ${INPUT_DIR} -output_dir ${OUTPUT_DIR}
 python main.py --input_dir input/face --im_path1 90.png --im_path2 15.png --im_path3 117.png --sign realistic --smooth 5 --output_dir output
 ```
 
-其中 `--input_dir` 是存放待处理的图像的目录，`--im_path1` 是待处理的图像，`--im_path2` 是结构图像，即发型模板，`--im_path3` 是外观图像，即发色模板，`--output_dir` 是输出目录。
+其中 `--input_dir` 是存放图像的目录，`--im_path1` 是待处理的图像文件名，`--im_path2` 是结构图像文件名，即发型模板，`--im_path3` 是外观图像文件名，即发色模板；`--output_dir` 是输出目录。
 
 生成忠于 mask 的图像
 
