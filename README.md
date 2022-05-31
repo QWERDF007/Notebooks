@@ -6,15 +6,17 @@
 
 | 图像分类                 | 图像分割 | 目标检测 | 超分辨率 | 自监督 |
 | ------------------------ | -------- | -------- | -------- | -------- |
-| [:cat:](#cat-图像分类) | [:dog:](#dog-图像分割) | [:car:](#car-目标检测) | [:cow:](#cow-超分辨率) | [:cake:](#cake-自监督) |
+| [:cat:](#cat-图像分类) | [:dog:](#dog-图像分割) | [:car:](#car-目标检测) | [:cow:](#cow-超分辨率) | [:fox_face:](#fox_face-自监督) |
 
-| 阴影去除                       | 图像变形                 | 环境依赖               | 图像生成 |         |
+| 阴影去除                       | 图像变形                 | 图像生成           | 自然语言处理 | 环境依赖 |
 | ------------------------------ | ------------------------ | ---------------------- | ------ | ------- |
-| [:hamster:](#hamster-阴影去除) | [:deer:](#deer-图像变形) | [:dragon:](#dragon-环境依赖) | [:fire:](#fire-图像生成) | :peach: |
+| [:hamster:](#hamster-阴影去除) | [:deer:](#deer-图像变形) | [:fire:](#fire-图像生成) | [:wolf:](#wolf-自然语言处理) | [:dragon:](#dragon-环境依赖) |
 
 
 
 ## What's New
+
+- 2022.05.23 - Transformer 论文翻译解读
 
 - 2022.05.04 - ResNet 论文翻译解读
 
@@ -29,8 +31,8 @@
 - 2021.12.02 - ESRGAN 论文翻译解读 (未完 - 补充材料)
 - 2021.11.30 - MAE 论文翻译解读 (未完)
 - 2021.09.14 - mmseg, mmdet 使用说明; 目标检测数据格式 (COCO、VOC、YOLO)
-- 2021.02.24 - MLS 代码
-- 2021.02.09 - 移动最小二乘法的图像变形 (MLS)
+- 2021.02.24 - MLS 代码实现
+- 2021.02.09 - 移动最小二乘法的图像变形 (MLS) 论文翻译
 
 
 
@@ -61,7 +63,7 @@
 
 
 
-## :cake: 自监督
+## :fox_face: 自监督
 
 - [x] [Masked Autoencoders Are Scalable Vision Learners](./Papers/SelfSupervise/Masked Autoencoders Are Scalable Vision Learners.md) (MAE) 论文翻译解读
 
@@ -75,7 +77,19 @@
 
 ## :deer: 图像变形
 
-- [x] [Image Deformation Using Moving Least Squares]() (MLS) 论文翻译解读; [code](./Code/mls)
+- [x] [Image Deformation Using Moving Least Squares](./Papers/Deformation/Image Deformation Using Moving Least Squares.md) (MLS) 论文翻译解读; [code](./Code/mls)
+
+
+
+## :fire: 图像生成
+
+- [x] [Barbershop 发型替换指北](./MachineLearning/GAN/Barbershop替换发型指北.md)
+
+
+
+## :wolf: 自然语言处理
+
+- [x] [Transformer 论文翻译](./Papers/NLP/Transformer.md)
 
 
 
@@ -85,10 +99,3 @@
 - [x] [PyTorch 1.10.0 C++ 编译](./MachineLearning/Env/libtorch编译.md)
 - [x] [gcc & g++ 8.4 安装](./MachineLearning/Env/gcc&g++安装.md)
 - [x] [Nvidia 驱动、CUDA、cudnn 安装](./MachineLearning/Env/NVIDIA驱动&CUDA&CUDNN安装.md)
-
-
-
-## :fire: 图像生成
-
-- [x] [Barbershop 发型替换指北](./MachineLearning/GAN/Barbershop替换发型指北.md)
-
