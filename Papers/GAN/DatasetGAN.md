@@ -40,6 +40,10 @@ $\rm D{\scriptsize ATASET}GAN$ 的关键见解是生成模型，比如 GANs，�
 
 ### 3.1. Prerequisites
 
+由于StyleGAN 的令人印象深刻的合成质量，$\rm D{\scriptsize ATASET}GAN$ 使用它作为生成主干。StyleGAN 生成器将从正态分布中抽取的潜在编码 $z \in Z$ 映射到真实的图像。潜在编码 $z$ 首先通过一个映射函数被映射到中间潜在编码 $w \in W$。然后 $w$ 被转换为 $k$ 个向量，$w^1,\dots,w^k$，得到 $k$ 个学习后的仿射变换。这些 $k$ 个变换后的潜在编码以渐进的方式作为风格信息被注入到 $k/2$ 个合成块中。具体来说，每个合成块有一个上采样 ($\times 2$) 层和两个卷积层组成。
+
+
+
 
 
 ## 6. Conclusions
