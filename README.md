@@ -65,13 +65,13 @@
 
 ## :cow: 超分辨率
 
-- [ ] [ESRGAN-Enhanced Super-Resolution Generative Adversarial Networks](./Papers/SuperResolution/ESRGAN-Enhanced Super-Resolution Generative Adversarial Networks.md) (ESRGAN) 论文翻译解读 (未完)
+- [ ] [ESRGAN-Enhanced Super-Resolution Generative Adversarial Networks](./Papers/SuperResolution/ESRGAN.md) (ESRGAN) 论文翻译解读 (未完)
 
 
 
 ## :fox_face: 自监督
 
-- [x] [Masked Autoencoders Are Scalable Vision Learners](./Papers/SelfSupervise/Masked Autoencoders Are Scalable Vision Learners.md) (MAE) 论文翻译解读
+- [x] [Masked Autoencoders Are Scalable Vision Learners](./Papers/SelfSupervised/MAE.md) (MAE) 论文翻译解读
 
 
 
@@ -83,7 +83,7 @@
 
 ## :deer: 图像变形
 
-- [x] [Image Deformation Using Moving Least Squares](./Papers/Deformation/Image Deformation Using Moving Least Squares.md) (MLS) 论文翻译解读; [code](./Code/mls)
+- [x] [Image Deformation Using Moving Least Squares](./Papers/Deformation/MLS.md) (MLS) 论文翻译解读; [code](./Code/mls)
 
 
 
