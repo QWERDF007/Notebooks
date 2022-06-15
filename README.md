@@ -16,6 +16,10 @@
 
 ## What's New
 
+- 2022.06.14 - DatasetGAN 论文翻译解读
+
+- 2022.06.01 - StyleGAN 论文翻译解读
+
 - 2022.05.23 - Transformer 论文翻译解读
 
 - 2022.05.04 - ResNet 论文翻译解读
@@ -39,8 +43,10 @@
 ## :cat: 图像分类
 
 
-- [x] [AlexNet 论文翻译解读](./Papers/Classification/AlexNet.md)
-- [x] [ResNet 论文翻译解读](./Papers/Classification/ResNet.md)
+- [x] [ImageNet Classification with Deep Convolutional Neural Networks](./Papers/Classification/AlexNet.md) (AlexNet) 论文翻译解读
+- [x] [Deep Residual Learning for Image Recognition](./Papers/Classification/ResNet.md) (ResNet) 论文翻译解读
+
+
 
 
 ## :dog: 图像分割
@@ -84,6 +90,8 @@
 ## :fire: 图像生成
 
 - [x] [Barbershop 发型替换指北](./MachineLearning/GAN/Barbershop替换发型指北.md)
+- [x] [A Style-Based Generator Architecture for Generative Adversarial Networks](./Papers/GAN/StyleGAN.md) (StyleGAN) 论文翻译解读
+- [ ] [DatasetGAN: Efficient Labeled Data Factory with Minimal Human Effort](./Papers/GAN/DatasetGAN.md) (DatasetGAN) 论文翻译解读 (未完)
 
 
 
