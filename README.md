@@ -16,6 +16,8 @@
 
 ## What's New
 
+- 2022.06.16 - SemanticStyleGAN 占坑
+
 - 2022.06.14 - DatasetGAN 论文翻译解读
 
 - 2022.06.01 - StyleGAN 论文翻译解读

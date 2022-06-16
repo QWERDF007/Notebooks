@@ -1,0 +1,1 @@
+# [SemanticStyleGAN: Learning Compositional Generative Priors for Controllable Image Synthesis and Editing](https://arxiv.org/pdf/2112.02236.pdf)
