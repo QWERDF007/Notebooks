@@ -16,6 +16,8 @@
 
 ## What's New
 
+- 2022.06.17 - DatasetGAN 使用指北
+
 - 2022.06.16 - SemanticStyleGAN 占坑
 
 - 2022.06.14 - DatasetGAN 论文翻译解读
@@ -93,7 +95,8 @@
 
 - [x] [Barbershop 发型替换指北](./MachineLearning/GAN/Barbershop替换发型指北.md)
 - [x] [A Style-Based Generator Architecture for Generative Adversarial Networks](./Papers/GAN/StyleGAN.md) (StyleGAN) 论文翻译解读
-- [ ] [DatasetGAN: Efficient Labeled Data Factory with Minimal Human Effort](./Papers/GAN/DatasetGAN.md) (DatasetGAN) 论文翻译解读 (未完)
+- [x] [DatasetGAN: Efficient Labeled Data Factory with Minimal Human Effort](./Papers/GAN/DatasetGAN.md) (DatasetGAN) 论文翻译解读 (补充材料未完)
+- [x] [DatasetGAN 使用指北](./MachineLearning/GAN/DatasetGAN使用指北.md)
 
 
 
