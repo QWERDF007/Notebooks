@@ -145,7 +145,31 @@ Xception 模型以很快的计算在 ImageNet 上展现出很好的图像分类�
 
 ### 4.4 Improvement along Object Boundaries
 
-在本小节中，我们用 trimap 实验来评估分割的准确性，以量化所提出的解码器模块在物体边界附近的准确性。具体来说，我们对验证集上 'void' 标签的标注应用形态学膨胀，这通常发生在物体的边界附近。然后我们计算 "void"  标签膨胀范围内的像素 (称为 trimap) 的平均 IOU。如图 5 (a) 所示，对于 ResNet-101 和 Xception 网络骨干采用所提出的解码器，与幼稚的双线性上采样相比，性能有所提升。当膨胀范围较窄时，改善效果越明显。我们观察到在所图中所示的最小的 trimap 宽度处，ResNet-101 和 Xception 的 mIOU 性能分别提升 4.8% 和 5.4%。我们还在图 5 (b) 中可视化了使用所提出的解码器的效果。
+在本小节中，我们用 trimap 实验来评估分割的准确性，以量化所提出的解码器模块在物体边界附近的准确性。具体来说，我们对验证集上 'void' 标签的标注应用形态学膨胀，这通常发生在物体的边界附近。然后我们计算 "void"  标签膨胀条带内的像素 (称为 trimap) 的平均 IOU。如图 5 (a) 所示，对于 ResNet-101 和 Xception 网络骨干采用所提出的解码器，与幼稚的双线性上采样相比，性能有所提升。当膨胀条带较窄时，改善效果越明显。我们观察到在所图中所示的最小的 trimap 宽度处，ResNet-101 和 Xception 的 mIOU 性能分别提升 4.8% 和 5.4%。我们还在图 5 (b) 中可视化了使用所提出的解码器的效果。
+
+<img src="assets/DeepLabv3Plus_table6.png" title="表6">
+
+**表 6：** 最优秀的模型的 PASCAL VOC 2012 测试集的结果。
+
+<img src="assets/DeepLabv3Plus_fig5.png" title="图5">
+
+**图 5：** (a) 当采用 train output stride = eval output stride = 16 时，mIOU 作为物体边界周围的条带的宽度的函数。**BU：** 双线性上采样。(b) 采用所提出的解码器模块与幼稚的双线性上采样 (记为 **BU**) 相比的定性结果。在示例中，我们使用 Xception 作为特征提取器，并且 train output stride = eval output stride = 16。
+
+<img src="assets/DeepLabv3Plus_fig6.png" title="图6">
+
+**图 6：** 在验证集上的可视化结果。最后一行展示了失败模式。
+
+### 4.5 Experimental Results on Cityscapes
+
+在本节中，我们在 Cityscapes 数据集 [3] 上实验 DeepLabv3+，这是一个包含 5000 张高质量的像素级标注的图像 (2975、500 和 1525 张分别用于训练集、验证集和测试集) 和大约 20000 张粗标注的图像的大型数据集。
+
+如表 7 (a) 所示，在包含 ASPP 和图像级特征的 DeepLabv3 上采用所提出的 Xception 模型作为网络骨干 (记为 X-65)，在验证集上获得了 77.33% 的性能。添加所提出的解码器模块显著地提升性能到 78.79% (1.46% 的提升)。我们注意到，移除增强的图像级特征将性能提升到 79.14%，表明在 DeepLab 模型中，图像级特征在 PASCAL VOC 2012 数据集上更有效。我们还发现在 Cityscapes 数据集上，在 Xception 中的 entry flow 增加更多的层是有效的，就像 [31] 在目标检测任务中所做的一样。在更深的网络骨干上构建得到的模型 (在表中记为 X-71)，在验证集上获得了 79.55% 的最佳性能。
+
+在验证集上找到最优的模型变体之后，我们在粗标注上进一步微调模型，以便与其他最先进的模型竞争。如表 7  (b) 所示，我们提出的 DeepLabv3+ 在测试集上获得了 82.1% 的性能，在 Cityscapes 上建立了一个新的最先进的性能。
+
+<img src="assets/DeepLabv3Plus_table7.png" title="表7">
+
+**表 7：** (a) 使用 train_fine 集训练的 DeepLabv3+ 在 Cityscapes 验证集上的结果。(b) DeepLabv3+ 在 Cityscapes 测试集上的结果。**Coarse：** 额外使用 train_extra 集 (粗标注的)。这个表中只列出了一些最好的模型。
 
 ## 5 Conclusion
 
