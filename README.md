@@ -16,31 +16,33 @@
 
 ## What's New
 
-- 2022.06.17 - DatasetGAN 使用指北
+- ✅ 2022.06.22 - DeepLabv3+ 论文翻译解读
 
-- 2022.06.16 - SemanticStyleGAN 占坑
+- ✅ 2022.06.17 - DatasetGAN 使用指北
 
-- 2022.06.14 - DatasetGAN 论文翻译解读
+- ❌ 2022.06.16 - SemanticStyleGAN 占坑 
 
-- 2022.06.01 - StyleGAN 论文翻译解读
+- ✅ 2022.06.14 - DatasetGAN 论文翻译解读
 
-- 2022.05.23 - Transformer 论文翻译解读
+- ✅ 2022.06.01 - StyleGAN 论文翻译解读
 
-- 2022.05.04 - ResNet 论文翻译解读
+- ✅ 2022.05.23 - Transformer 论文翻译解读
 
-- 2022.04.19 - gcc & g++ 8.4 安装、pytorch 1.10.0 c++ 编译、Nvidia 驱动、CUDA、cudnn 安装
+- ✅ 2022.05.04 - ResNet 论文翻译解读
 
-- 2022.04.19 - tensorflow 2.5.0 c++ 编译
+- ✅ 2022.04.19 - gcc & g++ 8.4 安装、pytorch 1.10.0 c++ 编译、Nvidia 驱动、CUDA、cudnn 安装
 
-- 2022.04.12 - AlexNet 论文翻译解读
+- ✅ 2022.04.19 - tensorflow 2.5.0 c++ 编译
 
-- 2022.03.17 - mmseg 自定义数据训练 SwinTransformer
+- ✅ 2022.04.12 - AlexNet 论文翻译解读
 
-- 2021.12.02 - ESRGAN 论文翻译解读 (未完 - 补充材料)
-- 2021.11.30 - MAE 论文翻译解读 (未完)
-- 2021.09.14 - mmseg, mmdet 使用说明; 目标检测数据格式 (COCO、VOC、YOLO)
-- 2021.02.24 - MLS 代码实现
-- 2021.02.09 - 移动最小二乘法的图像变形 (MLS) 论文翻译
+- ✅ 2022.03.17 - mmseg 自定义数据训练 SwinTransformer
+
+- ❌ 2021.12.02 - ESRGAN 论文翻译解读 (未完 - 补充材料)
+- ❌ 2021.11.30 - MAE 论文翻译解读 (未完)
+- ✅ 2021.09.14 - mmseg, mmdet 使用说明; 目标检测数据格式 (COCO、VOC、YOLO)
+- ✅ 2021.02.24 - MLS 代码实现
+- ✅ 2021.02.09 - 移动最小二乘法的图像变形 (MLS) 论文翻译
 
 
 
@@ -57,6 +59,7 @@
 
 - [x] [MMSegmentation 使用说明](./MachineLearning/OpenMMLab/mmseg自定义数据训练.md)
 - [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./MachineLearning/OpenMMLab/mmseg自定义数据训练SwinTransformer.md)
+- [x] [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](./Papers/Segmentation/Deeplabv3Plus.md) (DeepLabv3+) 论文解读
 
 
 
