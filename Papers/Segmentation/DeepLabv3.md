@@ -112,11 +112,27 @@ $$
 
 **ResNet-50：** 在表 1 中，我们实验了使用有 block7 (即额外 block5，block6 和 block7) 的 ResNet-50 时 $output\_stride$ 的影响。如表中所示，在 $output\_stride = 256$ (即完全没有空洞卷积) 的情况下，由于严重的信号降采样，性能要比其他的差很多。当 $output\_stride$ 变大并相应地应用空洞卷积时，性能从 20.29% 提升到 75.18%，表明空洞卷积在级联地构建更多的块进行语义分割时是必不可少的。
 
+<img src="assets/DeepLabv3_table1.png" title="表1">
+
+**表 1：** 当采用带有 block7 和不同 $output\_stride$ 的 ResNet-50 时，使用空洞卷积进一步深入探索。采用 $output\_stride = 8$ 可以得到更好的性能，但代价是更多的内存开销。
+
 **ResNet-50 vs. ResNet-101：** 我们用更深的网络 ResNet-101 替换 ResNet-50，并改变级联块的数量。如表 2 所示，性能随着更多的块的加入而提升，但提升的幅度变得更小。值得注意的是，对 ResNet-50 使用 block7 轻微地降低了性能，但对于 ResNet-101 仍然有所提升。
+
+<img src="assets/DeepLabv3_table2.png" title="表2">
+
+**表 2：** $output\_stride = 16$，使用具有不同数量的级联块的 ResNet-50 和 ResNet-101 时，使用空洞卷积进一步深入探索。网络结构 'block4'，'block5'，'block6' 和 'block7' 分别地添加额外的 0、1、2、3 个级联模块。采用更多的级联块通常可以提升性能。
 
 **Multi-grid：** 在表 3 中，我们对有多个级联的添加的块的 ResNet-101 使用多网格方法。unit rates，$Multi\_Grid = (r_1, r_2, r_3)$，被应用于 block4 和其他所有的添加的块。如表所示，我们观察到 (a) 应用多网格方法的通常比普通版本 ( 其中 $(r_1, r_2, r_3) = (1,1,1)$ ) 更好，(b) 简单地将 unit rates 翻倍 ( 即 $(r_1, r_2, r_3) = (2,2,2)$ ) 是无效的，(c) 使用多网格在更深时提升性能。我们最好的模型是使用 block7 和 $(r_1, r_2, r_3) = (1, 2, 1)$ 。
 
+<img src="assets/DeepLabv3_table3.png" title="表3">
+
+**表 3：** $output\_stride = 16$，对于具有不同数量的级联块的 ResNet-101 采用多网格方法。最好的模型性能以粗体显示。
+
 **验证集上的推理策略：** 所提出的模型是用 $output\_stride = 16$ 训练的，然后在推理期间我们使用 $output\_stride = 8$ 来获得更精细的特征映射。如表 4 所示，有趣的是，当评估使用 $output\_stride = 8$ 的最佳级联模型时，性能比使用 $output\_stride = 16$ 的提高了 1.39%。通过对 scales = { 0.5,0.75,1.0,1.25,1.5,1.75 } 的多尺度输入和左右翻转的图像进行推理，进一步提高了性能。特别地，我们计算每个尺度和翻转图像的平均概率作为最终结果。
+
+<img src="assets/DeepLabv3_table4.png" title="表4">
+
+**表 4：** 验证集上的推理策略。**MG：** 多网格。**OS：** $output\_stride$ 。**MS：** 测试期间多尺度输入。**Flip：** 添加左右翻转的输入。
 
 ### 4.3. Atrous Spatial Pyramid Pooling
 
