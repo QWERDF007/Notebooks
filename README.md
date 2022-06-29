@@ -16,6 +16,10 @@
 
 ## What's New
 
+- ❌ 2022.06.29 - 卷积、池化等算子输出尺寸计算 (未完 - 转置卷积)
+
+- ✅ 2022.06.29 - DeepLabv3 论文翻译解读
+
 - ✅ 2022.06.22 - DeepLabv3+ 论文翻译解读
 
 - ✅ 2022.06.17 - DatasetGAN 使用指北
@@ -51,6 +55,7 @@
 
 - [x] [ImageNet Classification with Deep Convolutional Neural Networks](./Papers/Classification/AlexNet.md) (AlexNet) 论文翻译解读
 - [x] [Deep Residual Learning for Image Recognition](./Papers/Classification/ResNet.md) (ResNet) 论文翻译解读
+- [ ] [卷积、汇聚、反卷积、空洞卷积输出尺寸计算](./MachineLearning/Classification/卷积池化等算子输出尺寸计算.md)
 
 
 
@@ -60,6 +65,7 @@
 - [x] [MMSegmentation 使用说明](./MachineLearning/OpenMMLab/mmseg自定义数据训练.md)
 - [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./MachineLearning/OpenMMLab/mmseg自定义数据训练SwinTransformer.md)
 - [x] [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](./Papers/Segmentation/DeepLabv3Plus.md) (DeepLabv3+) 论文解读
+- [x] [Rethinking Atrous Convolution for Semantic Image Segmentation](./Papers/Segmentation/DeepLabv3.md) (DeepLabv3) 论文解读
 
 
 
