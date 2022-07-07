@@ -52,10 +52,70 @@ $$
 
 
 
-<hr style="height:1px;border:none;border-top:2px solid #555555;" />
+------
+
+**算法 1** 生成式对抗网络的小批量梯度随机下降训练。应用于判别器的 steps $k$ 是一个超参数。在我们实验中我们使用 $k = 1$，最小的开销。
 
 
+------
 
+​    **for** 训练迭代次数 **do**
+
+​        **for** k steps **do**
+
+​            - 从噪声先验 $p_g(\boldsymbol{z})$ 中采样 m 个噪声样本 $\left \{ z^{(1)} , \dots, z^{(m)} \right \}$
+
+​            - 从数据生成分布 $p_{data}(\boldsymbol{x})$ 中采样 m 个样本 $\left \{ x^{(1)} , \dots, x^{(m)} \right \}$
+
+​            - 通过 ascending (上升?) 它的随机梯度来更新鉴别器：
+
+$$
+\large \nabla_{\theta_d} \frac{1}{m} \sum_{i = 1}^m \left[ \log D \left( \boldsymbol{x}^{(i)} \right) + \log \left( 1 - D \left( G \left( \boldsymbol{z}^{(i)} \right) \right) \right) \right]
+$$
+​        **end for**
+
+​        - 从噪声先验 $p_g(z)$ 中采样 m 个噪声样本 $\left \{ z^{(1)} , \dots, z^{(m)} \right \}$
+
+​        - 通过 descending (下降?) 它的随机梯度来更新生成器：
+$$
+\large \nabla_{\theta_d} \frac{1}{m} \sum_{i = 1}^m  \log \left( 1 - D \left( G \left( \boldsymbol{z}^{(i)} \right) \right) \right)
+$$
+​    **end for**
+
+​    基于梯度的更新可以使用任何标准的基于梯度的学习规则。在我们的实验中我们使用了 momentum。
+
+------
+
+### 4.1 Global Optimality of $p_g = p_{data}$
+
+我们首先考虑对于任意给定生成器 G 最优的鉴别器 D。
+
+**命题 1.** 对于某一固定的 G，最优的鉴别器 D 是：
+$$
+\large D_{G}^*(\boldsymbol{x}) =\frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_g(\boldsymbol{x})} \tag{2}
+$$
+证明. 对于任意给定的生成器 G，D 的训练准则是最大化 $V(G,D)$
+$$
+\large 
+\begin{aligned}
+V(G,D) &= \int_x p_{data}(\boldsymbol{x}) \log (D(\boldsymbol{x}))\mathrm{d}x + \int_x p_z(\boldsymbol{z}) \log (1 - D(g(\boldsymbol{z}))) \mathrm{d}z \\
+ &= \int_x p_{data}(\boldsymbol{x}) \log(D(\boldsymbol{x})) + p_g(\boldsymbol{x}) \log (1 - D(\boldsymbol{x})) \mathrm{d}x 
+\end{aligned}
+\tag{3}
+$$
+对于任意 $(a,b) \in \mathbb{R}^2 \setminus \{ 0,0 \}$，函数 $y \rightarrow a \log(y) + b \log(1 - y)$ 在 [0,1] 中点 $\frac{a}{a + b}$ 取得最大值。鉴别器不需要在 $Supp(p_{data}) \bigcup Supp(p_g)$ 之外被定义，证毕。( $Supp(p_{data})$ 和 $Supp(p_g)$ 分别问 $p_{data}$ 和 $p_g$ 的补集。)
+
+注意，D 的训练目标可以被解释为最大化估计条件概率 $P(Y = y|\boldsymbol{x})$ 的对数似然，其中 $Y$ 表示 $\boldsymbol{x}$ 是来自数据分布 $p_{data}$ ( 即 $y = 1$ ) 还是来自 $p_g$ ( 即 $y = 0$ )。等式 1 中的极大极小博弈现在可以重新表述为：
+
+$$
+\large
+\begin{aligned}
+C(G) &= \max_{D} V(G,D) \\
+&= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{z \sim p_z} [ \log(1 - D^*_G(G(\boldsymbol{z})))] \\
+&= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))] \\
+&= \mathbb{E}_{x \sim p_{data}} \left [ \log \frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ] + \mathbb{E}_{x \sim p_{g}} \left [ \log \frac{p_{g}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ]
+\end{aligned} \tag{4}
+$$
 
 
 
