@@ -1,6 +1,6 @@
 # Notebooks
 
-一些记录、论文翻译、心得
+一些记录、流程图、调用示例、论文翻译、心得
 
 [TOC]
 
@@ -12,13 +12,21 @@
 | ------------------------------ | ------------------------ | ---------------------- | ------ | ------- |
 | [:hamster:](#hamster-阴影去除) | [:deer:](#deer-图像变形) | [:fire:](#fire-图像生成) | [:wolf:](#wolf-自然语言处理) | [:rocket:](#rocket-环境依赖) |
 
-| 网络编程         |      |      |      |      |
+| 网络编程         | 流程图 | 杂项 |      |      |
 | ---------------- | ---- | ---- | ---- | ---- |
-| [:spider_web:](#spider_web-网络编程) |      |      |      |      |
+| [:spider_web:](#spider_web-网络编程) | [:turtle:](#turtle-流程图) | [:sunflower:](#sunflower-杂项) |      |      |
 
 ✅❌
 
 ## What's New
+
+- ❌ 2022.07.20 - GANgealing 占坑
+
+- ❌ 2022.07.20 - StyleGAN3-Editing 占坑
+
+- ✅ 2022.07.20 - Windows 编译 TensorFlow C++ v2.5.0 (cpu 版)
+- ✅ 2022.07.19 - Windows 下使用 onnxruntime C++ Demo
+- ✅ 2022.07.07 - mmseg 实现 Xception65 backbone，DeepLabv3Plus 网络结构 (drawio)
 
 - ❌ 2022.06.29 - 卷积、池化等算子输出尺寸计算 (未完 - 转置卷积)
 
@@ -36,11 +44,13 @@
 
 - ✅ 2022.05.23 - Transformer 论文翻译解读
 
+- ✅ 2022.05.09 - Barbershop 替换发型指北
+
 - ✅ 2022.05.04 - ResNet 论文翻译解读
 
 - ✅ 2022.04.19 - gcc & g++ 8.4 安装、pytorch 1.10.0 c++ 编译、Nvidia 驱动、CUDA、cudnn 安装
 
-- ✅ 2022.04.19 - tensorflow 2.5.0 c++ 编译
+- ✅ 2022.04.19 - Linux 编译 TensorFlow C++ v2.5.0 (gpu 版)
 
 - ✅ 2022.04.12 - AlexNet 论文翻译解读
 
@@ -70,6 +80,7 @@
 - [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./MachineLearning/OpenMMLab/mmseg自定义数据训练SwinTransformer.md)
 - [x] [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](./Papers/Segmentation/DeepLabv3Plus.md) (DeepLabv3+) 论文解读
 - [x] [Rethinking Atrous Convolution for Semantic Image Segmentation](./Papers/Segmentation/DeepLabv3.md) (DeepLabv3) 论文解读
+- [x] [MMsegmentation Xception65 backbone]()
 
 
 
@@ -133,3 +144,16 @@
 - [x] [什么是 gRPC](./Serving/grpc/什么是gRPC.md)
 - [x] [gRPC python 基础教程](./Serving/grpc/python/基础教程.md)
 - [x] [gRPC python 快速入门](./Serving/grpc/python/快速入门.md)
+
+
+
+## :turtle: 流程图
+
+- [x] [DeepLabv3Plus Xception65 d16 流程图](./FLows/DeepLabv3PlusXception65_16.drawio)
+- [x] [DeepLabv3Plus Xception65 d18 流程图](./FLows/DeepLabv3PlusXception65_8.drawio)
+
+
+
+## :sunflower: 杂项
+
+- [x] [onnxruntime C++ API 调用示例](https://github.com/QWERDF007/onnxruntime_cpp_demo)
