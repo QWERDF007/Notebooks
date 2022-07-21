@@ -20,6 +20,8 @@
 
 ## What's New
 
+- ❌ 2022.07.21 - HyperStyle 占坑
+
 - ❌ 2022.07.20 - GANgealing 占坑
 
 - ❌ 2022.07.20 - StyleGAN3-Editing 占坑
