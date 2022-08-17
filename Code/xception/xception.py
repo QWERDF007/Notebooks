@@ -199,7 +199,7 @@ class AlignedXception(BaseModule):
 
         self._make_stem_layer(in_channels, stem_channels)
 
-        blocks_cfg = xception_arch('xception65', dilations=dilations)
+        blocks_cfg = xception_arch('xception65', strides=strides, dilations=dilations)
         self.blocks = []
         for i, b in enumerate(blocks_cfg):
             block_name = f'block{i+1}'
