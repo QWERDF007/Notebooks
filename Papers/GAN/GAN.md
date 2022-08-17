@@ -22,6 +22,8 @@
 $$
 \large \lim_{\sigma \rightarrow 0} \nabla_x \mathbb{E}_{\epsilon \sim \mathcal{N}(0,\sigma^2 \boldsymbol{I})} f(\boldsymbol{x} + \epsilon) = \nabla_x f(\boldsymbol{x})
 $$
+**ps：** 即 $\epsilon \sim \mathcal{N}(0,\sigma^2 \boldsymbol{I})$ ，$\sigma \rightarrow 0$ 时，$f(\boldsymbol{x} + \epsilon)$ 的期望对 $\boldsymbol{x}$ 的偏导数等于 $f(\boldsymbol{x})$ 对 $\boldsymbol{x}$ 的偏导数 $\nabla_x f(\boldsymbol{x})$。
+
 在我们开展这项工作时，我们不知道 Kingma 和 Welling [18] 和 Rezende 等人 [23] 已经研究出了更通用的随机反向传播规则，允许模型通过具有有限方差的高斯分布来反向传播，并反向传播到协方差参数和均值。这些反向传播规则可以让模型学习生成器的条件方差，我们在本工作中把它当作超参数。Kingma 和 Welling 和 Rezende 等人使用随机反向传播训练变分自编码器 (VAEs)。像生成式对抗网络一样，变分自编码器将一个可微分生成器网络与第二个神经网络配对。不像生成式对抗网络，VAE 中的第二个神经网络是一个执行近似推理的识别模型。GANs 需要通过可视单元进行微分，因此不能对离散数据进行建模，而 VAEs 需要通过隐藏单元进行微分，因此不能有离散的潜在变量。存在着其他的 [12, 22] 类似 VAE 的方法，但与我们的方法的关系不太密切。
 
 先前的工作 [29,13] 也采用了使用一个判别式准测来训练一个生成式模型的方法。这些方法使用的准则是深度生成式模型难以处理的。深度模型甚至很难近似这些方法，因为它们涉及到概率的比率，不能用降低概率边界的变分近似来近似。噪声对比估计 (NCE) 涉及通过学习使模型在从固定噪声分布中区分数据有用的权重来训练生成式模型。使用先前训练过的模型作为噪声分布，可以训练一系列质量不断提高的模型。这可以被视为一种非正式的竞争机制，在精神上类似于对抗性网络游戏中使用的正式的竞争。NCE 的关键限制是它的 "鉴别器" 是由噪声分布和模型分布的概率密度的比率来定义的，因此需要评估和反向传播两个密度的能力。
@@ -105,7 +107,9 @@ V(G,D) &= \int_x p_{data}(\boldsymbol{x}) \log (D(\boldsymbol{x}))\mathrm{d}x + 
 $$
 对于任意 $(a,b) \in \mathbb{R}^2 \setminus \{ 0,0 \}$，函数 $y \rightarrow a \log(y) + b \log(1 - y)$ 在 [0,1] 中点 $\frac{a}{a + b}$ 取得最大值。鉴别器不需要在 $Supp(p_{data}) \bigcup Supp(p_g)$ 之外被定义，证毕。( $Supp(p_{data})$ 和 $Supp(p_g)$ 分别问 $p_{data}$ 和 $p_g$ 的补集。)
 
-注意，D 的训练目标可以被解释为最大化估计条件概率 $P(Y = y|\boldsymbol{x})$ 的对数似然，其中 $Y$ 表示 $\boldsymbol{x}$ 是来自数据分布 $p_{data}$ ( 即 $y = 1$ ) 还是来自 $p_g$ ( 即 $y = 0$ )。等式 1 中的极大极小博弈现在可以重新表述为：
+**ps：** 利用极值定理，求解函数的导数为 0，可以求得函数的极大值 $\frac{a}{a+b}$，然后代入 $a = p_{data}(\boldsymbol{x})$，$b = p_g(\boldsymbol{x})$。
+
+注意，D 的训练目标可以被解释为最大化估计条件概率 $P(Y = y|\boldsymbol{x})$ 的对数似然，其中 $Y$ 表示 $\boldsymbol{x}$ 是来自数据分布 $p_{data}$ ( 即 $y = 1$ ) 还是来自 $p_g$ ( 即 $y = 0$ )。等式 (1) 中的极大极小博弈现在可以重新表述为：
 
 $$
 \large
@@ -116,6 +120,20 @@ C(G) &= \max_{D} V(G,D) \\
 &= \mathbb{E}_{x \sim p_{data}} \left [ \log \frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ] + \mathbb{E}_{x \sim p_{g}} \left [ \log \frac{p_{g}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ]
 \end{aligned} \tag{4}
 $$
+
+**定理 1.** 当且仅当 $p_g = p_{data}$，(virtual) 训练准则 $C(G)$ 才取得全局最小值 $C(G) = - \log 4$ 。
+
+证明. 对于 $p_g = p_{data}$，$D^*_G(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^*_G(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时，$C(G)$ 所能取得的最优值，观察到
+$$
+\large \mathbb{E}_{\boldsymbol{x} \sim p_{data}}[\log \frac{1}{2}] + \mathbb{E}_{\boldsymbol{x} \sim p_{g}}[\log \frac{1}{2}] = \log \frac{1}{4} = - \log 4
+$$
+
+
+
+
+
+
+
 
 
 
