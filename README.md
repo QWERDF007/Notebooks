@@ -155,7 +155,7 @@
 ## :turtle: 流程图
 
 - [x] [DeepLabv3Plus Xception65 d16 流程图](./FLows/DeepLabv3PlusXception65_16.drawio)
-- [x] [DeepLabv3Plus Xception65 d18 流程图](./FLows/DeepLabv3PlusXception65_8.drawio)
+- [x] [DeepLabv3Plus Xception65 d8 流程图](./FLows/DeepLabv3PlusXception65_8.drawio)
 
 
 
