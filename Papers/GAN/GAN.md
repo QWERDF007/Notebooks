@@ -123,21 +123,74 @@ $$
 
 **定理 1.** 当且仅当 $p_g = p_{data}$，(virtual) 训练准则 $C(G)$ 才取得全局最小值 $C(G) = - \log 4$ 。
 
-证明. 对于 $p_g = p_{data}$，$D^*_G(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^*_G(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时，$C(G)$ 所能取得的最优值，观察到
+**证明.** 对于 $p_g = p_{data}$，$D^*_G(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^*_G(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时，$C(G)$ 所能取得的最优值，观察到
 $$
 \large \mathbb{E}_{\boldsymbol{x} \sim p_{data}}[\log \frac{1}{2}] + \mathbb{E}_{\boldsymbol{x} \sim p_{g}}[\log \frac{1}{2}] = \log \frac{1}{4} = - \log 4
 $$
 
+通过从 $C(G) = V(D_G^*, G)$ 减去这个表达式，我们可以得到：
+$$
+\large C(G) = -\log(4) + KL \left (p_{data} \bigg\Vert \frac{p_{data} + p_g}{2} \right) + KL \left( p_g \bigg\Vert \frac{p_{data} + p_g}{2} \right) \tag{5}
+$$
+其中 KL 是 Kullback–Leibler divergence (KL 散度或者相对熵)。我们在前面的表达式中认识到模型的分布和数据生成过程之间的 Jensen-Shannon divergence (JS 散度)：
+$$
+\large C(G) = -\log(4) + 2 \cdot JSD(p_{data} \Vert p_g) \tag{6}
+$$
+由于两个分布之间的 JS 散度总是非负的，且如果它们相等，则为 0，我们已经证明了 $C^* = - \log(4)$ 是 $C(G)$ 的全局最小值，并且唯一解是 $p_g = p_{data}$ ，即生成模型完美地复制了数据分布。
 
+## 4.2 Convergence of Algorithme 1
 
+**命题 2.** 如果 G 和 D 有足够的容量，在算法 1 的每一步，鉴别器在给定 G 的情况下，允许达到其最佳值，并且更新 $p_g$ 以改进准则
+$$
+\large \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))]
+$$
+然后 $p_g$ 收敛到 $p_{data}$ 。
 
+**证明.** 考虑 $V(G,D) = U(p_g, D)$ 作为上述准则中 $p_g$ 的一个函数。注意到，在 $p_g$ 中 $U(p_g, D)$ 是凸的。凸函数上确界的子导数包括该函数在其最大值处的导数。换句话说，如果 $\large f(x)  = \sup_{\alpha \in \mathcal{A}} f_{\alpha}(x)$ 并且对于每个 $\alpha$，$f_{\alpha}(x)$ 在 $x$ 中是凸的，那么如果 $\large \beta = \arg \sup_{\alpha \in \mathcal{A}} f_{\alpha}(x)$ 则 $\large \partial  \beta(x) \in \partial f$ 。这相当于在给定对应 G 的情况下，在最优 D 处计算用于更新 $p_g$ 的梯度下降。$\sup_D U(p_g, D)$ 在 $p_g$ 中是凸的，具有唯一的全局最优解，如定理 1 中所证明的，因此在 $p_g$ 更新足够小的情况下，$p_g$ 收敛到 $p_x$，从而得出证明。
 
+实际上，对抗网络通过函数 $G(z;\theta_g)$ 表达一系列受限的 $p_g$ 的分布，并且我们优化 $\theta_g$ 而不是 $p_g$ 本身，因此证明不适用。然而，多层感知机在实际中的优异性能表明，尽管缺乏理论保证，但多层感知机是一种合适的模型来使用。
 
+<img src="assets/GAN_table1.png" title="表1">
 
+**表 1：** 基于 Parzen 窗口的对数似然评估。MNIST 上报告的数字是测试集上样本的平均对数似然，并计算了各个样本的平均标准差。在 TFD，我们在计算了跨越数据集每一折 (flods) 的标准差，并利用每折验证集选择不通的 $\sigma$ 。在 TFD，$\sigma$ 在每一折上交叉验证，并计算每一折的平均对数似然。对于 MNIST，我们将数据集的实值 (而不是二进制) 的版本与其他模型进行比较。
 
+# 5 Experiments
 
+我们在一系列数据集上训练了对抗网络，包括 MNIST、the Toronto Face Database (TFD) 和 CIFAR-10。生成式网络混合使用 ReLU 激活和 sigmoid 激活，而判别器使用 maxout 激活。Dropout 被用于训练鉴别器网络。虽然我们的理论框架允许在生成器的中间层使用 dropout 和其他噪声，但我们仅将噪声用作生成器网络最底层的输入。
 
+我们通过将一个 Gaussian Parzen 窗口拟合到 G 生成的样本来评估 $p_g$ 分布下的测试集数据的概率，并报告该分布下的对数似然。通过在验证集上交叉验证，获得高斯函数的 $\sigma$ 参数。这个步骤由 Breuleux 等人引入，并用于各种生成模型，这些模型的确切的似然是不容易处理的。结果如表 1 所示。这种估计似然的方法具有较高的方差，并且在高位空间中表现不佳。但它是我们所知的最佳方法。生成式模型的进展，可采样但不可估计似然，直接推动了对如何评估此类模型的进一步研究。在图 2 和图 3 中，我们展示了从训练后的模型中获取的样本。虽然我们没有声称这些样本比现有方法生成的样本更好，但我们认为这些样本至少与文献中更好的生成式模型具有竞争力，并突出了对抗性框架的潜力。
 
-REFERENCE:
+<img src="assets/GAN_fig2.png" title="图2">
 
-https://rdc.hundsun.com/portal/article/920.html
+**图 2：** 来自模型中的样本的可视化。最右边一列展示了最相近的训练样本，以证明模型没有记忆训练集。样本是随机抽取的，不是精细挑选的。与大多数其他深度生成式模型的可视化不同，这些图像展示了来自模型分布的真实样本，而不是在给定条件均值下隐藏层的样本。此外，这些样本是不相关的，因为采样过程不依赖马尔可夫链混合。a) MNIST b) TFD c) CIFAR-10 (全连接模型) d) CIFAR-10 (卷积的鉴别器和 "转置卷积"的生成器)
+
+<img src="assets/GAN_fig3.png" title="图3">
+
+**图 3：** 通过在整个模型的 $z$ 空间的坐标直接线性插值得到的数字。
+
+# 6 Advantages and disadvantages
+
+与以前的建模框架相比，这个新框架有其优点和缺点。缺点主要是 $p_g(\boldsymbol{x})$ 没有明确的表示，并且在训练期间 D 必须与 G 很好地同步 (特别是，在没有更新 D 的情况下 G 不能训练太多，来避免 “the Helvetica scenario” (模式崩塌)，即 G 将太多的 $\bold{z}$ 值崩塌为相同的 $\bold{x}$，以具有足够的多样性来建模 $p_{data}$ )，就像玻尔兹曼机的负链一样，必须保持学习步骤之间的更新。其优点是不需要马尔可夫链，只使用反向传播来获得梯度，在学习过程中不需要推理，并且可以将多种函数合并到模型中。表 2 总结了生成式对抗网络与其他生成式建模方法的比较。
+
+上述优点主要是计算上的。对抗模型还可以从生成器网络中获得一些统计优势，生成器不直接使用数据样本进行更新，而只使用流经判别器的梯度进行更新。这意味着输入组件不会直接复制到生成器的参数中。对抗网络的另外一个优点是，它们可以表示非常尖锐甚至退化的分布，而基于马尔可夫链的方法要求分布有点模糊，以便链能够在模式之间混合。
+
+<img src="assets/GAN_table2.png" title="表2">
+
+**表 2：** 生成式建模中的挑战：a summary of the difficulties encountered by different approaches to deep generative modeling for each of the major operations involving a model.
+
+# 7 Conclusions and future work
+
+这个框架可以进行许多直接的扩展：
+
+1. 将 $\boldsymbol{c}$ 同时作为 G 和 D 的输入，可以得到条件生成式模型 $p(\boldsymbol{x} | \boldsymbol{c})$ 。
+2. 通过训练辅助网络在给定 $\boldsymbol{x}$ 的情况下预测 $z$ ，可以学习近似推理。这与通过 wake-sleep 算法训练的推理网络类似，但其优点是在生成器网络训练完毕后，推理网络可以被训练为固定的生成器。
+3. 可以通过训练一组共享参数的条件模型来近似建模所有的条件 $\large p(\boldsymbol{x}_S | \boldsymbol{x}_{S\mkern-10mu/} )$ ，其中 $S$ 是 $\boldsymbol{x}$ 索引的子集。本质上，可以使用对抗网络来实现确定性 MP-DBM 的一个随机扩展。
+4. 半监督学习：当标记数据有限时，来自鉴别器或推理网络的特征可以提高分类器的性能。
+5. 效率提高：通过设计更好的方法来协调 G 和 D，或者在训练过程中确定更好的分布来采样 $\bold{z}$，可以大大加速训练。
+
+本文证明了对抗建模框架的可行性，表明这些研究方向可以被证明是有用的。
+
+# 参考
+
+- https://rdc.hundsun.com/portal/article/920.html
+- https://blog.csdn.net/weixin_41109655/article/details/119906048
