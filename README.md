@@ -125,7 +125,7 @@
 - [x] [A Style-Based Generator Architecture for Generative Adversarial Networks](./Papers/GAN/StyleGAN.md) (StyleGAN) 论文翻译解读
 - [x] [DatasetGAN: Efficient Labeled Data Factory with Minimal Human Effort](./Papers/GAN/DatasetGAN.md) (DatasetGAN) 论文翻译解读 (补充材料未完)
 - [x] [DatasetGAN 使用指北](./MachineLearning/GAN/DatasetGAN使用指北.md)
-- [x] [stylegan3-encoder 图像反演、图像插值](./MachineLearning/GAN/StyleGAN3编码图像)
+- [x] [stylegan3-encoder 图像反演、图像插值](./MachineLearning/GAN/StyleGAN3编码图像.md)
 
 
 
