@@ -20,6 +20,8 @@
 
 ## What's New
 
+- ✅ 2022.08.24 - 经典论文 GAN 翻译解读
+
 - ✅ 2022.07.21 - stylegan3-encoder 图像反演、图像插值
 
 - ❌ 2022.07.21 - HyperStyle 占坑
@@ -126,6 +128,7 @@
 - [x] [DatasetGAN: Efficient Labeled Data Factory with Minimal Human Effort](./Papers/GAN/DatasetGAN.md) (DatasetGAN) 论文翻译解读 (补充材料未完)
 - [x] [DatasetGAN 使用指北](./MachineLearning/GAN/DatasetGAN使用指北.md)
 - [x] [stylegan3-encoder 图像反演、图像插值](./MachineLearning/GAN/StyleGAN3编码图像.md)
+- [x] [Generative Adversarial Nets](./Papers/GAN/GAN.md) (论文翻译解读)
 
 
 
