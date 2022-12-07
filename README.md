@@ -20,6 +20,8 @@
 
 ## What's New
 
+- ✅ 2022.11.17 - git基本工作流程
+
 - ✅ 2022.08.24 - 经典论文 GAN 翻译解读
 
 - ✅ 2022.07.21 - stylegan3-encoder 图像反演、图像插值
@@ -157,11 +159,12 @@
 
 ## :turtle: 流程图
 
-- [x] [DeepLabv3Plus Xception65 d16 流程图](./FLows/DeepLabv3PlusXception65_16.drawio)
-- [x] [DeepLabv3Plus Xception65 d8 流程图](./FLows/DeepLabv3PlusXception65_8.drawio)
+- [x] [DeepLabv3Plus Xception65 d16 流程图](./Flows/DeepLabv3PlusXception65_16.drawio)
+- [x] [DeepLabv3Plus Xception65 d8 流程图](./Flows/DeepLabv3PlusXception65_8.drawio)
 
 
 
 ## :sunflower: 杂项
 
 - [x] [onnxruntime C++ API 调用示例](https://github.com/QWERDF007/onnxruntime_cpp_demo)
+- [x] [git基本工作流程](./Code/misc/git基本工作流程.md)
