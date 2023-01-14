@@ -12,9 +12,9 @@
 | ------------------------------ | ------------------------ | ---------------------- | ------ | ------- |
 | [:hamster:](#hamster-阴影去除) | [:deer:](#deer-图像变形) | [:fire:](#fire-图像生成) | [:wolf:](#wolf-自然语言处理) | [:rocket:](#rocket-环境依赖) |
 
-| 网络编程         | 流程图 | 杂项 |      |      |
+| 特征搜索     | 网络编程 | 流程图 | 杂项 |  |
 | ---------------- | ---- | ---- | ---- | ---- |
-| [:spider_web:](#spider_web-网络编程) | [:turtle:](#turtle-流程图) | [:sunflower:](#sunflower-杂项) |      |      |
+| [:mag:](#mag-特征搜索) | [:spider_web:](#spider_web-网络编程) | [:turtle:](#turtle-流程图) | [:sunflower:](#sunflower-杂项) |  |
 
 ✅❌
 
@@ -52,6 +52,8 @@
 
 - ✅ 2022.05.23 - Transformer 论文翻译解读
 
+- ✅ 2022.05.10 - Faiss 向量检索库介绍
+
 - ✅ 2022.05.09 - Barbershop 替换发型指北
 
 - ✅ 2022.05.04 - ResNet 论文翻译解读
@@ -77,15 +79,15 @@
 
 - [x] [ImageNet Classification with Deep Convolutional Neural Networks](./Papers/Classification/AlexNet.md) (AlexNet) 论文翻译解读
 - [x] [Deep Residual Learning for Image Recognition](./Papers/Classification/ResNet.md) (ResNet) 论文翻译解读
-- [ ] [卷积、汇聚、反卷积、空洞卷积输出尺寸计算](./MachineLearning/Classification/卷积池化等算子输出尺寸计算.md)
+- [ ] [卷积、汇聚、反卷积、空洞卷积输出尺寸计算](./Notebooks/Classification/卷积池化等算子输出尺寸计算.md)
 
 
 
 
 ## :dog: 图像分割
 
-- [x] [MMSegmentation 使用说明](./MachineLearning/OpenMMLab/mmseg自定义数据训练.md)
-- [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./MachineLearning/OpenMMLab/mmseg自定义数据训练SwinTransformer.md)
+- [x] [MMSegmentation 使用说明](./Notebooks/OpenMMLab/mmseg自定义数据训练.md)
+- [x] [MMSegmentation 在自定义数据集上训练 SwinTransformer](./Notebooks/OpenMMLab/mmseg自定义数据训练SwinTransformer.md)
 - [x] [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](./Papers/Segmentation/DeepLabv3Plus.md) (DeepLabv3+) 论文解读
 - [x] [Rethinking Atrous Convolution for Semantic Image Segmentation](./Papers/Segmentation/DeepLabv3.md) (DeepLabv3) 论文解读
 - [x] [MMsegmentation Xception65 backbone]()
@@ -94,8 +96,8 @@
 
 ## :car: 目标检测
 
-- [x] [目标检测数据格式](./MachineLearning/ObjectDection/DataFormat.md)
-- [x] [MMdetection 使用说明](./MachineLearning/OpenMMLab/mmdet自定义数据训练.md)
+- [x] [目标检测数据格式](./Notebooks/ObjectDection/DataFormat.md)
+- [x] [MMdetection 使用说明](./Notebooks/OpenMMLab/mmdet自定义数据训练.md)
 
 
 
@@ -125,11 +127,11 @@
 
 ## :fire: 图像生成
 
-- [x] [Barbershop 发型替换指北](./MachineLearning/GAN/Barbershop替换发型指北.md)
+- [x] [Barbershop 发型替换指北](./Notebooks/GAN/Barbershop替换发型指北.md)
 - [x] [A Style-Based Generator Architecture for Generative Adversarial Networks](./Papers/GAN/StyleGAN.md) (StyleGAN) 论文翻译解读
 - [x] [DatasetGAN: Efficient Labeled Data Factory with Minimal Human Effort](./Papers/GAN/DatasetGAN.md) (DatasetGAN) 论文翻译解读 (补充材料未完)
-- [x] [DatasetGAN 使用指北](./MachineLearning/GAN/DatasetGAN使用指北.md)
-- [x] [stylegan3-encoder 图像反演、图像插值](./MachineLearning/GAN/StyleGAN3编码图像.md)
+- [x] [DatasetGAN 使用指北](./Notebooks/GAN/DatasetGAN使用指北.md)
+- [x] [stylegan3-encoder 图像反演、图像插值](./Notebooks/GAN/StyleGAN3编码图像.md)
 - [x] [Generative Adversarial Nets](./Papers/GAN/GAN.md) (论文翻译解读)
 
 
@@ -142,18 +144,25 @@
 
 ## :rocket: 环境依赖
 
-- [x] [TensorFlow 2.5.0 C++ 编译](./MachineLearning/Env/libtensorflow编译.md)
-- [x] [PyTorch 1.10.0 C++ 编译](./MachineLearning/Env/libtorch编译.md)
-- [x] [gcc & g++ 8.4 安装](./MachineLearning/Env/gcc&g++安装.md)
-- [x] [Nvidia 驱动、CUDA、cudnn 安装](./MachineLearning/Env/NVIDIA驱动&CUDA&CUDNN安装.md)
+- [x] [TensorFlow 2.5.0 C++ 编译](./Notebooks/Env/libtensorflow编译.md)
+- [x] [PyTorch 1.10.0 C++ 编译](./Notebooks/Env/libtorch编译.md)
+- [x] [gcc & g++ 8.4 安装](./Notebooks/Env/gcc&g++安装.md)
+- [x] [Nvidia 驱动、CUDA、cudnn 安装](./Notebooks/Env/NVIDIA驱动&CUDA&CUDNN安装.md)
+
+
+
+## :mag: 特征搜索
+
+- [x] [faiss 向量检索库介绍](./Notebooks/FeatureSearch/Faiss向量检索.md)
+
 
 
 
 ## :spider_web: 网络编程
 
-- [x] [什么是 gRPC](./Serving/grpc/什么是gRPC.md)
-- [x] [gRPC python 基础教程](./Serving/grpc/python/基础教程.md)
-- [x] [gRPC python 快速入门](./Serving/grpc/python/快速入门.md)
+- [x] [什么是 gRPC](./Notebooks/Serving/grpc/什么是gRPC.md)
+- [x] [gRPC python 基础教程](./Notebooks/Serving/grpc/python/基础教程.md)
+- [x] [gRPC python 快速入门](./Notebooks/Serving/grpc/python/快速入门.md)
 
 
 
