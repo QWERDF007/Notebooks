@@ -134,7 +134,7 @@ $$
 
 **定理 1.** 当且仅当 $p_g = p_{data}$，(virtual) 训练准则 $C(G)$ 才取得全局最小值 $C(G) = - \log 4$ 。
 
-**证明.** 对于 $p_g = p_{data}$， $D^{\ast}_G(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^{\ast}_G(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时， $C(G)$ 所能取得的最优值，观察到
+**证明.** 对于 $p_g = p_{data}$， $D^{\ast}_{G}(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^{\ast}_{G}(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时， $C(G)$ 所能取得的最优值，观察到
 $$
 \large \mathbb{E}_{\boldsymbol{x} \sim p_{data}}[\log \frac{1}{2}] + \mathbb{E}_{\boldsymbol{x} \sim p_{g}}[\log \frac{1}{2}] = \log \frac{1}{4} = - \log 4
 $$
@@ -190,7 +190,7 @@ $$
 
 <img src="assets/GAN_table2.png" title="表2">
 
-**表 2：** 生成式建模中的挑战：a summary of the difficulties encountered by different approaches to deep generative modeling for each of the major operations involving a model.
+**表 2：** 生成式建模中的挑战：深度生成建模的不同方法涉及模型的每个主要操作遇到的困难的总结
 
 # 7 Conclusions and future work
 
