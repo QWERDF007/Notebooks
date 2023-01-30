@@ -153,6 +153,11 @@ $$
 
 **命题 2.** 如果 G 和 D 有足够的容量，在算法 1 的每一步，鉴别器在给定 G 的情况下，允许达到其最佳值，并且更新 $p_g$ 以改进准则
 
+
+
+$\boldsymbol{a}$
+
+
 $$
 \large \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))]
 $$
