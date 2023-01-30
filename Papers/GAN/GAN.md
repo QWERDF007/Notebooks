@@ -54,7 +54,7 @@ $$
 
 <img src="assets/GAN_fig1.png" title="图1">
 
-**图 1：** 通过同时更新鉴别分布 (D，蓝色虚线) 来训练生成式对抗网络，使 $D$ 区分样本是来自数据的生成分布 (黑色虚线) $p_x$，还是来自生成式分布 $p_g$ (绿色实线)。下面的水平线是 $z$ 采样的域，在本例中是均匀分布。上面的水平线        是 $x$ 的域的一部分。向上的箭头表示映射 $\boldsymbol{x} = G(z)$ 是如何对变换后的样本施加非均匀分布 $p_g$ 的。(a) 考虑一个接近收敛的对抗性对： $p_g$ 与 $p_{data}$ 相似，而 $D$ 是一个部分准确的分类器。(b) 在算法的内循环中， $D$ 被训练来从数据中区分 (生成) 样本，收敛于 $D^*(\boldsymbol{x}) = \frac{p_{data}(x)}{p_{data}(x) + p_g(x)}$。(c) 更新 $G$ 之后， $D$ 的梯度引导 $G(z)$ 流向更有可能被分类为数据的区域。(d) 经过多个 steps 训练后，如果 $G$ 和 $D$ 有足够的容量，它们会达到一个双方都无法继续提升的点，因为 $p_g = p_{data}$ 。鉴别器无法区分两个分布，即 $D(\boldsymbol{x}) = \frac{1}{2}$。
+**图 1：** 通过同时更新鉴别分布 (D，蓝色虚线) 来训练生成式对抗网络，使 $D$ 区分样本是来自数据的生成分布 (黑色虚线) $p_x$，还是来自生成式分布 $p_g$ (绿色实线)。下面的水平线是 $z$ 采样的域，在本例中是均匀分布。上面的水平线        是 $x$ 的域的一部分。向上的箭头表示映射 $\boldsymbol{x} = G(z)$ 是如何对变换后的样本施加非均匀分布 $p_g$ 的。(a) 考虑一个接近收敛的对抗性对： $p_g$ 与 $p_{data}$ 相似，而 $D$ 是一个部分准确的分类器。(b) 在算法的内循环中， $D$ 被训练来从数据中区分 (生成) 样本，收敛于 $D^{\ast}(\boldsymbol{x}) = \frac{p_{data}(x)}{p_{data}(x) + p_g(x)}$。(c) 更新 $G$ 之后， $D$ 的梯度引导 $G(z)$ 流向更有可能被分类为数据的区域。(d) 经过多个 steps 训练后，如果 $G$ 和 $D$ 有足够的容量，它们会达到一个双方都无法继续提升的点，因为 $p_g = p_{data}$ 。鉴别器无法区分两个分布，即 $D(\boldsymbol{x}) = \frac{1}{2}$。
 
 
 
@@ -102,7 +102,7 @@ $$
 **命题 1.** 对于某一固定的 G，最优的鉴别器 D 是：
 
 $$
-\large D_{G}^*(\boldsymbol{x}) =\frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_g(\boldsymbol{x})} \tag{2}
+\large D_{G}^{\ast}(\boldsymbol{x}) =\frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_g(\boldsymbol{x})} \tag{2}
 $$
 
 证明. 对于任意给定的生成器 G，D 的训练准则是最大化 $V(G,D)$
@@ -126,20 +126,20 @@ $$
 \large
 \begin{aligned}
 C(G) &= \max_{D} V(G,D) \\
- &= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{z \sim p_z} [ \log(1 - D^*_G(G(\boldsymbol{z})))] \\
- &= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))] \\
+ &= \mathbb{E}_{x \sim p_{data}} [ \log D^{\ast}_G(\boldsymbol{x}) ] + \mathbb{E}_{z \sim p_z} [ \log(1 - D^{\ast}_G(G(\boldsymbol{z})))] \\
+ &= \mathbb{E}_{x \sim p_{data}} [ \log D^{\ast}_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^{\ast}_G(\boldsymbol{x}))] \\
  &= \mathbb{E}_{x \sim p_{data}} \left [ \log \frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ] + \mathbb{E}_{x \sim p_{g}} \left [ \log \frac{p_{g}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ]
 \end{aligned} \tag{4}
 $$
 
 **定理 1.** 当且仅当 $p_g = p_{data}$，(virtual) 训练准则 $C(G)$ 才取得全局最小值 $C(G) = - \log 4$ 。
 
-**证明.** 对于 $p_g = p_{data}$， $D^*_G(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^*_G(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时， $C(G)$ 所能取得的最优值，观察到
+**证明.** 对于 $p_g = p_{data}$， $D^{\ast}_G(\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D^{\ast}_G(\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时， $C(G)$ 所能取得的最优值，观察到
 $$
 \large \mathbb{E}_{\boldsymbol{x} \sim p_{data}}[\log \frac{1}{2}] + \mathbb{E}_{\boldsymbol{x} \sim p_{g}}[\log \frac{1}{2}] = \log \frac{1}{4} = - \log 4
 $$
 
-通过从 $C(G) = V(D_G^*, G)$ 减去这个表达式，我们可以得到：
+通过从 $C(G) = V(D_G^{\ast}, G)$ 减去这个表达式，我们可以得到：
 $$
 \large C(G) = -\log(4) + KL \left (p_{data} \bigg\Vert \frac{p_{data} + p_g}{2} \right) + KL \left( p_g \bigg\Vert \frac{p_{data} + p_g}{2} \right) \tag{5}
 $$
@@ -147,7 +147,7 @@ $$
 $$
 \large C(G) = -\log(4) + 2 \cdot JSD(p_{data} \Vert p_g) \tag{6}
 $$
-由于两个分布之间的 JS 散度总是非负的，且如果它们相等，则为 0，我们已经证明了 $C^* = - \log(4)$ 是 $C(G)$ 的全局最小值，并且唯一解是 $p_g = p_{data}$ ，即生成模型完美地复制了数据分布。
+由于两个分布之间的 JS 散度总是非负的，且如果它们相等，则为 0，我们已经证明了 $C^{\ast} = - \log(4)$ 是 $C(G)$ 的全局最小值，并且唯一解是 $p_g = p_{data}$ ，即生成模型完美地复制了数据分布。
 
 ## 4.2 Convergence of Algorithme 1
 
@@ -155,7 +155,7 @@ $$
 
 
 $$
-\large \mathbb{E}_{ x \sim p_{data} } [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_{g} } [ \log( 1 - D^*_{G}(\boldsymbol{x}) ) ]
+\large \mathbb{E}_{ x \sim p_{data} } [ \log D^{\ast}_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_{g} } [ \log( 1 - D^{\ast}_{G}(\boldsymbol{x}) ) ]
 $$
 
 然后 $p_g$ 收敛到 $p_{data}$ 。
