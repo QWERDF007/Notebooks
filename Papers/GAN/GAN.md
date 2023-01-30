@@ -54,7 +54,7 @@ $$
 
 <img src="assets/GAN_fig1.png" title="图1">
 
-**图 1：** 通过同时更新鉴别分布 (D，蓝色虚线) 来训练生成式对抗网络，使 $D$ 区分样本是来自数据的生成分布 (黑色虚线) $p_x$，还是来自生成式分布 $p_g$ (绿色实线)。下面的水平线是 $z$ 采样的域，在本例中是均匀分布。上面的水平线        是 $x$ 的域的一部分。向上的箭头表示映射 $\boldsymbol{x} = G(z)$ 是如何对变换后的样本施加非均匀分布 $p_g$ 的。(a) 考虑一个接近收敛的对抗性对：$p_g$ 与 $p_{data}$ 相似，而 $D$ 是一个部分准确的分类器。(b) 在算法的内循环中， $D$ 被训练来从数据中区分 (生成) 样本，收敛于 $D^*(\boldsymbol{x}) = \frac{p_{data}(x)}{p_{data}(x) + p_g(x)}$。(c) 更新 $G$ 之后， $D$ 的梯度引导 $G(z)$ 流向更有可能被分类为数据的区域。(d) 经过多个 steps 训练后，如果 $G$ 和 $D$ 有足够的容量，它们会达到一个双方都无法继续提升的点，因为 $p_g = p_{data}$ 。鉴别器无法区分两个分布，即 $D(\boldsymbol{x}) = \frac{1}{2}$。
+**图 1：** 通过同时更新鉴别分布 (D，蓝色虚线) 来训练生成式对抗网络，使 $D$ 区分样本是来自数据的生成分布 (黑色虚线) $p_x$，还是来自生成式分布 $p_g$ (绿色实线)。下面的水平线是 $z$ 采样的域，在本例中是均匀分布。上面的水平线        是 $x$ 的域的一部分。向上的箭头表示映射 $\boldsymbol{x} = G(z)$ 是如何对变换后的样本施加非均匀分布 $p_g$ 的。(a) 考虑一个接近收敛的对抗性对： $p_g$ 与 $p_{data}$ 相似，而 $D$ 是一个部分准确的分类器。(b) 在算法的内循环中， $D$ 被训练来从数据中区分 (生成) 样本，收敛于 $D^*(\boldsymbol{x}) = \frac{p_{data}(x)}{p_{data}(x) + p_g(x)}$。(c) 更新 $G$ 之后， $D$ 的梯度引导 $G(z)$ 流向更有可能被分类为数据的区域。(d) 经过多个 steps 训练后，如果 $G$ 和 $D$ 有足够的容量，它们会达到一个双方都无法继续提升的点，因为 $p_g = p_{data}$ 。鉴别器无法区分两个分布，即 $D(\boldsymbol{x}) = \frac{1}{2}$。
 
 
 
@@ -78,14 +78,17 @@ $$
 $$
 \large \nabla_{\theta_d} \frac{1}{m} \sum_{i = 1}^m \left[ \log D \left( \boldsymbol{x}^{(i)} \right) + \log \left( 1 - D \left( G \left( \boldsymbol{z}^{(i)} \right) \right) \right) \right]
 $$
+
 ​        **end for**
 
 ​        - 从噪声先验 $p_g(z)$ 中采样 m 个噪声样本 $\left \{ z^{(1)} , \dots, z^{(m)} \right \}$
 
 ​        - 通过 descending (下降?) 它的随机梯度来更新生成器：
+
 $$
 \large \nabla_{\theta_d} \frac{1}{m} \sum_{i = 1}^m  \log \left( 1 - D \left( G \left( \boldsymbol{z}^{(i)} \right) \right) \right)
 $$
+
 ​    **end for**
 
 ​    基于梯度的更新可以使用任何标准的基于梯度的学习规则。在我们的实验中我们使用了 momentum。
@@ -97,10 +100,13 @@ $$
 我们首先考虑对于任意给定生成器 G 最优的鉴别器 D。
 
 **命题 1.** 对于某一固定的 G，最优的鉴别器 D 是：
+
 $$
 \large D_{G}^*(\boldsymbol{x}) =\frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_g(\boldsymbol{x})} \tag{2}
 $$
+
 证明. 对于任意给定的生成器 G，D 的训练准则是最大化 $V(G,D)$
+
 $$
 \large 
 \begin{aligned}
@@ -109,6 +115,7 @@ V(G,D) &= \int_x p_{data}(\boldsymbol{x}) \log (D(\boldsymbol{x}))\mathrm{d}x + 
 \end{aligned}
 \tag{3}
 $$
+
 对于任意 $(a,b) \in \mathbb{R}^2 \setminus \{ 0,0 \}$，函数 $y \rightarrow a \log(y) + b \log(1 - y)$ 在 [0,1] 中点 $\frac{a}{a + b}$ 取得最大值。鉴别器不需要在 $Supp(p_{data}) \bigcup Supp(p_g)$ 之外被定义，证毕。( $Supp(p_{data})$ 和 $Supp(p_g)$ 分别问 $p_{data}$ 和 $p_g$ 的补集。)
 
 **ps：** 利用极值定理，求解函数的导数为 0，可以求得函数的极大值 $\frac{a}{a+b}$，然后代入 $a = p_{data}(\boldsymbol{x})$， $b = p_g(\boldsymbol{x})$。
