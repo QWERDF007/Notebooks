@@ -155,7 +155,7 @@ $$
 
 
 $$
-\large \mathbb{E}_{x \sim p_{data}} [ \log D^{*}_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_{g} } [ \log(1 - D^{*}_{G}(\boldsymbol{x}))]
+\large \mathbb{E}_{ x \sim p_{data} } [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_{g} } [ \log( 1 - D^*_{G}(\boldsymbol{x}) ) ]
 $$
 
 然后 $p_g$ 收敛到 $p_{data}$ 。
