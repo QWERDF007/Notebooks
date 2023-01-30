@@ -4,7 +4,7 @@
 
    例如： $D^{\ast}_{G} (\boldsymbol{x}) = \frac{1}{2}$ 和 $D_{G}^{\ast} (\boldsymbol{x}) = \frac{1}{2}$ 
 
-   例如：  $D_{G}^{\ast} (\boldsymbol{x}) = \frac{1}{2}$ 和 $D^{\ast}_{G} (\boldsymbol{x}) = \frac{1}{2}$
+   例如： $D_{G}^{\ast} (\boldsymbol{x}) = \frac{1}{2}$ 和 $D^{\ast}_{G} (\boldsymbol{x}) = \frac{1}{2}$
 
 3. 公式 `$$ $$` 要另起一行，否则显示异常，例如 $$ z = x + y $$
 
