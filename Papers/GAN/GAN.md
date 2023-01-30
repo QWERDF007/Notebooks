@@ -76,7 +76,7 @@ $$
 ​            - 通过 ascending (上升?) 它的随机梯度来更新鉴别器：
 
 $$
-\large \nabla_{\theta_d} \frac{1}{m} \sum_{i = 1}^m \left[ \log D \left( \boldsymbol{x}^{(i)} \right) + \log \left( 1 - D \left( G \left( \boldsymbol{z}^{(i)} \right) \right) \right) \right]
+\large \nabla_{\theta_d} \frac{1}{m} \sum_{i = 1}^m \left [ \log D \left ( \boldsymbol{x}^{(i)} \right ) + \log \left ( 1 - D \left ( G \left ( \boldsymbol{z}^{(i)} \right ) \right ) \right ) \right ]
 $$
 
 ​        **end for**
@@ -126,9 +126,9 @@ $$
 \large
 \begin{aligned}
 C(G) &= \max_{D} V(G,D) \\
-&= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{z \sim p_z} [ \log(1 - D^*_G(G(\boldsymbol{z})))] \\
-&= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))] \\
-&= \mathbb{E}_{x \sim p_{data}} \left [ \log \frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ] + \mathbb{E}_{x \sim p_{g}} \left [ \log \frac{p_{g}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ]
+ &= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{z \sim p_z} [ \log(1 - D^*_G(G(\boldsymbol{z})))] \\
+ &= \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))] \\
+ &= \mathbb{E}_{x \sim p_{data}} \left [ \log \frac{p_{data}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ] + \mathbb{E}_{x \sim p_{g}} \left [ \log \frac{p_{g}(\boldsymbol{x})}{p_{data}(\boldsymbol{x}) + p_{g}(\boldsymbol{x})} \right ]
 \end{aligned} \tag{4}
 $$
 
@@ -152,9 +152,11 @@ $$
 ## 4.2 Convergence of Algorithme 1
 
 **命题 2.** 如果 G 和 D 有足够的容量，在算法 1 的每一步，鉴别器在给定 G 的情况下，允许达到其最佳值，并且更新 $p_g$ 以改进准则
+
 $$
 \large \mathbb{E}_{x \sim p_{data}} [ \log D^*_G(\boldsymbol{x}) ] + \mathbb{E}_{x \sim p_g} [ \log(1 - D^*_G(\boldsymbol{x}))]
 $$
+
 然后 $p_g$ 收敛到 $p_{data}$ 。
 
 **证明.** 考虑 $V(G,D) = U(p_g, D)$ 作为上述准则中 $p_g$ 的一个函数。注意到，在 $p_g$ 中 $U(p_g, D)$ 是凸的。凸函数上确界的子导数包括该函数在其最大值处的导数。换句话说，如果 $\large f(x)  = \sup_{\alpha \in \mathcal{A}} f_{\alpha}(x)$ 并且对于每个 $\alpha$， $f_{\alpha}(x)$ 在 $x$ 中是凸的，那么如果 $\large \beta = \arg \sup_{\alpha \in \mathcal{A}} f_{\alpha}(x)$ 则 $\large \partial  \beta(x) \in \partial f$ 。这相当于在给定对应 G 的情况下，在最优 D 处计算用于更新 $p_g$ 的梯度下降。 $\sup_D U(p_g, D)$ 在 $p_g$ 中是凸的，具有唯一的全局最优解，如定理 1 中所证明的，因此在 $p_g$ 更新足够小的情况下， $p_g$ 收敛到 $p_x$，从而得出证明。
