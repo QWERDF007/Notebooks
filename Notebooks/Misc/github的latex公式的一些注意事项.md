@@ -40,3 +40,5 @@
 
 12. 测试 $x_{a} y_{b}$
 
+13. 测试 ${\boldsymbol{x}}_{a} {\boldsymbol{y}}_{b}$
+
