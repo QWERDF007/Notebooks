@@ -16,10 +16,10 @@
 
 4. 公式粗体测试 
 
-   - $\mathbf{z}$
-   - $\textbf{z}$
-   - $\bf{z}$
-   - $\bold{z}$
-   - $\boldsymbol{z}$
+   - $\mathbf{z}$ `$\mathbf{z}$`
+   - $\textbf{z}$ `$\textbf{z}$`
+   - $\bf{z}$ `$\bf{z}$`
+   - $\bold{z}$ `$\bold{z}$`
+   - $\boldsymbol{z}$ `$\boldsymbol{z}$`
 
 <img src="./assets/math_font.png">
