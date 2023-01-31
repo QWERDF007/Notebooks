@@ -16,7 +16,10 @@
 
 4. 公式粗体测试 
 
-   - $\bold{z}$ 和 $\mathbf{z}$
+   - $\mathbf{z}$
+   - $\textbf{z}$
+   - $\bf{z}$
+   - $\bold{z}$
    - $\boldsymbol{z}$
 
 <img src="./assets/math_font.png">
