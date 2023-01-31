@@ -32,3 +32,5 @@
 
 8. 测试 $\boldsymbol{x}_{S\mkern-10mu/}$
 
+9. 测试 $p({\boldsymbol{x}}_{S} | {\boldsymbol{x}}_{S\mkern-10mu/} )$
+
