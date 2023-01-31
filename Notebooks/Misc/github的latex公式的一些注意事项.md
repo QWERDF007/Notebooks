@@ -38,3 +38,5 @@
 
 11. 测试 $\boldsymbol{x}_{a} \boldsymbol{y}_{b}$
 
+12. 测试 $x_{a} y_{b}$
+
