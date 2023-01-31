@@ -28,5 +28,7 @@
 
 6. 测试 $x_{S\mkern-10mu/}$
 
-7. 测试 $\boldsymbol{x}_{s}$
+7. 测试 $\boldsymbol{x}_{S}$
+
+8. 测试 $\boldsymbol{x}_{S\mkern-10mu/}$
 
