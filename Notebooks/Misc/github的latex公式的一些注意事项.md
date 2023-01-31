@@ -34,3 +34,5 @@
 
 9. 测试 $\boldsymbol{x}_{S} \boldsymbol{x}_{S\mkern-10mu/} $
 
+10. 测试 $\boldsymbol{x} \boldsymbol{y}$
+
