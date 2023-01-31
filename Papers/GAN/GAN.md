@@ -135,18 +135,23 @@ $$
 **定理 1.** 当且仅当 $p_g = p_{data}$，(virtual) 训练准则 $C(G)$ 才取得全局最小值 $C(G) = - \log 4$ 。
 
 **证明.** 对于 $p_g = p_{data}$， $D_{G}^{\ast} (\boldsymbol{x}) = \frac{1}{2}$ (考虑等式 (2))。因此，代入 $D_{G}^{\ast} (\boldsymbol{x}) = \frac{1}{2}$ 到等式 (4)，可以得出 $C(G) = \log \frac{1}{2} + \log \frac{1}{2} = -\log 4$ 。该值就是在 $p_g = p_{data}$ 时， $C(G)$ 所能取得的最优值，观察到
+
 $$
 \large \mathbb{E}_{\boldsymbol{x} \sim p_{data}}[\log \frac{1}{2}] + \mathbb{E}_{\boldsymbol{x} \sim p_{g}}[\log \frac{1}{2}] = \log \frac{1}{4} = - \log 4
 $$
 
 通过从 $C(G) = V(D_G^{\ast}, G)$ 减去这个表达式，我们可以得到：
+
 $$
 \large C(G) = -\log(4) + KL \left (p_{data} \bigg\Vert \frac{p_{data} + p_g}{2} \right) + KL \left( p_g \bigg\Vert \frac{p_{data} + p_g}{2} \right) \tag{5}
 $$
+
 其中 KL 是 Kullback–Leibler divergence (KL 散度或者相对熵)。我们在前面的表达式中认识到模型的分布和数据生成过程之间的 Jensen-Shannon divergence (JS 散度)：
+
 $$
 \large C(G) = -\log(4) + 2 \cdot JSD(p_{data} \Vert p_g) \tag{6}
 $$
+
 由于两个分布之间的 JS 散度总是非负的，且如果它们相等，则为 0，我们已经证明了 $C^{\ast} = - \log(4)$ 是 $C(G)$ 的全局最小值，并且唯一解是 $p_g = p_{data}$ ，即生成模型完美地复制了数据分布。
 
 ## 4.2 Convergence of Algorithme 1
