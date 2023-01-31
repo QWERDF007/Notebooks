@@ -22,4 +22,7 @@
    - $\bold{z}$ `$\bold{z}$`
    - $\boldsymbol{z}$ `$\boldsymbol{z}$`
 
-<img src="./assets/math_font.png">
+   <img src="./assets/math_font.png">
+
+5. 测试 $S\mkern-10mu/$
+
