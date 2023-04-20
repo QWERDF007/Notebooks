@@ -146,6 +146,12 @@ moon, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, ou
 
 - [Protogen v2.2 模型页面](https://huggingface.co/darkstorm2150/Protogen_v2.2_Official_Release)
 
+Prompt:
+
+```
+drawing male leather jacket cyberpunk 2077 on a city street by WoD1 <hypernet:gothicRPGArtstyle_v1:1>
+```
+
 ## Readings
 
 这里有一些有趣的阅读材料。
@@ -154,3 +160,4 @@ moon, ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, ou
 - [Illustrated self-attention](https://towardsdatascience.com/illustrated-self-attention-2d627e33b20a) – 解释了自注意力的数学，这与交叉注意力类似。
 - [NovelAI’s improvements on Stable Diffusion](https://blog.novelai.net/novelai-improvements-on-stable-diffusion-e10d38db82ac) – 请参见 "Hypernetworks" 部分以了解他们的贡献。其他改进也很有趣。
 - [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543) – 这是ControlNet论文，但第2.1节 (相关工作) 包含了超网络的说明。
+
