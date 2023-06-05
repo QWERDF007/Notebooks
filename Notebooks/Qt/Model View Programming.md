@@ -24,7 +24,7 @@ Model/View架构
 
 通常，模型/视图类可以分为上述三组：模型、视图和委托。每个组件都由抽象类定义，这些抽象类提供了公共接口，并在某些情况下提供了功能的默认实现。抽象类旨在被子类化，以提供其他组件所期望的完整功能集；这也允许编写专门的组件。
 
-模型、视图和委托使用信号和槽彼此通信：
+模型、视图和委托使用信号和插槽彼此通信：
 
 - 来自模型的信号通知视图有关数据源保存的数据更改的信息。
 - 来自视图的信号提供有关用户与正在显示的项目交互的信息。
@@ -65,7 +65,7 @@ Qt 为不同类型的视图提供了完整的实现：`QListView` 显示项目�
 
 在模型/视图架构中有两种方法可以处理排序；选择哪种方法取决于您的底层模型。
 
-如果您的模型是可排序的，即如果它重新实现了 `QAbstractItemModel::sort()` 函数，则 `QTableView` 和 `QTreeView` 都提供了一个API，允许您以编程方式对模型数据进行排序。此外，您还可以通过将 `QHeaderView::sortIndicatorChanged()` 信号连接到相应的 `QTableView::sortByColumn()` 槽或 `QTreeView::sortByColumn()` 槽来启用交互式排序（即允许用户通过单击视图标题来对数据进行排序）。
+如果您的模型是可排序的，即如果它重新实现了 `QAbstractItemModel::sort()` 函数，则 `QTableView` 和 `QTreeView` 都提供了一个API，允许您以编程方式对模型数据进行排序。此外，您还可以通过将 `QHeaderView::sortIndicatorChanged()` 信号连接到相应的 `QTableView::sortByColumn()` 插槽或 `QTreeView::sortByColumn()` 插槽来启用交互式排序（即允许用户通过单击视图标题来对数据进行排序）。
 
 另一种方法是，如果您的模型没有所需的接口或者如果您想使用列表视图来呈现数据，则可以使用代理模型来转换模型结构，然后再在视图中呈现数据。这在 [Proxy Models](https://doc.qt.io/qt-6/model-view-programming.html#proxy-models) 一节中有详细介绍。
 
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 
 <img src="./assets/modelview-models.png">
 
-模型还通过信号和槽机制通知任何附加的视图有关数据更改的信息。
+模型还通过信号和插槽机制通知任何附加的视图有关数据更改的信息。
 
 本节描述了一些基本概念，这些概念对于其他组件通过模型类访问数据项的方式至关重要。更高级的概念在后面的章节中讨论。
 
@@ -373,7 +373,7 @@ view->setModel(model);
     secondTableView->setModel(model);
 ```
 
-在模型/视图架构中使用信号和槽意味着对模型的更改可以传播到所有附加的视图，确保我们始终可以访问相同的数据，而不管使用的视图如何。
+在模型/视图架构中使用信号和插槽意味着对模型的更改可以传播到所有附加的视图，确保我们始终可以访问相同的数据，而不管使用的视图如何。
 
 <img src="./assets/sharedmodel-tableviews.png">
 
@@ -557,20 +557,126 @@ void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,
 | :----------------------------------------------------------- | :----------------------------------------------------------- |
 | 只能有一个当前项目。                                         | 可以有多个所选项目。                                         |
 | 当前项目将通过按键导航或鼠标按钮单击进行更改。               | 当用户与项目交互时，项目的选定状态被设置或取消设置，这取决于几种预定义的模式——例如，单选、多选等。 |
-| 如果编辑键，当前项目将被编辑，**F2**, 按下或双击该项目（前提是启用了编辑）。 | 当前项可以与锚点一起使用，以指定应选择或取消选择（或两者的组合）的范围。 |
+| 如果编辑键 **F2** 按下或双击该项目 (前提是启用了编辑)，当前项目将被编辑。 | 当前项可以与锚点一起使用，以指定应选择或取消选择（或两者的组合）的范围。 |
 | 当前项目由焦点矩形指示。                                     | 所选项目用选择矩形表示。                                     |
+
+当操作选择时，将 `QItemSelectionModel` 视为项目模型中所有项目的选择状态的记录通常很有帮助。一旦设置了选择模型，就可以选择、取消选择项目集合，或者切换其选择状态，而无需知道哪些项已经被选择。可以随时检索所有选定项的索引，并且可以通过信号和插槽机制通知其他组件有关选择模型的更改。
 
 ### Using a selection model
 
+标准视图类提供了可以在大多数应用程序中使用的默认选择模型。可以使用视图的 `selectionModel()` 函数获取属于一个视图的选择模型，并使用 `setSelectionModel()` 在多个视图之间共享，因此通常不需要构建新的选择模型。
 
+通过指定模型和 `QItemSelection` 中的一对模型索引来创建选择。这使用索引来引用给定模型中的项目，并将它们解释为所选项目块中左上角和右下角的项目。将选择应用于模型中的项目需要将选择提交给选择模型；这可以通过多种方式实现，每种方式对已存在于选择模型中的选择具有不同的影响。
 
+#### Selecting items
 
+为了演示一些主要特性，我们构造了一个总共有 32 个项目的自定义表格模型实例，并打开了一个表格视图以查看其数据：
 
+```c++
+	TableModel *model = new TableModel(8, 4, &app);
 
+    QTableView *table = new QTableView(0);
+    table->setModel(model);
 
+    QItemSelectionModel *selectionModel = table->selectionModel();
+```
 
+表格视图的默认选择模型将被检索以供后续使用。我们不会修改模型中的任何项目，而是选择一些项目，这些项目将在表格的左上角显示。为此，我们需要检索与要选择区域中左上角和右下角项目对应的模型索引：
 
+```c++
+	QModelIndex topLeft;
+    QModelIndex bottomRight;
 
+    topLeft = model->index(0, 0, QModelIndex());
+    bottomRight = model->index(5, 2, QModelIndex());
+```
+
+要在模型中选择这些项目，并在表视图中看到相应的变化，我们需要构造一个选择对象，然后将其应用于选择模型：
+
+```c++
+	QItemSelection selection(topLeft, bottomRight);
+    selectionModel->select(selection, QItemSelectionModel::Select);
+```
+
+使用由 [selection flags](https://doc.qt.io/qt-6/qitemselectionmodel.html#SelectionFlag-enum) 组合定义的命令将选择应用于选择模型。在这种情况下，使用的标志会导致选择对象中记录的项目被包含在选择模型中，而不管它们的先前状态。选择结果由视图显示。
+
+<img src="./assets/selected-items1.png">
+
+使用由选择标志定义的各种操作可以修改项目的选择。由这些操作产生的选择可能具有复杂的结构，但是选择模型可以有效地表示它。当我们研究如何更新选择时，将描述使用不同的选择标志来操作所选项目。
+
+#### Reading the selection state
+
+存储在选择模型中的模型索引可以使用 `selectedIndexes()` 函数读取。这将返回一个未排序的模型索引列表，只要我们知道它们所属的模型，就可以对其进行迭代：
+
+```c++
+	const QModelIndexList indexes = selectionModel->selectedIndexes();
+
+    for (const QModelIndex &index : indexes) {
+        QString text = QString("(%1,%2)").arg(index.row()).arg(index.column());
+        model->setData(index, text);
+    }
+```
+
+上面的代码使用基于范围的 for 循环来迭代并修改与选择模型返回的索引对应的项目。
+
+选择模型发出信号以指示选择中的更改。这些信号通知其他组件有关选择作为整体以及项目模型中当前聚焦项的更改。我们可以将 `selectionChanged()` 信号连接到一个插槽，并在选择更改时检查模型中选中的或取消选定的项目。插槽使用两个 `QItemSelection` 对象调用：一个包含与新选择的项目对应的索引列表；另一个包含与新取消选择的项目对应的索引。
+
+在以下代码中，我们提供了一个接收 `selectionChanged()` 信号的插槽，它使用字符串填充所选项目，并清除取消选择的项目的内容。
+
+```c++
+void MainWindow::updateSelection(const QItemSelection &selected,
+    const QItemSelection &deselected)
+{
+    QModelIndexList items = selected.indexes();
+
+    for (const QModelIndex &index : std::as_const(items)) {
+        QString text = QString("(%1,%2)").arg(index.row()).arg(index.column());
+        model->setData(index, text);
+    }
+
+    items = deselected.indexes();
+
+    for (const QModelIndex &index : std::as_const(items)) {
+        model->setData(index, QString());
+}
+```
+
+我们可以通过将 `currentChanged()` 信号连接到使用两个模型索引调用的插槽来跟踪当前聚焦的项。这些 (索引) 与先前聚焦的项和当前聚焦的项对应。
+
+在以下代码中，我们提供了一个接收 `currentChanged()` 信号的插槽，它使用提供的信息更新 `QMainWindow` 的状态栏：
+
+```c++
+void MainWindow::changeCurrent(const QModelIndex &current,
+    const QModelIndex &previous)
+{
+    statusBar()->showMessage(
+        tr("Moved from (%1,%2) to (%3,%4)")
+            .arg(previous.row()).arg(previous.column())
+            .arg(current.row()).arg(current.column()));
+}
+```
+
+使用这些信号监视用户所做的选择很简单，但我们也可以直接更新选择模型。
+
+#### Updating a selection
+
+选择命令由 `QItemSelectionModel::SelectionFlag` 定义的选择标志组合提供。每个选择标志告诉选择模型在调用任意一个 `select()` 函数时如何更新其内部记录的所选项目。最常用的标志是 `Select` 标志，它指示选择模型将指定的项目记录为已选择。`Toggle` 标志会导致选择模型反转指定项目的状态，选中任何给定的未选中的项目，并取消选中任何当前选中的项目。`Deselect` 标志取消选中所有指定的项目。
+
+通过创建项目的选择并将其应用于选择模型来更新选择模型中的各个项目。在以下代码中，我们将第二个项目选择应用于上面显示的表格模型，使用 `Toggle` 命令反转给定项目的选择状态。
+
+```c++
+	QItemSelection toggleSelection;
+
+    topLeft = model->index(2, 1, QModelIndex());
+    bottomRight = model->index(7, 3, QModelIndex());
+    toggleSelection.select(topLeft, bottomRight);
+
+    selectionModel->select(toggleSelection, QItemSelectionModel::Toggle);
+```
+
+此操作的结果显示在表视图中，提供了一种可视化我们所取得的成果的便捷方式：
+
+<img src="./assets/selected-items2.png">
 
 
 
