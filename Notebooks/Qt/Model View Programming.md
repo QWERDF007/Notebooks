@@ -678,11 +678,118 @@ void MainWindow::changeCurrent(const QModelIndex &current,
 
 <img src="./assets/selected-items2.png">
 
+默认情况下，选择命令仅对模型索引指定的单个项目进行操作。但是，用于描述选择命令的标志可以与其他标志组合，以更改整行和整列。例如，如果您使用一个索引调用 `select()`，但使用的命令是 `Select` 和 `Rows` 的组合，则选择包含所引用项目的整行。以下代码演示了 `Rows` 和 `Columns` 标志的使用：
+
+```c++
+	QItemSelection columnSelection;
+
+    topLeft = model->index(0, 1, QModelIndex());
+    bottomRight = model->index(0, 2, QModelIndex());
+
+    columnSelection.select(topLeft, bottomRight);
+
+    selectionModel->select(columnSelection,
+        QItemSelectionModel::Select | QItemSelectionModel::Columns);
+
+    QItemSelection rowSelection;
+
+    topLeft = model->index(0, 0, QModelIndex());
+    bottomRight = model->index(1, 0, QModelIndex());
+
+    rowSelection.select(topLeft, bottomRight);
+
+    selectionModel->select(rowSelection,
+        QItemSelectionModel::Select | QItemSelectionModel::Rows);
+```
+
+尽管只向选择模型提供了四个索引，但使用 `Columns` 和 `Rows` 选择标志意味着选择了两列和两行。下图显示了这两个选择的结果：
+
+<img src="./assets/selected-items3.png">
+
+在示例模型上执行的所有命令都涉及在模型中累积项目的选择。还可以清除选择，或使用新选择替换当前选择。
+
+要使用新的选择替换当前选择，请将其他选择标志与 `Current` 标志组合。使用此标志的命令指示选择模型在 `select()` 调用中用指定的模型索引替换其当前模型索引集合。要在开始添加新选择之前清除所有选择，请将其他选择标志与 `Clear` 标志组合。这会导致重置选择模型的模型索引集合。
+
+#### Selecting all items in a model
+
+要选择模型中的所有项目，必须为每个级别的模型创建一个覆盖该级别中的所有项目的选择。我们通过检索与给定父索引的左上角和右下角项对应的索引来完成此操作：
+
+```c++
+	QModelIndex topLeft = model->index(0, 0, parent);
+    QModelIndex bottomRight = model->index(model->rowCount(parent)-1,
+        model->columnCount(parent)-1, parent);
+```
+
+用这些索引和模型构建一个选择。然后在选择模型中选择相应的项目：
+
+```c++
+	QItemSelection selection(topLeft, bottomRight);
+    selectionModel->select(selection, QItemSelectionModel::Select);
+```
+
+这需要对模型中的所有级别执行。对于顶级项目，我们将以通常的方式定义父索引：
+
+```c++
+	QModelIndex parent = QModelIndex();
+```
+
+对于分层模型，`hasChildren()` 函数用于确定任何给定项是否是另一级项目的父项。
+
+## Create New Models
+
+
+
+### Designing a model
 
 
 
 
 
+### A read-only example model
+
+
+
+
+
+
+
+### An editable model
+
+
+
+### Next steps
+
+
+
+
+
+## Item View Convenience Classes
+
+
+
+### List widgets
+
+
+
+### Tree widgets
+
+
+
+### Table widgets
+
+
+
+### Common features
+
+
+
+
+
+## Using Drag and Drop with Item Views
+
+
+
+### Using convenience views
 
 
 
