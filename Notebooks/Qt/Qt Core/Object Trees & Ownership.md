@@ -1,0 +1,1 @@
+# [Object Trees & Ownership](https://doc.qt.io/qt-6/objecttrees.html)
