@@ -1,4 +1,4 @@
-# Graphics View Framework
+# [Graphics View Framework](https://doc.qt.io/qt-6/graphicsview.html)
 
 Graphics View 提供了一种管理大量定制的 2D 图形 items 并与之交互的界面，以及一个用于可视化 items 的控件，支持缩放和旋转。
 
