@@ -219,7 +219,7 @@ QVariant value = model->data(index, role);
 
 <img src="./assets/modelview-roles.png">
 
-该角色向模型指示所引用的数据类型。视图可以以不同的方式显示角色，因此为每个角色提供适当的信息很重要。[Creating New Models](https://doc.qt.io/qt-6/model-view-programming.html#creating-new-models) 部分更详细地介绍了角色的一些特定用途。
+该角色向模型指示所引用的数据类型。视图可以以不同的方式显示角色，因此为每个角色提供适当的信息很重要。[Create New Models](# Create New Models) 部分更详细地介绍了角色的一些特定用途。
 
 `Qt :: ItemDataRole` 中定义的标准角色涵盖了项目数据的大多数常见用途。通过为每个角色提供适当的项目数据，模型可以向视图和委托提供有关如何向用户呈现项目的提示。不同类型的视图可以自由地解释或忽略此信息。还可以定义用于特定于应用程序的目的的其他角色。
 
@@ -741,7 +741,7 @@ void MainWindow::changeCurrent(const QModelIndex &current,
 
 有关更复杂模型的示例，请参见 [Simple Tree Model](https://doc.qt.io/qt-6/qtwidgets-itemviews-simpletreemodel-example.html)。
 
-有关 `QAbstractItemModel` 子类的需求在 [Model Subclassing Reference](https://doc.qt.io/qt-6/model-view-programming.html#model-subclassing-reference) 中有更详细的描述。
+有关 `QAbstractItemModel` 子类的需求在 [Model Subclassing Reference](# Model Subclassing Reference) 中有更详细的描述。
 
 ### Designing a model
 
@@ -900,7 +900,7 @@ QVariant StringListModel::data(const QModelIndex &index, int role) const
 可以更改模型中的行数和列数。在字符串列表模型中，只有改变行数才有意义，所以我们只重新实现插入和删除行的函数。这些在类定义中声明：
 
 ```c++
-bool insertRows(int position, int rows, const QModelIndex &index = QModelIndex()) override;
+	bool insertRows(int position, int rows, const QModelIndex &index = QModelIndex()) override;
     bool removeRows(int position, int rows, const QModelIndex &index = QModelIndex()) override;
 ```
 
