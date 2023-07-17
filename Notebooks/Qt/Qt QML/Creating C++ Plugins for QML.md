@@ -54,6 +54,6 @@ Q_UNUSED(registration);
 
 ## Reference
 
-- [Writing QML Extensions with C++](https://doc.qt.io/qt-6/qtqml-tutorials-extending-qml-example.html) - 包含有关创建 QML 插件的章节
-- [Defining QML Types from C++](https://doc.qt.io/qt-6/qtqml-cppintegration-definetypes.html) - 有关将 C++ 类型注册到运行时的信息。
+- [Writing QML Extensions with C++](./Writing QML Extensions with C++.md) - 包含有关创建 QML 插件的章节
+- [Defining QML Types from C++](./Defining QML Types from C++.md) - 有关将 C++ 类型注册到运行时的信息。
 - [How to Create Qt Plugins](https://doc.qt.io/qt-6/plugins-howto.html) - 有关 Qt 插件的信息
