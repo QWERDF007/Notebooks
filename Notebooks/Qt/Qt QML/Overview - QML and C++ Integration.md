@@ -9,17 +9,17 @@ QML 设计成可通过 C++ 代码轻松扩展。[Qt QML](./Qt QML.md) 模块中�
 - 访问 Qt QML 或 [Qt Quick](../Qt Quick/Qt Quick.md) C++ API 中的功能（例如，使用 `QQuickImageProvider` 动态生成图像）。
 - 从 C++ 实现自己的 [QML 对象类型](。/QML Object Types.md)，无论是为了在自己的特定应用程序中使用还是为了分发给其他人。
 
-要向 QML 提供一些 C++ 数据或功能，必须从 QObject 派生类中提供它。由于 QML 引擎与元对象系统的集成，任何 QObject 派生类的属性、方法和信号都可以从 QML 中访问，如在 [将 C++ 类型的属性暴露给 QML](./Exposing Attributes of C++ Types to QML.md) 中所述。一旦这样的类提供了所需的功能，它可以以多种方式暴露给 QML：
+要向 QML 提供一些 C++ 数据或功能，必须从 `QObject` 派生类中提供它。由于 QML 引擎与元对象系统的集成，任何 `QObject` 派生类的属性、方法和信号都可以从 QML 中访问，如在 [将 C++ 类型的属性暴露给 QML](./Exposing Attributes of C++ Types to QML.md) 中所述。一旦这样的类提供了所需的功能，它可以以多种方式暴露给 QML：
 
-- 该类可[注册为可实例化的 QML 类型](./Defining QML Types from C++.md#Registering an Instantiable Object Type)，以便可以像任何普通的 QML 对象类型一样从 QML 代码中实例化和使用它。
-- 该类可[注册为 Singleton 类型](./Defining QML Types from C++.md#Registering Singleton Objects with a Singleton Type)，以便可以从 QML 代码中导入该类的单例，允许从 QML 访问该实例的属性、方法和信号。
-- 将该类的实例[嵌入到 QML 代码](https://doc.qt.io/qt-6/qtqml-cppintegration-contextproperties.html)中作为上下文属性或上下文对象，允许从 QML 访问该实例的属性、方法和信号。
+- 该类可 [注册为可实例化的 QML 类型](./Defining QML Types from C++.md#Registering an Instantiable Object Type)，以便可以像任何普通的 QML 对象类型一样从 QML 代码中实例化和使用它。
+- 该类可 [注册为 Singleton 类型](./Defining QML Types from C++.md#Registering Singleton Objects with a Singleton Type)，以便可以从 QML 代码中导入该类的单例，允许从 QML 访问该实例的属性、方法和信号。
+- 将该类的实例 [嵌入到 QML 代码](https://doc.qt.io/qt-6/qtqml-cppintegration-contextproperties.html) 中作为上下文属性或上下文对象，允许从 QML 访问该实例的属性、方法和信号。
 
 这些是从 QML 代码访问 C++ 功能最常见的方法；有关更多选项和详细信息，请参见下面更深入的部分中描述的主要文档页面。除了能够从 QML 访问 C++ 功能之外，Qt QML 模块还提供了一些方法来反向操作并从 C++ 代码操作 QML 对象。更多细节参见 [从 C++ 与 QML 对象交互](./Interacting with QML Objects from C++.md)。
 
-通常希望将某些状态作为全局属性公开给 QML。Exposing State from C++ to QML 中描述了如何做到这一点。
+通常希望将某些状态作为全局属性暴露给 QML。[将状态从 C++ 暴露到 QML](./Exposing State from C++ to QML.md) 中描述了如何做到这一点。
 
-最后，C++ 代码可以集成到 C++ 应用程序或 C++ 插件中，具体取决于它是作为独立应用程序还是库进行分发。插件可以与一个 QML 模块集成，然后可以在其他应用程序中导入并使用该模块中的 QML 代码；参见[在 C++ 插件中提供类型和功能](./Creating C++ Plugins for QML.md) 了解更多。
+最后，C++ 代码可以集成到 C++ 应用程序或 C++ 插件中，具体取决于它是作为独立应用程序还是库进行分发。插件可以与一个 QML 模块集成，然后可以在其他应用程序中导入并使用该模块中的 QML 代码；参见 [在 C++ 插件中提供类型和功能](./Creating C++ Plugins for QML.md) 了解更多。
 
 ## Choosing the Correct Integration Method Between C++ and QML
 
