@@ -4,7 +4,7 @@ Qt QML 模块提供了一组 API，用于通过 C++ 扩展扩展QML。您可以�
 
 本教程介绍了如何使用 C++ 编写 QML 扩展，其中包括核心 QML 功能，包括属性、信号和绑定。它还展示了如何通过插件部署扩展。
 
-本教程涵盖的许多主题在 [Overview - QML and C++ Integration](./Overview - QML and C++ Integration.md) 及其文档子主题中有更详细的记录。特别是，您可能会对子主题 [Exposing Attributes of C++ Types to QML](./Exposing Attributes of C++ Types to QML.md) 和 [Defining QML Types from C++](./Defining QML Types from C++.md) 感兴趣。
+本教程涵盖的许多主题在 [Overview - QML and C++ Integration](<./Overview - QML and C++ Integration.md>) 及其文档子主题中有更详细的记录。特别是，您可能会对子主题 [将 C++ 类型的属性暴露给 QML](<./Exposing Attributes of C++ Types to QML.md>) 和 [从 C++ 定义 QML 类型](<./Defining QML Types from C++.md>) 感兴趣。
 
 ## Running the Tutorial Examples
 
@@ -18,7 +18,7 @@ Qt QML 模块提供了一组 API，用于通过 C++ 扩展扩展QML。您可以�
 
 extending-qml/chapter1-basics
 
-扩展 QML 时的一个常见的任务是提供一个新的 QML 类型，该类型支持一些自定义功能，超出了内置 [Qt Quick 类型](./Qt Quick QML Types.md)提供的功能。例如，可以使用它来实现特定的数据模型，或提供具有自定义绘画和绘图功能的类型，或者访问无法通过内置 QML 功能访问的网络编程等系统功能。
+扩展 QML 时的一个常见的任务是提供一个新的 QML 类型，该类型支持一些自定义功能，超出了内置 [Qt Quick 类型](<./Qt Quick QML Types.md>) 提供的功能。例如，可以使用它来实现特定的数据模型，或提供具有自定义绘画和绘图功能的类型，或者访问无法通过内置 QML 功能访问的网络编程等系统功能。
 
 在本教程中，我们将展示如何使用 Qt Quick 模块中的 C++ 类来扩展 QML。最终结果将是一个简单的饼图显示，由几个自定义 QML 类型通过 QML 特性（如绑定和信号）连接在一起实现，并通过插件提供给 QML 运行时。
 
@@ -36,7 +36,7 @@ PieChart {
 }
 ```
 
-为此，我们需要一个封装该 `PieChart` 类型及其两个属性的 C++ 类。由于 QML 广泛使用了 [Qt 元对象系统](../Qt Core/The Meta-Object System.md)，这个新类必须：
+为此，我们需要一个封装该 `PieChart` 类型及其两个属性的 C++ 类。由于 QML 广泛使用了 [Qt 元对象系统](<../Qt Core/The Meta-Object System.md>)，这个新类必须：
 
 - 继承自 `QObject`
 - 使用 `Q_PROPERTY` 宏声明其属性
@@ -89,7 +89,7 @@ QML_IMPORT_MAJOR_VERSION = 1
 
 ### CMake Setup
 
-同样，为了在使用 CMake 时注册生效，请使用 [qt_add_qml_module](./qt_add_qml_module.md) 命令：
+同样，为了在使用 CMake 时注册生效，请使用 [qt_add_qml_module](<./qt_add_qml_module.md>) 命令：
 
 ```cmake
 qt_add_qml_module(chapter1-basics
@@ -428,7 +428,7 @@ PieChart {
 }
 ```
 
-除了 `int` 之外，我们还可以使用各种其他属性类型。许多 Qt 数据类型，例如 `QColor`、`QSize` 和 `QRect`，QML 都自动支持。（请参阅 [Data Type Conversion Between QML and C++](./Data Type Conversion Between QML and C++.md) 文档以获取完整列表。）
+除了 `int` 之外，我们还可以使用各种其他属性类型。许多 Qt 数据类型，例如 `QColor`、`QSize` 和 `QRect`，QML 都自动支持。（请参阅 [Data Type Conversion Between QML and C++](<./Data Type Conversion Between QML and C++.md>) 文档以获取完整列表。）
 
 如果我们想创建一个类型不受 QML 默认支持的属性，我们需要向 QML 引擎注册该类型。
 
@@ -656,7 +656,7 @@ void PieChart::append_slice(QQmlListProperty<PieSlice> *list, PieSlice *slice)
 
 目前，`PieChart` 和 `PieSlice` 类型由 app.qml 使用，其在一个 C++ 应用程序中使用 `QQuickView` 显示。使用我们的 QML 扩展的另一种方法是创建一个插件库，将其作为新的 QML 导入模块提供给 QML 引擎使用。这允许将 `PieChart` 和 `PieSlice` 类型注册到类型命名空间中，该命名空间可以由任何 QML 应用程序导入，而不仅限于一个应用程序使用这些类型。
 
-创建插件的步骤在 [Creating C++ Plugins for QML](./Creating C++ Plugins for QML.md) 中有描述。首先，我们创建一个名为 `ChartsPlugin` 的插件类。它是 `QQmlEngineExtensionPlugin` 的子类，并使用 `Q_PLUGIN_METADATA()` 宏将插件注册到 Qt 元对象系统中。
+创建插件的步骤在 [Creating C++ Plugins for QML](<./Creating C++ Plugins for QML.md>) 中有描述。首先，我们创建一个名为 `ChartsPlugin` 的插件类。它是 `QQmlEngineExtensionPlugin` 的子类，并使用 `Q_PLUGIN_METADATA()` 宏将插件注册到 Qt 元对象系统中。
 
 这是 `chartsplugin.h` 中 `ChartsPlugin` 的定义：
 
@@ -834,7 +834,7 @@ PieChart {
 }
 ```
 
-> 注意：要继续了解 QML 扩展和功能，请查看 [Writing advanced QML Extensions with C++](./Writing advanced QML Extensions with C++.md)
+> 注意：要继续了解 QML 扩展和功能，请查看 [Writing advanced QML Extensions with C++](<./Writing advanced QML Extensions with C++.md>)
 
 
 

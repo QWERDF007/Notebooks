@@ -2,7 +2,7 @@
 
 大多数应用程序需要格式化数据并显示数据。Qt Quick 有模型、视图和委托的概念来显示数据。它们将数据的可视化模块化，以便开发人员或设计人员控制数据的不同方面。开发人员可以通过很少的更改将列表视图与网格视图交换。同样，将数据实例封装在委托中允许开发人员决定如何呈现或处理数据。
 
-<img src="./assets/modelview-overview.png" align="left" />
+<img src="./assets/modelview-overview.png"/>
 
 - Model — 包含数据及其结构。有多种 QML 类型可用于创建模型。
 
@@ -93,7 +93,7 @@ Gradient {
 }
 ```
 
-<img src="./assets/listview-decorations.png" align="left" />
+<img src="./assets/listview-decorations.png"/>
 
 ### Mouse and Touch Handling
 
@@ -129,7 +129,7 @@ Component {
 
 `ListView` 类型具有 `section` 附加属性，可以将相邻和相关类型组合成一个分区。`section.property` 确定使用哪个列表类型属性作为分区。`section.criteria` 可以指定如何显示分区名称，而 `section.delegate` 类似于视图的 `delegate` 属性。
 
-<img src="./assets/listview-section.png" align="left" />
+<img src="./assets/listview-section.png"/>
 
 ## View Delegates
 
@@ -149,7 +149,7 @@ Component {
 }
 ```
 
-<img src="./assets/listview-setup.png" align="left" />
+<img src="./assets/listview-setup.png"/>
 
 ### Accessing Views and Models from Delegates
 
@@ -274,7 +274,7 @@ Item {
 
 > 注意：如果委托包含必需属性，则无法访问 `model`、`index` 和 `modelData` 角色，除非它还具有名称匹配的必需属性。
 
-QML 在内置 QML 类型集中提供了几种数据模型类型。此外，可以使用 Qt C++ 创建模型，然后使其可用于 `QQmlEngine`，以供 QML 组件使用。有关创建这些模型的信息，请访问 [使用 C++ 模型与 Qt Quick 视图](./Using C++ Models with Qt Quick Views.md) 和 [创建 QML 类型](./The QML Type System.md) 文章。
+QML 在内置 QML 类型集中提供了几种数据模型类型。此外，可以使用 Qt C++ 创建模型，然后使其可用于 `QQmlEngine`，以供 QML 组件使用。有关创建这些模型的信息，请访问 [使用 C++ 模型与 Qt Quick 视图](<./Using C++ Models with Qt Quick Views.md>) 和 [创建 QML 类型](<./The QML Type System.md>) 文章。
 
 可以使用一个 Repeater 实现来自模型的项目的定位。
 
@@ -451,11 +451,11 @@ Rectangle {
 
 可以在 C++ 中定义模型，然后使其可用于 QML。此机制对于将现有 C++ 数据模型或其他复杂数据集暴露到 QML 中非常有用。
 
-有关信息，请访问 [使用 C++ 模型与 Qt Quick 视图](./Using C++ Models with Qt Quick Views.md)。
+有关信息，请访问 [使用 C++ 模型与 Qt Quick 视图](<./Using C++ Models with Qt Quick Views.md>)。
 
 ## Repeaters
 
-<img src="./assets/repeater-index.png" align="left" />
+<img src="./assets/repeater-index.png"/>
 
 Repeaters 使用模型中的数据从模板中创建与 positioners 一起使用的项目。组合重复器和定位器是布置大量项目的简单方法。将 `Repeater` 项放置在定位器内部，并生成封装定位器排列的项目。
 
@@ -492,7 +492,7 @@ Rectangle {
 
 `Repeater` 创建的项目数由其 `count` 属性保存。不能设置此属性来确定要创建的项目数。相反，如上例所示，我们使用整数作为模型。
 
-有关详细信息，请参见 [QML 数据模型](# Integers as Models) 文档。
+有关详细信息，请参见 [QML 数据模型](<# Integers as Models>) 文档。
 
 如果模型是字符串列表，则委托还会暴露给通常只读的 `modelData` 属性，该属性保存字符串。例如：
 
@@ -508,7 +508,7 @@ Column {
 }
 ```
 
-<img src="./assets/repeater-modeldata.png" align="left" />
+<img src="./assets/repeater-modeldata.png"/>
 
 还可以使用委托作为 `Repeater` 创建的项目的模板。这是使用 `delegate` 属性指定的。
 
@@ -537,7 +537,7 @@ ListView {
 
 > 注意：如果模型角色绑定到必需属性，赋值给该属性不会修改模型。它将打破与模型的绑定（就像赋值给任何其他属性一样会打破现有的绑定）。如果要使用必需属性并更改模型数据，请让 `model` 也成为必需属性，并将其分配给 `model.propertyName`。
 
-有关更多信息，请访问 [使用 C++ 模型与 Qt Quick 视图](./Using C++ Models with Qt Quick Views.md)。
+有关更多信息，请访问 [使用 C++ 模型与 Qt Quick 视图](<./Using C++ Models with Qt Quick Views.md>)。
 
 ## Using Transitions
 
