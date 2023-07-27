@@ -10,7 +10,7 @@ Qt 的元对象系统提供了对象间通信的信号和槽机制、运行时�
 
 moc 工具读取一个 C++ 源文件。如果它找到一个或多个包含 Q_OBJECT 宏的类声明，它将为这些类中的每一个类生成包含元对象代码的另一个 C++ 源文件。这个生成的源文件要么被 `#include` 到类的源文件中，要么更常见的是与类的实现一起编译和链接。
 
-除了为对象间通信提供 [信号和槽](./Signals & Slots.md) 机制（引入该系统的主要原因）之外，元对象代码还提供了以下其他功能：
+除了为对象间通信提供 [信号和槽](<./Signals & Slots.md>) 机制（引入该系统的主要原因）之外，元对象代码还提供了以下其他功能：
 
 - `QObject::metaObject()` 返回与类关联的元对象。
 - `QMetaObject::className()` 在运行时返回类名作为字符串，而不需要通过 C++ 编译器支持本机运行时类型信息 (RTTI)。
@@ -60,5 +60,5 @@ if (QLabel *label = qobject_cast<QLabel *>(obj)) {
 
 因此，我们**强烈建议所有 `QObject` 的子类都使用 `Q_OBJECT` 宏**，无论它们是否实际上使用信号、槽和属性。
 
-另请参见 [QMetaObject](https://doc.qt.io/qt-6/qmetaobject.html)、[Qt 的属性系统](./The Property System.md) 和 [信号和槽](./Signals & Slots.md)。
+另请参见 [QMetaObject](https://doc.qt.io/qt-6/qmetaobject.html)、[Qt 的属性系统](<./The Property System.md>) 和 [信号和槽](<./Signals & Slots.md>)。
 
