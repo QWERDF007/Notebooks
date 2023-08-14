@@ -152,11 +152,11 @@ AP 是仅通过在 11 个级别插值精确率获得的，取召回率大于等�
 
 
 
-<img src="./assets/11AP-1.gif" align="left" />
+<img src="./assets/11AP-1.gif"  />
 
-<img src="./assets/11AP-2.gif" align="left" />
+<img src="./assets/11AP-2.gif"  />
 
-<img src="./assets/11AP-3.gif" align="left" />
+<img src="./assets/11AP-3.gif"  />
 
 
 
@@ -178,19 +178,19 @@ AP 是仅通过在 11 个级别插值精确率获得的，取召回率大于等�
 
 
 
-<img src="./assets/allAP-1.gif" align="left" />
+<img src="./assets/allAP-1.gif"  />
 
-<img src="./assets/allAP-2.gif" align="left" />
+<img src="./assets/allAP-2.gif"  />
 
-<img src="./assets/allAP-3.gif" align="left" />
+<img src="./assets/allAP-3.gif"  />
 
-<img src="./assets/allAP-4.gif" align="left" />
+<img src="./assets/allAP-4.gif"  />
 
-<img src="./assets/allAP-5.gif" align="left" />
+<img src="./assets/allAP-5.gif"  />
 
-<img src="./assets/allAP-6.gif" align="left" />
+<img src="./assets/allAP-6.gif"  />
 
-<img src="./assets/allAP-7.gif" align="left" />
+<img src="./assets/allAP-7.gif"  />
 
 
 
