@@ -76,7 +76,7 @@ $$
 
 我们也可以在等式 (1) 中使用方阵 $W_s$ 。但我们将通过实验证明，恒等映射对于解决退化问题是足够的，并且是经济的，因此 $W_s$ 只在匹配维度时使用。
 
-残差函数 $\mathcal{F}$ 的形式是灵活的。在本论文中的实验涉及到的一个函数 $\mathcal{F}$ ，它有两层或三层，也可以有更多层。但如果 $\mathcal{F}$ 只有一层，等式 (1) 类似于线性层：$\mathbf{y} = W_1 \mathbf{x} + \mathbf{x}$ ，我们没有观察到它的优点。
+残差函数 $\mathcal{F}$ 的形式是灵活的。在本论文中的实验涉及到的一个函数 $\mathcal{F}$ ，它有两层或三层，也可以有更多层。但如果 $\mathcal{F}$ 只有一层，等式 (1) 类似于线性层： $\mathbf{y} = W_1 \mathbf{x} + \mathbf{x}$ ，我们没有观察到它的优点。
 
 我们还注意到，尽管为了简单起见，上述符号是关于全连接层的，但它们适用于卷积层。函数 $\mathcal{F}(\mathbf{x}, \{W_i\})$ 可以表示多个卷积层。元素级加法在两个特征映射上，逐个通道执行。
 
@@ -90,7 +90,7 @@ $$
 
 **ps：** FLOPs——浮点运算次数 (Floating Point Operations)；FLOPS——每秒浮点运算次数 (Floating Point Operations Per Second)
 
-**残差网络。** 在上述的普通网络的基础上，我们插入 shortcut connections (图 3 右)，将网络转化为对应的残差版本。当输入和输出是相同的维度时，恒等 shortcut (等式 (1)) 可以直接使用 (图 3 中的实线 shortcuts)。当维度增加时 (图 3 中的虚线 shortcuts)，我们考虑两种选择：(A) shortcut 通过额外的零填充来增加维度，仍然进行恒等映射；(B) 等式(2) 中的投影被用于匹配维度 (通过 ==$1 \times 1$ 的卷积==完成)。对于这两个选项，当 shortcuts 跨越两种尺寸的 feature maps 时，它们的步幅都为 2。
+**残差网络。** 在上述的普通网络的基础上，我们插入 shortcut connections (图 3 右)，将网络转化为对应的残差版本。当输入和输出是相同的维度时，恒等 shortcut (等式 (1)) 可以直接使用 (图 3 中的实线 shortcuts)。当维度增加时 (图 3 中的虚线 shortcuts)，我们考虑两种选择：(A) shortcut 通过额外的零填充来增加维度，仍然进行恒等映射；(B) 等式(2) 中的投影被用于匹配维度 (通过 == $1 \times 1$ 的卷积==完成)。对于这两个选项，当 shortcuts 跨越两种尺寸的 feature maps 时，它们的步幅都为 2。
 
 <img src="assets/ResNet_fig3.png" title="图3">
 
