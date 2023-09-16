@@ -22,7 +22,7 @@
 
 **ps：** 这里的 solvers 指的是 SGD 等优化器，在实验部分有说到 SGD solver。
 
-在本论文中，我们通过引入一种==深度残差学习框架==来解决退化问题。与其希望每几个堆叠的层直接拟合一个期望的底层映射，不如显示地让这些层拟合一个残差映射。形式上，将期望的底层映射表示为 $\mathcal{H}(\mathbf{x})$ ，我们让堆叠的非线性层拟合另外一个映射 $\mathcal{F}(\mathbf{x}) := \mathcal{H}(\mathbf{x}) - \mathbf{x}$ 。原来的映射被改写成 $\mathcal{F}(\mathbf{x}) + \mathbf{x}$。我们假设优化残差映射比优化原始的更容易。最极端的情况是，如果一个恒等映射是最优的，那么将残差推向 0 比通过一堆非线性层来拟合恒等映射更容易。
+在本论文中，我们通过引入一种==深度残差学习框架==来解决退化问题。与其希望每几个堆叠的层直接拟合一个期望的底层映射，不如显示地让这些层拟合一个残差映射。形式上，将期望的底层映射表示为 $\mathcal{H}(\mathbf{x})$ ，我们让堆叠的非线性层拟合另外一个映射 $\mathcal{F}(\mathbf{x}) := \mathcal{H}(\mathbf{x}) - \mathbf{x}$ 。原来的映射被改写成 $\mathcal{F}(\mathbf{x}) + \mathbf{x}$ 。我们假设优化残差映射比优化原始的更容易。最极端的情况是，如果一个恒等映射是最优的，那么将残差推向 0 比通过一堆非线性层来拟合恒等映射更容易。
 
 表达式 $\mathcal{F}(\mathbf{x}) + \mathbf{x}$ 可以使用 "shortcut connections" (图 2) 的前馈神经网络来实现。Shortcut connections 是指跳过一层或多层的连接。在我们的方法中，shortcut connections 简单地执行恒等映射，它们的输出被添加到堆叠的层的输出上 (图 2)。恒等 shortcut connections 既不增加参数，也不增加计算复杂性。整个网络仍然可以通过 SGD 使用反向传播进行端到端的训练，并且可以很容易地使用常用的库 (如 Caffe) 实现，无需修改 solvers。
 
@@ -50,7 +50,7 @@
 
 ### 3.1. Residual Learning
 
-让我们把 $\mathcal{H}(\mathbf{x})$ 看作是由几个堆叠的层 (不一定是整个网络) 拟合的底层映射， $\mathbf{x}$ 表示这些层的第一层的输入。如果==假设多个非线性层能渐进地逼近复杂的函数==，那么就等价于假设它们可以渐进地逼近残差函数，即 $\mathcal{H}(\mathbf{x}) - \mathbf{x}$ (假设输入和输出是相同维度的)。因此，与其期望堆叠的层逼近 $\mathcal{H}(\mathbf{x})$ ，不如显示地让这些层逼近一个残差函数 $\mathcal{F}(\mathbf{x}) := \mathcal{H}(\mathbf{x}) - \mathbf{x}$。因此，原始函数就变成了 $\mathcal{F}(\mathbf{x}) + \mathbf{x}$。虽然这两种形式都应该能够渐进地逼近期望函数 (如假设的那样)，但学习的难易程度可能不同。
+让我们把 $\mathcal{H}(\mathbf{x})$ 看作是由几个堆叠的层 (不一定是整个网络) 拟合的底层映射， $\mathbf{x}$ 表示这些层的第一层的输入。如果==假设多个非线性层能渐进地逼近复杂的函数==，那么就等价于假设它们可以渐进地逼近残差函数，即 $\mathcal{H}(\mathbf{x}) - \mathbf{x}$ (假设输入和输出是相同维度的)。因此，与其期望堆叠的层逼近 $\mathcal{H}(\mathbf{x})$ ，不如显示地让这些层逼近一个残差函数 $\mathcal{F}(\mathbf{x}) := \mathcal{H}(\mathbf{x}) - \mathbf{x}$ 。因此，原始函数就变成了 $\mathcal{F}(\mathbf{x}) + \mathbf{x}$ 。虽然这两种形式都应该能够渐进地逼近期望函数 (如假设的那样)，但学习的难易程度可能不同。
 
 这个 reformulation 是由关于退化问题的反直觉现象 (图 1 左) 所激励的。正如我们在引言中所讨论的，如果添加的层可以被构建为恒等映射，一个更深的模型的训练误差应该不大于它的对应的浅层模型。退化问题表明 solvers 在用多个非线性层逼近恒等映射时可能有困难。使用残差学习 reformulation，如果恒等映射是最优的，solvers 可以简单地将多个非线性层的权重趋于零来逼近恒等映射。
 
@@ -59,17 +59,21 @@
 ### 3.2. Identity Mapping by Shortcuts
 
 我们每隔几层采用残差学习。一个构造块如图 2 所示。形式上，在本论文中我们考虑将一个构造块定义为：
+
 $$
 \mathbf{y} = \mathcal{F}(\mathbf{x}, \{W_i\}) + \mathbf{x} \tag{1}
 $$
+
 这里的 $\mathbf{x}$ 和 $\mathbf{y}$ 是被考虑的层的输入和输出向量。函数 $\mathcal{F}(\mathbf{x}, W_i)$ 表示要学习的残差映射。对于图 2 中的两层的示例， $\mathcal{F} = W_2\sigma(W_1\mathbf{x})$ ，其中 $\sigma$ 表示 ReLU，并且为了简化表示，偏置被省略了。运算 $\mathcal{F} + \mathbf{x}$ 是通过 shortcut connection 和元素级别的加法完成的。我们在加法后使用了第二次非线性 (例如， $\sigma(\mathbf{y})$ ，见图 2)。
 
 等式 (1) 中的 shortcut connections 既不引入额外的参数，也不引入计算复杂度。这不仅在实践中很有吸引力，而且在我们比较普通网络和残差网络时也很重要。我们可以公平地比较同时具有相同数量的参数、深度、宽度和计算成本 (除了可忽略的元素级加法) 的普通网络和残差网络。
 
 等式 (1) 中的 $\mathbf{x}$ 和 $\mathcal{F}$ 的维度必须相等。如果不相等 (例如，改变输入/输出通道)，我们可以对 shortcut connections 进行一个线性投影 $W_s$ 来匹配维度：
+
 $$
 \mathbf{y} = \mathcal{F}(\mathbf{x}, \{W_i\}) + W_s \mathbf{x} \tag{2}
 $$
+
 我们也可以在等式 (1) 中使用方阵 $W_s$ 。但我们将通过实验证明，恒等映射对于解决退化问题是足够的，并且是经济的，因此 $W_s$ 只在匹配维度时使用。
 
 残差函数 $\mathcal{F}$ 的形式是灵活的。在本论文中的实验涉及到的一个函数 $\mathcal{F}$ ，它有两层或三层，也可以有更多层。但如果 $\mathcal{F}$ 只有一层，等式 (1) 类似于线性层：$\mathbf{y} = W_1 \mathbf{x} + \mathbf{x}$ ，我们没有观察到它的优点。
@@ -148,7 +152,7 @@ $$
 
 <img src="assets/ResNet_fig5.png" title="图5">
 
-**图 5：** 一个关于 ImageNet 更深的残差函数 $\mathcal{F}$。左：图 3 中的一个构建块 (在 $56 \times 56$ 的 feature maps 上)。
+**图 5：** 一个关于 ImageNet 更深的残差函数 $\mathcal{F}$ 。左：图 3 中的一个构建块 (在 $56 \times 56$ 的 feature maps 上)。
 
 **Deeper Bottleneck Architectures.** 接下来我们描述我们在 ImageNet 上更深的网络。考虑到我们所能承受的训练时间，我们修改构建块为一个 bottleneck 设计。对于每个残差函数 $\mathcal{F}$ ，我们使用 3 层的堆叠代替 2 层的 (图 5)。这三层分别是 $1 \times 1$ ， $3 \times 3$ 和 $1 \times 1$ 的卷积，其中 $1 \times 1$ 的层负责减少和增加 (恢复) 维度，使 $3 \times 3$ 的层成为一个有更小输入/输出维度的 bottleneck。
 
