@@ -59,7 +59,7 @@ $$
 \phi_{i,j}\left( \mathcal N_p^{(h,w)} \right) = f_{agg}\left( \{ \phi_{i,j}(a,b) \mid (a,b) \in \mathcal N_p^{(h,w)} \} \right) \tag{2}
 $$
 
-其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N^{(h,w)}_p$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
+其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N_p^{(h,w)}$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
 
 $$
 \begin{aligned}
