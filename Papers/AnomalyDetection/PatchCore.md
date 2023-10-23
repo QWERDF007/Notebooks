@@ -56,14 +56,14 @@ $$
 位置 $(h, w)$ 的局部感知特征为
 
 $$
-\phi_{i,j}\left( \mathcal{N}_p^{(h,w)} \right) = f_{agg}\left( \{ \phi_{i,j}(a,b) \mid (a,b) \in \mathcal{N}_p^{(h,w)} \} \right) \tag{2}
+\phi_{i,j}\left( \mathcal N_p^{(h,w)} \right) = f_{agg}\left( \{ \phi_{i,j}(a,b) \mid (a,b) \in \mathcal N_p^{(h,w)} \} \right) \tag{2}
 $$
 
 其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N^{(h,w)}_p$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
 
 $$
 \begin{aligned}
-\mathcal{P}&_{s,p}(\phi_{i,j}) = \{ \phi_{i,j}\left( \mathcal{N}_p^{(h,w)} \right) \mid \\ 
+\mathcal P&_{s,p}(\phi_{i,j}) = \{ \phi_{i,j}\left( \mathcal N_p^{(h,w)} \right) \mid \\ 
 &{h, w} \mod s = 0, h < h^*, w < w^*, h, w \in \mathbb{N} \}
 \end{aligned} \tag{3}
 $$
@@ -73,7 +73,7 @@ $$
 最后，对于所有正常训练样本 $x_i \in \mathcal X_N$ ，PatchCore 的内存库 $\mathcal M$ 只需简单地定义为
 
 $$
-\mathcal{M} = \bigcup_{x_i \in \mathcal{X}_N} \mathcal{P}_{s,p}(\phi_{j}(x_i)) \tag{4}
+\mathcal M = \bigcup_{x_i \in \mathcal X_N } \mathcal P_{s,p}(\phi_{j}(x_i)) \tag{4}
 $$
 
 <img src="./assets/patchcore_fig3.png">
@@ -110,7 +110,7 @@ $$
 为了获得 $s$ ,我们使用缩放 $w$ 对 $s^∗$ 进行调整，来考虑邻域 patch 的行为：如果与异常候选 $m^{test,*}$ 最接近的内存库特征 $m^*$ 本身远离相邻样本，从而已经是一个罕见的正常样本，我们增加异常分数：
 
 $$
-s = \left( 1 - \frac{ \exp \lVert m^{test,*} - m^* \rVert_2 }{ \sum_{m \in \mathcal{N}_b (m^*)} \exp \lVert m^{test,*} - m^* \rVert_2 } \right) \cdot s^* \tag{7}
+s = \left( 1 - \frac{ \exp \lVert m^{test,*} - m^* \rVert_2 }{ \sum_{m \in \mathcal N_b (m^*)} \exp \lVert m^{test,*} - m^* \rVert_2 } \right) \cdot s^* \tag{7}
 $$
 
 其中 $\mathcal N_b(m^*)$ 是测试 patch 特征 $m^*$ 在 $\mathcal M$ 中的最近的 $b$ 个 patch 特征。我们发现这种重新加权比仅使用 patch 距离的最大值更加鲁棒。给定 $s$ ，分割直接跟随。公式 7 中的图像级异常分数 (第一行) 需要通过 $\arg \max$ 操作计算每个 patch 的异常分数。类似于[14]，可以通过根据它们各自的空间位置重新对齐计算的 patch 异常分数来在同一步骤中计算分割图。为了匹配原始输入分辨率 (我们可能需要使用中间网络特征)，我们通过双线性插值将结果上采样。此外，我们使用核宽度为 $\sigma = 4$ 的高斯平滑结果，但没有优化此参数。
