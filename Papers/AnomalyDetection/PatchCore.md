@@ -62,10 +62,7 @@ $$
 其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N_p^{(h,w)}$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
 
 $$
-\begin{aligned}
-\mathcal P&_{s,p}(\phi_{i,j}) = \{ \phi_{i,j}\left( \mathcal N_p^{(h,w)} \right) \mid \\ 
-&{h, w} \mod s = 0, h < h^*, w < w^*, h, w \in \mathbb{N} \}
-\end{aligned} \tag{3}
+\mathcal P_{s,p}(\phi_{i,j}) = \{ \phi_{i,j}\left( \mathcal N_p^{(h,w)} \right) \mid {h, w} \mod s = 0, h < h^*, w < w^*, h, w \in \mathbb{N} \} \tag{3}
 $$
 
 其中可选的步幅参数 $s$ ，除了在 [4.4.2]() 节中进行的消融实验外我们将其设置为 1。类似于[10]和[14]，我们发现聚合多个特征层次结构可以提供一些好处。但是，为了保留所使用特征的通用性以及空间分辨率，PatchCore 仅使用两个中间特征层次结构 $j$ 和 $j + 1$ 。这是通过计算 $\mathcal P_{s,p}(\phi_{i,j+1})$ 并将每个元素与其在使用的最低层次结构（即最高分辨率）上对应的 patch 特征进行聚合来实现的，我们通过双线性重新缩放 $\mathcal P_{s,p} (\phi_{i,j+1})$ 以使 $\left| \mathcal P_{s,p}(\phi_{i,j+1})\right|$ 和 $\left| \mathcal P_{s,p}(\phi_{i,j})\right|$ 相匹配来实现这一点。
