@@ -79,7 +79,7 @@ $$
 
 ### 3.2. Coreset-reduced patch-feature memory bank
 
-随着 $\mathcal X_N$ 的大小增加，$\mathcal M$ 变得越来越大，从而使得对新测试数据进行推理的时间和所需存储量都增加。这个问题已经用于异常分割的SPADE [10]中被注意到，它同时使用了低级和高级特征图。由于计算限制，SPADE 需要一个预选择阶段来根据较弱的全图像深度特征表示的图像级异常检测机制选择特征图，以进行像素级异常检测，即对最后一个特征图进行全局平均。这导致从完整图像计算出的低分辨率、带有 ImageNet 偏差的表示可能会对检测和定位性能产生负面影响。
+随着 $\mathcal X_N$ 的大小增加，$\mathcal{M}$ 变得越来越大，从而使得对新测试数据进行推理的时间和所需存储量都增加。这个问题已经用于异常分割的SPADE [10]中被注意到，它同时使用了低级和高级特征图。由于计算限制，SPADE 需要一个预选择阶段来根据较弱的全图像深度特征表示的图像级异常检测机制选择特征图，以进行像素级异常检测，即对最后一个特征图进行全局平均。这导致从完整图像计算出的低分辨率、带有 ImageNet 偏差的表示可能会对检测和定位性能产生负面影响。
 
 这些问题可以通过使 $\mathcal M$ 对更大的图像大小和数量下可有意义的搜索来解决，从而允许基于 patch 的比较对异常检测和分割都有益。这要求保留在 $\mathcal M$ 中编码的正常特征的覆盖率。不幸的是，随机子采样，尤其是多个数量级的子采样，会丢失 $\mathcal M$ 中编码的正常特征覆盖范围中的大量信息 (参见第 4.4.2 节中的实验)。在本文中,我们使用核心集下采样机制来减少 $\mathcal M$，我们发现它可以减少推理时间同时保持性能。
 
@@ -89,13 +89,13 @@ $$
 \mathcal M_C^* = \arg\min_{\mathcal M_C \subset \mathcal M}\max_{m \in \mathcal M}\min_{n \in \mathcal M_C} \lVert m - n \rVert_2 \tag{5}
 $$
 
-$M_C^{\star}$ 的精确计算是 NP 困难的[54]，我们使用[48]中建议的迭代贪心逼近。为进一步减少核心集选择时间,我们遵循[49]，利用 Johnson-Lindenstrauss 定理[11]通过随机线性映射 $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^{d^{\star}} (d^{\star} < d)$ 降低 元素 $\mathcal m \in \mathcal M$ 的维数。内存库减少总结在算法 1 中。对于符号，我们使用 $PatchCore-n \%$ 表示原始内存库减少到的百分比 $n$ ,例如，$PatchCore-1 \%$ 是 $\mathcal M$ 的 100 倍减少。图 3 给出了与随机选择相比,贪心核心集下采样的空间覆盖的视觉感受。
+$M_C^{\star}$ 的精确计算是 NP 困难的[54]，我们使用[48]中建议的迭代贪心逼近。为进一步减少核心集选择时间,我们遵循[49]，利用 Johnson-Lindenstrauss 定理[11]通过随机线性映射 $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^{d^{\star}} (d^{\star} < d)$ 降低 元素 $\mathcal m \in \mathcal M$ 的维数。内存库减少总结在算法 1 中。对于符号，我们使用 $PatchCore - n \% $ 表示原始内存库减少到的百分比 $n$ ,例如，$PatchCore - 1 \% $ 是 $\mathcal M$ 的 100 倍减少。图 3 给出了与随机选择相比,贪心核心集下采样的空间覆盖的视觉感受。
 
 <img src="./assets/patchcore_algo1.png">
 
 ### 3.3. Anomaly Detection with PatchCore
 
-使用正常 patch 特征内存库 $\mathcal M$ ，我们通过测试图像 $x^{test}$ 中的测试 patch 特征集合 $\mathcal P(x^{test}) = \mathcal P_{s,p}(\phi_j(x^{test}))$ 与 $\mathcal M$ 中每个相应的最近邻 $m^∗$ 之间的最大距离分数 $s^∗$ 来估计测试图像 $x^{test}$ 的图像级异常分数 $s \in \mathbb{R}$ :
+使用正常 patch 特征内存库 $\mathcal M$ ，我们通过测试图像 $x^{test}$ 中的测试 patch 特征集合 $\mathcal P(x^{test}) = \mathcal P_{s,p}(\phi_j(x^{test}))$ 与 $\mathcal M$ 中每个相应的最近邻 $m^{\star}$ 之间的最大距离分数 $s^{\star}$ 来估计测试图像 $x^{test}$ 的图像级异常分数 $s \in \mathbb{R}$ :
 
 $$
 \begin{aligned}
