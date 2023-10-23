@@ -38,18 +38,18 @@ PatchCore 方法包括以下几个部分：局部 patch 特征聚合到内存库
 
 ### 3.1. Locally aware patch features
 
-我们使用 $\mathcal X_N$ 表示训练时可用的所有正常图像集合 $( \forall{x} \in \mathcal X_N : y_x = 0 )$ ，其中 $y_x \in \set{0,1}$ 表示图像 $x$ 是正常 (0) 还是异常 (1) 图像。相应地，我们定义 $\mathcal{X}_T$ 为测试时提供的样本集合，其中 $\forall{x} \in \mathcal{X}_{T} : y_x \in \set{0,1}$ 。遵循[[4][4]]、[[10][10]] 和 [[14][14]]，PatchCore 使用一个在 ImageNet上 预训练的网络 $\phi$ 。由于在特定网络层级的特征起着重要作用，我们使用 $\phi_{i,j} = \phi_j(x_i)$ 表示数据集 $\mathcal{X}$ 中的图像 $x_i \in \mathcal{X}$ 在预训练网络 $\phi$ 的第 $j$ 层特征。如果没有特别说明，与现有文献一致， $j$ 索引类似 ResNet [[23][23]] 的体系结构 (如 ResNet50 或 WideResnet-50[57]) 的特征图，其中 $j \in \set{1,2,3,4}$ 表示各自空间分辨率块的最终输出。
+我们使用 $\mathcal X_N$ 表示训练时可用的所有正常图像集合 $( \forall{x} \in \mathcal X_N : y_x = 0 )$ ，其中 $y_x \in \set{0,1}$ 表示图像 $x$ 是正常 (0) 还是异常 (1) 图像。相应地，我们定义 $\mathcal X_T$ 为测试时提供的样本集合，其中 $\forall{x} \in \mathcal X_T : y_x \in \set{0,1}$ 。遵循[[4][4]]、[[10][10]] 和 [[14][14]]，PatchCore 使用一个在 ImageNet上 预训练的网络 $\phi$ 。由于在特定网络层级的特征起着重要作用，我们使用 $\phi_{i,j} = \phi_j(x_i)$ 表示数据集 $\mathcal X$ 中的图像 $x_i \in \mathcal X$ 在预训练网络 $\phi$ 的第 $j$ 层特征。如果没有特别说明，与现有文献一致， $j$ 索引类似 ResNet [[23][23]] 的体系结构 (如 ResNet50 或 WideResnet-50[57]) 的特征图，其中 $j \in \set{1,2,3,4}$ 表示各自空间分辨率块的最终输出。
 
 特征表示的一个选择是网络特征层次结构中的最后一层。这是 [4] 或 [10] 的做法，但引入了以下两个问题。首先，它会丢失更加局部的正常 (图像) 信息[14]。由于测试时遇到的异常类型事先不可知，这会损害后续的异常检测性能。其次，在 ImageNet 上预训练的网络中的非常深层和抽象的特征会偏向自然图像分类任务，与冷启动工业异常检测任务及手头评估的数据之间只有很小的重叠。
 
-因此，我们提出使用一个包含中间或中级特征表示的 patch-level 特征的内存库 $\mathcal{M}$ ，以利用提供的训练上下文，避免过于通用或或对 ImageNet 分类偏置过重的特征。在 ResNet 类架构的具体情况下,这将指的是例如 $j \in [2,3]$ 。为了规范化 patch 表示，我们扩展了先前引入的符号。假设特征映射 $\phi_{ i,j} \in \mathbb{R}^{c^∗ \times h^∗ \times w^∗}$ 是一个深度为 $c^∗$ ，高度为 $h^∗$ ，宽度为 $w^∗$ 的三维张量。然后，我们使用 $\phi_{i,j}(h,w) = \phi_j(x_i,h,w) \in \mathbb{R}^{c^∗}$ 来表示在位置 $h \in \set{1,\dots,h^∗}$ 和 $w \in \set{1,\dots,w^∗}$ 处的 $c^∗$ 维特征切片。假设每个 $\phi_{i,j}$ 的感受野大小大于1，则这实际上涉及到图像 patch 特征表示。理想情况下，每个 patch 表示都在足够大的感受野大小上运行，以考虑对局部空间变化具有鲁棒性的有意义的异常上下文。虽然这可以通过有步长的池化 (strided pooling) 和进入网络层次结构的更深层来实现这一点，但由此创建的 patch 特征变得更加具有 ImageNet 特色，因此对于手头的异常检测任务不那么相关，同时训练成本增加并且有效特征映射分辨率降低。
+因此，我们提出使用一个包含中间或中级特征表示的 patch-level 特征的内存库 $\mathcal M$ ，以利用提供的训练上下文，避免过于通用或或对 ImageNet 分类偏置过重的特征。在 ResNet 类架构的具体情况下,这将指的是例如 $j \in [2,3]$ 。为了规范化 patch 表示，我们扩展了先前引入的符号。假设特征映射 $\phi_{ i,j} \in \mathbb{R}^{c^∗ \times h^∗ \times w^∗}$ 是一个深度为 $c^∗$ ，高度为 $h^∗$ ，宽度为 $w^∗$ 的三维张量。然后，我们使用 $\phi_{i,j}(h,w) = \phi_j(x_i,h,w) \in \mathbb{R}^{c^∗}$ 来表示在位置 $h \in \set{1,\dots,h^∗}$ 和 $w \in \set{1,\dots,w^∗}$ 处的 $c^∗$ 维特征切片。假设每个 $\phi_{i,j}$ 的感受野大小大于1，则这实际上涉及到图像 patch 特征表示。理想情况下，每个 patch 表示都在足够大的感受野大小上运行，以考虑对局部空间变化具有鲁棒性的有意义的异常上下文。虽然这可以通过有步长的池化 (strided pooling) 和进入网络层次结构的更深层来实现这一点，但由此创建的 patch 特征变得更加具有 ImageNet 特色，因此对于手头的异常检测任务不那么相关，同时训练成本增加并且有效特征映射分辨率降低。
 
 这促使在构建每个 patch-level 特征表示时进行一个局部邻域聚合，以提高感受野大小和对小空间偏差的鲁棒性，而不损失空间分辨率或特征图的可用性。为此，我们扩展了上述 $\phi_{i,j}(h,w)$ 的表示，以考虑不均匀的 patch 大小 $p$ (对应考虑的邻域大小)，并结合邻域中的特征向量
 
 $$
 \begin{aligned}
-\mathcal{N}_p^{(h,w)} = \{(a,b) \mid   a &\in [ h - \lfloor p/2 \rfloor, \ \dots, \ h + \lfloor p/2 \rfloor ], \\
-b &\in [ w - \lfloor p/2 \rfloor, \ \dots, \ w + \lfloor p/2 \rfloor ]\}
+\mathcal N_p^{(h,w)} = \{(a,b) \mid   a & \in [ h - \lfloor p/2 \rfloor, \ \dots, \ h + \lfloor p/2 \rfloor ], \\
+b & \in [ w - \lfloor p/2 \rfloor, \ \dots, \ w + \lfloor p/2 \rfloor ]\}
 \end{aligned} \tag{1}
 $$
 
@@ -59,7 +59,7 @@ $$
 \phi_{i,j}\left( \mathcal{N}_p^{(h,w)} \right) = f_{agg}\left( \{ \phi_{i,j}(a,b) \mid (a,b) \in \mathcal{N}_p^{(h,w)} \} \right) \tag{2}
 $$
 
-其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal{N}^{(h,w)}_p$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal{P}_{s,p}(\phi_{i,j})$ 为
+其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N^{(h,w)}_p$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
 
 $$
 \begin{aligned}
@@ -68,9 +68,9 @@ $$
 \end{aligned} \tag{3}
 $$
 
-其中可选的步幅参数 $s$ ，除了在 [4.4.2]() 节中进行的消融实验外我们将其设置为 1。类似于[10]和[14]，我们发现聚合多个特征层次结构可以提供一些好处。但是，为了保留所使用特征的通用性以及空间分辨率，PatchCore 仅使用两个中间特征层次结构 $j$ 和 $j + 1$ 。这是通过计算 $\mathcal{P}_{s,p}(\phi_{i,j+1})$ 并将每个元素与其在使用的最低层次结构（即最高分辨率）上对应的 patch 特征进行聚合来实现的，我们通过双线性重新缩放 $\mathcal{P}_{s,p}(\phi_{i,j+1})$ 以使 $\left|\mathcal{P}_{s,p}(\phi_{i,j+1})\right|$ 和 $\left|\mathcal{P}_{s,p}(\phi_{i,j})\right|$ 相匹配来实现这一点。
+其中可选的步幅参数 $s$ ，除了在 [4.4.2]() 节中进行的消融实验外我们将其设置为 1。类似于[10]和[14]，我们发现聚合多个特征层次结构可以提供一些好处。但是，为了保留所使用特征的通用性以及空间分辨率，PatchCore 仅使用两个中间特征层次结构 $j$ 和 $j + 1$ 。这是通过计算 $\mathcal P_{s,p}(\phi_{i,j+1})$ 并将每个元素与其在使用的最低层次结构（即最高分辨率）上对应的 patch 特征进行聚合来实现的，我们通过双线性重新缩放 $\mathcal P_{s,p} (\phi_{i,j+1})$ 以使 $\left| \mathcal P_{s,p}(\phi_{i,j+1})\right|$ 和 $\left| \mathcal P_{s,p}(\phi_{i,j})\right|$ 相匹配来实现这一点。
 
-最后，对于所有正常训练样本 $x_i \in \mathcal{X}_N$ ，PatchCore 的内存库 $\mathcal{M}$ 只需简单地定义为
+最后，对于所有正常训练样本 $x_i \in \mathcal X_N$ ，PatchCore 的内存库 $\mathcal M$ 只需简单地定义为
 
 $$
 \mathcal{M} = \bigcup_{x_i \in \mathcal{X}_N} \mathcal{P}_{s,p}(\phi_{j}(x_i)) \tag{4}
@@ -82,27 +82,27 @@ $$
 
 ### 3.2. Coreset-reduced patch-feature memory bank
 
-随着 $\mathcal{X}_N$ 的大小增加，$\mathcal{M}$ 变得越来越大，从而使得对新测试数据进行推理的时间和所需存储量都增加。这个问题已经用于异常分割的SPADE [10]中被注意到，它同时使用了低级和高级特征图。由于计算限制，SPADE 需要一个预选择阶段来根据较弱的全图像深度特征表示的图像级异常检测机制选择特征图，以进行像素级异常检测，即对最后一个特征图进行全局平均。这导致从完整图像计算出的低分辨率、带有 ImageNet 偏差的表示可能会对检测和定位性能产生负面影响。
+随着 $\mathcal X_N$ 的大小增加，$\mathcal M$ 变得越来越大，从而使得对新测试数据进行推理的时间和所需存储量都增加。这个问题已经用于异常分割的SPADE [10]中被注意到，它同时使用了低级和高级特征图。由于计算限制，SPADE 需要一个预选择阶段来根据较弱的全图像深度特征表示的图像级异常检测机制选择特征图，以进行像素级异常检测，即对最后一个特征图进行全局平均。这导致从完整图像计算出的低分辨率、带有 ImageNet 偏差的表示可能会对检测和定位性能产生负面影响。
 
-这些问题可以通过使 $\mathcal{M}$ 对更大的图像大小和数量下可有意义的搜索来解决，从而允许基于 patch 的比较对异常检测和分割都有益。这要求保留在 $\mathcal{M}$ 中编码的正常特征的覆盖率。不幸的是，随机子采样，尤其是多个数量级的子采样，会丢失 $\mathcal{M}$ 中编码的正常特征覆盖范围中的大量信息 (参见第 4.4.2 节中的实验)。在本文中,我们使用核心集下采样机制来减少 $\mathcal{M}$，我们发现它可以减少推理时间同时保持性能。
+这些问题可以通过使 $\mathcal M$ 对更大的图像大小和数量下可有意义的搜索来解决，从而允许基于 patch 的比较对异常检测和分割都有益。这要求保留在 $\mathcal M$ 中编码的正常特征的覆盖率。不幸的是，随机子采样，尤其是多个数量级的子采样，会丢失 $\mathcal M$ 中编码的正常特征覆盖范围中的大量信息 (参见第 4.4.2 节中的实验)。在本文中,我们使用核心集下采样机制来减少 $\mathcal M$，我们发现它可以减少推理时间同时保持性能。
 
-从概念上讲，核心集选择旨在找到一个子集 $\mathcal{S} \subset \mathcal{A}$ ，使得在 $\mathcal{A}$ 上计算的问题解可以通过在 $\mathcal{S}$ 上计算的那些结果进行最接近和特别是更快速的逼近[1]。根据具体问题，感兴趣的核心集各不相同。因为PatchCore 使用最近邻计算 (下一部分)，我们使用一个 **minimax facility location coreset selection**，参见[48]和[49]，以确保 $\mathcal{M}-\mathrm{coreset} \ \mathcal{M}_C$ 在 patch-level 的特征空间中的覆盖范围大约与原始内存库 $\mathcal{M}$ 相似
+从概念上讲，核心集选择旨在找到一个子集 $\mathcal S \subset \mathcal A$ ，使得在 $\mathcal A$ 上计算的问题解可以通过在 $\mathcal S$ 上计算的那些结果进行最接近和特别是更快速的逼近[1]。根据具体问题，感兴趣的核心集各不相同。因为PatchCore 使用最近邻计算 (下一部分)，我们使用一个 **minimax facility location coreset selection**，参见[48]和[49]，以确保 $\mathcal M -\mathrm{coreset} \ \mathcal M_C$ 在 patch-level 的特征空间中的覆盖范围大约与原始内存库 $\mathcal M$ 相似
 
 $$
-\mathcal{M}_C^* = \arg\min_{\mathcal{M_C \subset \mathcal{M}}}\max_{m \in \mathcal{M}}\min_{n \in \mathcal{M}_C} \lVert m - n \rVert_2 \tag{5}
+\mathcal M_C^* = \arg\min_{\mathcal M_C \subset \mathcal M}\max_{m \in \mathcal M}\min_{n \in \mathcal M_C} \lVert m - n \rVert_2 \tag{5}
 $$
 
-$M_C^*$ 的精确计算是 NP 困难的[54]，我们使用[48]中建议的迭代贪心逼近。为进一步减少核心集选择时间,我们遵循[49]，利用 Johnson-Lindenstrauss 定理[11]通过随机线性映射 $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^{d*} (d^* < d)$ 降低 元素 $\mathcal{m} \in \mathcal{M}$ 的维数。内存库减少总结在算法 1 中。对于符号，我们使用 $PatchCore-n\%$ 表示原始内存库减少到的百分比 $n$ ,例如，$PatchCore-1\%$ 是 $\mathcal{M}$ 的 100 倍减少。图 3 给出了与随机选择相比,贪心核心集下采样的空间覆盖的视觉感受。
+$M_C^*$ 的精确计算是 NP 困难的[54]，我们使用[48]中建议的迭代贪心逼近。为进一步减少核心集选择时间,我们遵循[49]，利用 Johnson-Lindenstrauss 定理[11]通过随机线性映射 $\psi: \mathbb{R}^d \rightarrow \mathbb{R}^{d*} (d^* < d)$ 降低 元素 $\mathcal m \in \mathcal M$ 的维数。内存库减少总结在算法 1 中。对于符号，我们使用 $PatchCore-n\%$ 表示原始内存库减少到的百分比 $n$ ,例如，$PatchCore-1\%$ 是 $\mathcal M$ 的 100 倍减少。图 3 给出了与随机选择相比,贪心核心集下采样的空间覆盖的视觉感受。
 
 <img src="./assets/patchcore_algo1.png">
 
 ### 3.3. Anomaly Detection with PatchCore
 
-使用正常 patch 特征内存库 $\mathcal{M}$ ，我们通过测试图像 $x^{test}$ 中的测试 patch 特征集合 $\mathcal{P}(x^{test}) = \mathcal{P}_{s,p}(\phi_j(x^{test}))$ 与 $\mathcal{M}$ 中每个相应的最近邻 $m^∗$ 之间的最大距离分数 $s^∗$ 来估计测试图像 $x^{test}$ 的图像级异常分数 $s \in \mathbb{R}$ :
+使用正常 patch 特征内存库 $\mathcal M$ ，我们通过测试图像 $x^{test}$ 中的测试 patch 特征集合 $\mathcal P(x^{test}) = \mathcal P_{s,p}(\phi_j(x^{test}))$ 与 $\mathcal M$ 中每个相应的最近邻 $m^∗$ 之间的最大距离分数 $s^∗$ 来估计测试图像 $x^{test}$ 的图像级异常分数 $s \in \mathbb{R}$ :
 
 $$
 \begin{aligned}
-m^{test,*}， m^* &= \arg \max_{m^{test} \in \mathcal{P}(x^{test})} \arg \min_{m \in \mathcal{M}} \lVert m^{test} - m \rVert_2 \\
+m^{test,*}， m^* &= \arg \max_{m^{test} \in \mathcal P(x^{test})} \arg \min_{m \in \mathcal M} \lVert m^{test} - m \rVert_2 \\
 s^* &= \lVert m^{test,*} - m^* \rVert_2
 \end{aligned} \tag{6}
 $$
@@ -113,7 +113,7 @@ $$
 s = \left( 1 - \frac{ \exp \lVert m^{test,*} - m^* \rVert_2 }{ \sum_{m \in \mathcal{N}_b (m^*)} \exp \lVert m^{test,*} - m^* \rVert_2 } \right) \cdot s^* \tag{7}
 $$
 
-其中 $\mathcal{N}_b(m^*)$ 是测试 patch 特征 $m^*$ 在 $\mathcal{M}$ 中的最近的 $b$ 个 patch 特征。我们发现这种重新加权比仅使用 patch 距离的最大值更加鲁棒。给定 $s$ ，分割直接跟随。公式 7 中的图像级异常分数 (第一行) 需要通过 $\arg \max$ 操作计算每个 patch 的异常分数。类似于[14]，可以通过根据它们各自的空间位置重新对齐计算的 patch 异常分数来在同一步骤中计算分割图。为了匹配原始输入分辨率 (我们可能需要使用中间网络特征)，我们通过双线性插值将结果上采样。此外，我们使用核宽度为 $\sigma = 4$ 的高斯平滑结果，但没有优化此参数。
+其中 $\mathcal N_b(m^*)$ 是测试 patch 特征 $m^*$ 在 $\mathcal M$ 中的最近的 $b$ 个 patch 特征。我们发现这种重新加权比仅使用 patch 距离的最大值更加鲁棒。给定 $s$ ，分割直接跟随。公式 7 中的图像级异常分数 (第一行) 需要通过 $\arg \max$ 操作计算每个 patch 的异常分数。类似于[14]，可以通过根据它们各自的空间位置重新对齐计算的 patch 异常分数来在同一步骤中计算分割图。为了匹配原始输入分辨率 (我们可能需要使用中间网络特征)，我们通过双线性插值将结果上采样。此外，我们使用核宽度为 $\sigma = 4$ 的高斯平滑结果，但没有优化此参数。
 
 ## 4. Experiments
 
