@@ -99,18 +99,18 @@ $M_C^{\star}$ 的精确计算是 NP 困难的[54]，我们使用[48]中建议的
 
 $$
 \begin{aligned}
-m^{test,*}， m^* &= \arg \max_{m^{test} \in \mathcal P(x^{test})} \arg \min_{m \in \mathcal M} \lVert m^{test} - m \rVert_2 \\
-s^* &= \lVert m^{test,*} - m^* \rVert_2
+m^{test,\star}， m^{\star} &= \arg \max_{m^{test} \in \mathcal P(x^{test})} \arg \min_{m \in \mathcal M} \lVert m^{test} - m \rVert_2 \\
+s^{\star} &= \lVert m^{test,\star} - m^{\star} \rVert_2
 \end{aligned} \tag{6}
 $$
 
 为了获得 $s$ ,我们使用缩放 $w$ 对 $s^∗$ 进行调整，来考虑邻域 patch 的行为：如果与异常候选 $m^{test,*}$ 最接近的内存库特征 $m^*$ 本身远离相邻样本，从而已经是一个罕见的正常样本，我们增加异常分数：
 
 $$
-s = \left( 1 - \frac{ \exp \lVert m^{test,*} - m^* \rVert_2 }{ \sum_{m \in \mathcal N_b (m^*)} \exp \lVert m^{test,*} - m^* \rVert_2 } \right) \cdot s^* \tag{7}
+s = \left( 1 - \frac{ \exp \lVert m^{test, \star} - m^{\star} \rVert_2 }{ \sum_{m \in \mathcal N_b (m^{\star})} \exp \lVert m^{test,\star} - m^{\star} \rVert_2 } \right) \cdot s^{\star} \tag{7}
 $$
 
-其中 $\mathcal N_b(m^*)$ 是测试 patch 特征 $m^*$ 在 $\mathcal M$ 中的最近的 $b$ 个 patch 特征。我们发现这种重新加权比仅使用 patch 距离的最大值更加鲁棒。给定 $s$ ，分割直接跟随。公式 7 中的图像级异常分数 (第一行) 需要通过 $\arg \max$ 操作计算每个 patch 的异常分数。类似于[14]，可以通过根据它们各自的空间位置重新对齐计算的 patch 异常分数来在同一步骤中计算分割图。为了匹配原始输入分辨率 (我们可能需要使用中间网络特征)，我们通过双线性插值将结果上采样。此外，我们使用核宽度为 $\sigma = 4$ 的高斯平滑结果，但没有优化此参数。
+其中 $\mathcal N_b(m^{\star})$ 是测试 patch 特征 $m^{\star}$ 在 $\mathcal M$ 中的最近的 $b$ 个 patch 特征。我们发现这种重新加权比仅使用 patch 距离的最大值更加鲁棒。给定 $s$ ，分割直接跟随。公式 7 中的图像级异常分数 (第一行) 需要通过 $\arg \max$ 操作计算每个 patch 的异常分数。类似于[14]，可以通过根据它们各自的空间位置重新对齐计算的 patch 异常分数来在同一步骤中计算分割图。为了匹配原始输入分辨率 (我们可能需要使用中间网络特征)，我们通过双线性插值将结果上采样。此外，我们使用核宽度为 $\sigma = 4$ 的高斯平滑结果，但没有优化此参数。
 
 ## 4. Experiments
 
