@@ -36,6 +36,14 @@ PatchCore 方法包括以下几个部分：局部 patch 特征聚合到内存库
 
 **图 2**：PatchCore 概览。正常样本被分解为一个领域感知的、patch-level 的特征内存库。为了减少冗余信息和推理时间，这个内存库通过贪心的核心集  (coreset) 下采样进行降维。在测试时，如果至少有一个patch 是异常的，那么图像会被分类为异常。并且通过评分每个 patch 的特征，生成像素级的异常分割。
 
+> 符号定义：
+>
+> $\phi$ : 一个在 ImageNet上 预训练的网络
+>
+> $\mathcal X_N$ : 训练时可用的所有正常图像集合
+>
+>  $y_x$ : 表示图像 $x$ 是正常 (0) 还是异常 (1) 图像
+
 ### 3.1. Locally aware patch features
 
 我们使用 $\mathcal X_N$ 表示训练时可用的所有正常图像集合 $( \forall{x} \in \mathcal X_N : y_x = 0 )$ ，其中 $y_x \in \set{0,1}$ 表示图像 $x$ 是正常 (0) 还是异常 (1) 图像。相应地，我们定义 $\mathcal X_T$ 为测试时提供的样本集合，其中 $\forall{x} \in \mathcal X_T : y_x \in \set{0,1}$ 。遵循[[4][4]]、[[10][10]] 和 [[14][14]]，PatchCore 使用一个在 ImageNet上 预训练的网络 $\phi$ 。由于在特定网络层级的特征起着重要作用，我们使用 $\phi_{i,j} = \phi_j(x_i)$ 表示数据集 $\mathcal X$ 中的图像 $x_i \in \mathcal X$ 在预训练网络 $\phi$ 的第 $j$ 层特征。如果没有特别说明，与现有文献一致， $j$ 索引类似 ResNet [[23][23]] 的体系结构 (如 ResNet50 或 WideResnet-50[57]) 的特征图，其中 $j \in \set{1,2,3,4}$ 表示各自空间分辨率块的最终输出。
