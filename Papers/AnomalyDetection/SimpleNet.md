@@ -151,7 +151,7 @@ $$
 
 ### 4.2. Evaluation Metrics
 
-
+图像级别的异常检测性能通过标准的接收器操作特征曲线下面积来衡量，我们将其定义为 I-AUROC，使用生成的异常检测分数 $S_{AD}$ (公式 11)。对于异常定位，使用异常图 $S_{AL}$ (公式 10) 进行像素级 AUROC (定义为 P-AUROC) 的评估。与之前的工作[6, 22]一致，我们在 MVTec AD 上计算检测和定位的类平均 AUROC 和所有类别的平均 AUROC。对比的基线方法包括 AE-SSIM [3]、RIAD [31]、DRÆM [30]、CutPaste [17]、CS-Flow [24]、PaDiM [6]、RevDist [7]和PatchCore [22]。
 
 
 
