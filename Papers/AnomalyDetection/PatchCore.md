@@ -36,13 +36,31 @@ PatchCore 方法包括以下几个部分：局部 patch 特征聚合到记忆库
 
 **图 2**：PatchCore 概览。正常样本被分解为一个领域感知的、patch-level 的特征记忆库。为了减少冗余信息和推理时间，这个记忆库通过贪心的核心集  (coreset) 下采样进行降维。在测试时，如果至少有一个patch 是异常的，那么图像会被分类为异常。并且通过评分每个 patch 的特征，生成像素级的异常分割。
 
-> 符号定义：
+> 符号定义
 >
 > $\phi$ : 一个在 ImageNet上 预训练的网络
 >
 > $\mathcal X_N$ : 训练时可用的所有正常图像集合
 >
->  $y_x$ : 表示图像 $x$ 是正常 (0) 还是异常 (1) 图像
+> $y_x$ : 表示图像 $x$ 是正常 (0) 还是异常 (1) 图像
+>
+> $\mathcal X_T$ : 测试时可用的图像集合
+>
+> $\phi_{i,j} = \phi_j(x_i)$ :  数据集 $\mathcal X$ 中的图像 $x_i$ 在预训练网络 $\phi$ 的第 $j$ 层特征
+>
+> $\phi_{ i,j} \in \mathbb{R}^{c^∗ \times h^∗ \times w^∗}$ : 一个深度为 $c^∗$ ，高度为 $h^∗$ ，宽度为 $w^∗$ 的三维张量
+>
+> $\phi_{i,j}(h,w) = \phi_j(x_i,h,w) \in \mathbb{R}^{c^∗}$ : 在位置 $h$ 和 $w$ 处的 $c^*$ 维特征切片
+>
+> $\mathcal N_p^{(h,w)}$ : 位置 $(h, w)$ 的大小为 $p$ 的领域
+>
+> $f_{agg}$ : 聚合函数，自适应平均池化
+>
+> $\phi_{i,j}\left( \mathcal N_p^{(h,w)} \right)$ : 特征图上位置 $(h, w)$ 处大小为 $p \times p$ 的一块 patch 的局部感知特征
+>
+> $\mathcal P_{s,p}(\phi_{i,j})$ :  特征图张量 $\phi_{i,j}$ 的局部感知的 patch 特征集合
+>
+> $\mathcal M$ : 所有正常训练样本的特征图的局部感知的 patch 特征集合
 
 ### 3.1. Locally aware patch features
 
@@ -61,19 +79,19 @@ b & \in [ w - \lfloor p/2 \rfloor, \ \dots, \ w + \lfloor p/2 \rfloor ]\}
 \end{aligned} \tag{1}
 $$
 
-位置 $(h, w)$ 的局部感知特征为
+和位置 $(h, w)$ 的局部感知特征为
 
 $$
 \phi_{i,j}\left( \mathcal N_p^{(h,w)} \right) = f_{agg}\left( \{ \phi_{i,j}(a,b) \mid (a,b) \in \mathcal N_p^{(h,w)} \} \right) \tag{2}
 $$
 
-其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N_p^{(h,w)}$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
+其中 $f_{agg}$ 为一些聚合函数对邻域 $\mathcal N_p^{(h,w)}$ 中的特征向量进行聚合。对于 PatchCore，我们使用自适应平均池化。这类似于对每个单独的特征映射进行局部平滑处理，从而在预定义的维度 $d$ 上得到一个在 $(h,w)$ 的单一表示，这是对所有的 $(h,w)$ 对进行的，其中 $h \in \set{1,\dots,h^∗}$ 且 $w \in \set{1,\dots,w^∗}$ ，从而保留了特征映射的分辨率。对于特征图张量 $\phi_{i,j}$ ，其局部感知的 patch 特征集合 $\mathcal P_{s,p}(\phi_{i,j})$ 为
 
 $$
 \mathcal P_{s,p}(\phi_{i,j}) = \{ \phi_{i,j} \left( \mathcal N_p^{(h,w)} \right) \mid {h, w} \mod s = 0, h < h^{\star}, w < w^{\star}, h, w \in \mathbb{N} \} \tag{3}
 $$
 
-其中可选的步幅参数 $s$ ，除了在 [4.4.2]() 节中进行的消融实验外我们将其设置为 1。类似于[10]和[14]，我们发现聚合多个特征层次结构可以提供一些好处。但是，为了保留所使用特征的通用性以及空间分辨率，PatchCore 仅使用两个中间特征层次结构 $j$ 和 $j + 1$ 。这是通过计算 $\mathcal P_{s,p}(\phi_{i,j+1})$ 并将每个元素与其在使用的最低层次结构（即最高分辨率）上对应的 patch 特征进行聚合来实现的，我们通过双线性重新缩放 $\mathcal P_{s,p} (\phi_{i,j+1})$ 以使 $\left| \mathcal P_{s,p}(\phi_{i,j+1})\right|$ 和 $\left| \mathcal P_{s,p}(\phi_{i,j})\right|$ 相匹配来实现这一点。
+其中可选的步幅参数 $s$ 我们将其设置为 1，除了在 [4.4.2]() 节中进行的消融实验外。类似于[10]和[14]，我们发现聚合多个特征层次结构可以提供一些好处。但是，为了保留所使用特征的通用性以及空间分辨率，PatchCore 仅使用两个中间特征层次结构 $j$ 和 $j + 1$ 。这是通过计算 $\mathcal P_{s,p}(\phi_{i,j+1})$ 并将每个元素与其在使用的最低层次结构（即最高分辨率）上对应的 patch 特征进行聚合来实现的，我们通过双线性重新缩放 $\mathcal P_{s,p} (\phi_{i,j+1})$ 以使 $\left| \mathcal P_{s,p}(\phi_{i,j+1})\right|$ 和 $\left| \mathcal P_{s,p}(\phi_{i,j})\right|$ 相匹配来实现这一点。
 
 最后，对于所有正常训练样本 $x_i \in \mathcal X_N$ ，PatchCore 的记忆库 $\mathcal M$ 只需简单地定义为
 
@@ -81,15 +99,15 @@ $$
 \mathcal M = \bigcup_{x_i \in \mathcal X_N } \mathcal P_{s,p}(\phi_{j}(x_i)) \tag{4}
 $$
 
-<img src="./assets/patchcore_fig3.png">
-
-**图 3**：对比：多模态 (a) 和均匀分布 (b) 中采样的 2D 数据 (蓝色) 的核心集 (顶部) 与随机下采样 (底部) (红色)。从视觉上看，核心集子采样更好地近似了空间支持，随机子采样在多模态情况下错过了簇，并且在 (b) 中不太均匀。
-
 ### 3.2. Coreset-reduced patch-feature memory bank
 
 随着 $\mathcal X_N$ 的大小增加， $\mathcal M$ 变得越来越大，从而使得对新测试数据进行推理的时间和所需存储量都增加。这个问题已经用于异常分割的SPADE [10]中被注意到，它同时使用了低级和高级特征图。由于计算限制，SPADE 需要一个预选择阶段来根据较弱的全图像深度特征表示的图像级异常检测机制选择特征图，以进行像素级异常检测，即对最后一个特征图进行全局平均。这导致从完整图像计算出的低分辨率、带有 ImageNet 偏差的表示可能会对检测和定位性能产生负面影响。
 
 这些问题可以通过使 $\mathcal M$ 对更大的图像大小和数量下可有意义的搜索来解决，从而允许基于 patch 的比较对异常检测和分割都有益。这要求保留在 $\mathcal M$ 中编码的正常特征的覆盖率。不幸的是，随机子采样，尤其是多个数量级的子采样，会丢失 $\mathcal M$ 中编码的正常特征覆盖范围中的大量信息 (参见第 4.4.2 节中的实验)。在本文中,我们使用核心集下采样机制来减少 $\mathcal M$，我们发现它可以减少推理时间同时保持性能。
+
+<img src="./assets/patchcore_fig3.png">
+
+**图 3**：对比：多模态 (a) 和均匀分布 (b) 中采样的 2D 数据 (蓝色) 的核心集 (顶部) 与随机下采样 (底部) (红色)。从视觉上看，核心集子采样更好地近似了空间支持，随机子采样在多模态情况下错过了簇，并且在 (b) 中不太均匀。
 
 从概念上讲，核心集选择旨在找到一个子集 $\mathcal S \subset \mathcal A$ ，使得在 $\mathcal A$ 上计算的问题解可以通过在 $\mathcal S$ 上计算的那些结果进行最接近和特别是更快速的逼近[1]。根据具体问题，感兴趣的核心集各不相同。因为PatchCore 使用最近邻计算 (下一部分)，我们使用一个 **minimax facility location coreset selection**，参见[48]和[49]，以确保 $\mathcal M -\mathrm{coreset} \ \mathcal M_C$ 在 patch-level 的特征空间中的覆盖范围大约与原始记忆库 $\mathcal M$ 相似
 
