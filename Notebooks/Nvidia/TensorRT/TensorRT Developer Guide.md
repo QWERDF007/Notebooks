@@ -20,23 +20,23 @@ NVIDIA TensorRT 支持许多类型的层，其功能不断扩展；但是，在�
 
 TensorRT 包含可以加载到应用程序中的插件。有关开源插件列表，请参见 [GitHub: TensorRT](https://github.com/NVIDIA/TensorRT/tree/main/plugin#tensorrt-plugins) 插件。
 
-要在应用程序中使用 TensorRT 插件，必须加载 `libnvinfer_plugin.so` (Windows上 为 `nvinfer_plugin.dll` ) 库，并通过在应用程序代码中调用 `initLibNvInferPlugins` 来注册所有插件。有关这些插件的更多信息，请参见 [NvInferPlugin.h](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/_nv_infer_plugin_8h.html) 文件以供参考。
+要在应用程序中使用 TensorRT 插件，必须加载 `libnvinfer_plugin.so` (Windows 上为 `nvinfer_plugin.dll` ) 库，并通过在应用程序代码中调用 `initLibNvInferPlugins` 来注册所有插件。有关这些插件的更多信息，请参见 [NvInferPlugin.h](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/_nv_infer_plugin_8h.html) 文件以供参考。
 
 如果这些插件不符合您的需求，则可以编写并添加自己的插件。
 
 ### 9.1. 使用 C++ API 添加自定义层
 
-你可以通过从TensorRT的插件基类之一派生自定义层。
+你可以通过从 TensorRT 的插件基类之一派生自定义层。
 
 从插件的基类中派生您的插件类。它们在支持具有不同类型/格式或动态形状的I/O方面具有不同的表现力。下表总结了基类，按表达能力从最低到最高排序。
 
 **注意：** 如果插件用于一般用途，请提供一个 FP32 实现，以使其能够正确地与任何网络一起运行。
 
-|                                                              | Introduced in TensorRT version? | Mixed I/O formats/types | Dynamic shapes? | Supports implicit/explicit batch mode? |
-| ------------------------------------------------------------ | ------------------------------- | ----------------------- | --------------- | -------------------------------------- |
-| [IPluginV2Ext](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/classnvinfer1_1_1_i_plugin_v2_ext.html) | 5.1                             | Limited                 | No              | Both implicit and explicit batch modes |
-| [IPluginV2IOExt](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/classnvinfer1_1_1_i_plugin_v2_i_o_ext.html) | 6.0.1                           | General                 | No              | Both implicit and explicit batch modes |
-| [IPluginV2DynamicExt](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/classnvinfer1_1_1_i_plugin_v2_dynamic_ext.html) | 6.0.1                           | General                 | Yes             | Explicit batch mode only               |
+|                                                              | 引入 TensorRT 中的版本？       | 混合 I/O 格式/类型 | 动态形状？ | 支持隐式/显式批处理模式？ |
+| ------------------------------------------------------------ | ------------------------------ | ------------------ | ---------- | ------------------------- |
+| [IPluginV2Ext](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/classnvinfer1_1_1_i_plugin_v2_ext.html) | 5.1 (自 TensorRT 8.5 起已弃用) | 有限的             | No         | 隐式和显式批处理模式      |
+| [IPluginV2IOExt](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/classnvinfer1_1_1_i_plugin_v2_i_o_ext.html) | 6.0.1                          | 一般的             | No         | 隐式和显式批处理模式      |
+| [IPluginV2DynamicExt](https://docs.nvidia.com/deeplearning/sdk/tensorrt-api/c_api/classnvinfer1_1_1_i_plugin_v2_dynamic_ext.html) | 6.0.1                          | 一般的             | Yes        | 仅显式批处理模式          |
 
 为了在网络中使用插件，您必须首先使用 TensorRT 的 `PluginRegistry` (C ++, Python) 注册它。您为插件注册工厂类的一个实例，该工厂类派生自 `PluginCreator` (C ++, Python) ，而不是直接注册插件。插件创建器类还提供有关插件的其他信息：其名称、版本和插件字段参数。
 
