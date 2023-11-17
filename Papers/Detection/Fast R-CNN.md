@@ -1,4 +1,4 @@
-# [Fast R-CNN](https://arxiv.org/pdf/1504.08083.pdf)
+# [Fast R-CNN](https://arxiv.org/abs/1504.08083)
 
 ## Abstract
 
