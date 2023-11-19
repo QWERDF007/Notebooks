@@ -2,7 +2,7 @@
 
 ## Abstract
 
-这篇论文提出了一种基于区域的快速卷积神经网络方法（Fast R-CNN）用于目标检测。Fast R-CNN 在之前的工作基础上，使用深度卷积神经网络高效地分类候选区域。与以前的工作相比，Fast R-CNN 采用了多种创新来提高训练和测试速度，同时还提高了检测精度。Fast R-CNN 训练非常深的 VGG16 网络比 R-CNN 快 9 倍，测试速度快 213 倍，并在 PASCAL VOC 2012 上实现了更高的 mAP。与 SPPnet 相比，Fast R-CNN 训练 VGG16 快 3 倍，测试快 10 倍，并且更准确。Fast R-CNN 使用 Python 和 C++（使用Caffe）实现，并在开源 MIT许可下可用 https://github.com/rbgirshick/fast-rcnn。
+这篇论文提出了一种基于区域的快速卷积神经网络方法（Fast R-CNN）用于目标检测。Fast R-CNN 在之前的工作基础上，使用深度卷积神经网络高效地分类候选区域。与以前的工作相比，Fast R-CNN 采用了多种创新来提高训练和测试速度，同时还提高了检测精度。Fast R-CNN 训练非常深的 VGG16 网络比 R-CNN 快 9 倍，测试速度快 213 倍，并在 PASCAL VOC 2012 上实现了更高的 mAP。与 SPPnet 相比，Fast R-CNN 训练 VGG16 快 3 倍，测试快 10 倍，并且更准确。Fast R-CNN 使用 Python 和 C++（使用Caffe）实现，并在开源 MIT许可下可用 https://github.com/rbgirshick/fast-rcnn 。
 
 ## 1. Introduction
 
