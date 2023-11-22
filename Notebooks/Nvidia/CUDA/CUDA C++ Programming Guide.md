@@ -51,7 +51,7 @@ CUDA 并行编程模型旨在克服这一挑战，同时为熟悉 C 等标准编
 ## 1.4. Document Structure
 
 - [Introduction](#1-Introduction) 是对 CUDA 的一般介绍。
-- [Programming Model](#2-Programming-Model) 概述了 CUDA 编程模型。
+- [Programming Model](#2.-Programming-Model) 概述了 CUDA 编程模型。
 
 # 2. Programming Model
 
@@ -165,7 +165,83 @@ int main()
 
 ### 2.2.1. Thread Block Clusters
 
+随着 NVIDIA [Compute Capability 9.0](#16.8. Compute Capability 9.0) 的推出，CUDA 编程模型引入了一个可选的层次结构级别，称为由线程块组成的线程块集群。类似于线程块中的线程被保证在流处理器上同时调度，线程块集群中的线程块也被保证在 GPU 处理集群 (GPC) 上同时调度。
 
+类似于线程块，集群也可以组织成一维、二维或三维，如图5所示。集群中的线程块数量可以由用户定义，并且集群中最多支持 8 个线程块作为 CUDA 中一个可移植的集群大小。注意，在 GPU 硬件或 MIG 配置上太小上而无法支持 8 个多处理器时，最大集群大小将相应减小。这些较小配置以及支持超过 8 个线程块集群大小的更大配置的标识是特定于架构的，可以通过 `cudaOccupancyMaxPotentialClusterSize` API 查询。
+
+<img src="./assets/CUDA-C++-guide-fig5.jpg">
+
+**图 5**：线程块集群
+
+> Note：
+>
+> 在使用集群支持启动的内核中，出于兼容性目的，gridDim 变量仍然表示线程块数量的大小。可以使用 Cluster Group API 找到集群中块的排名。
+
+可以使用编译器时期内核属性 `__cluster_dims__(X,Y,Z)` 或使用 CUDA 内核启动 API  `cudaLaunchKernelEx` 在内核中启用线程块集群。下面的示例展示了如何使用编译器时期内核属性启动集群。使用属性定义的集群大小在编译时固定，然后可以使用经典的 `<<< , >>>` 启动内核。如果内核使用编译器时期的集群大小，则在启动内核时无法修改集群大小。
+
+```c++
+// Kernel definition
+// Compile time cluster size 2 in X-dimension and 1 in Y and Z dimension
+__global__ void __cluster_dims__(2, 1, 1) cluster_kernel(float *input, float* output)
+{
+
+}
+
+int main()
+{
+    float *input, *output;
+    // Kernel invocation with compile time cluster size
+    dim3 threadsPerBlock(16, 16);
+    dim3 numBlocks(N / threadsPerBlock.x, N / threadsPerBlock.y);
+
+    // The grid dimension is not affected by cluster launch, and is still enumerated
+    // using number of blocks.
+    // The grid dimension must be a multiple of cluster size.
+    cluster_kernel<<<numBlocks, threadsPerBlock>>>(input, output);
+}
+```
+
+线程块集群大小也可以在运行时设置，内核可以使用 CUDA 内核启动 API `cudaLaunchKernelEx` 启动。下面的代码示例展示了如何使用可扩展 API 启动集群内核。
+
+```c++
+// Kernel definition
+// No compile time attribute attached to the kernel
+__global__ void cluster_kernel(float *input, float* output)
+{
+
+}
+
+int main()
+{
+    float *input, *output;
+    dim3 threadsPerBlock(16, 16);
+    dim3 numBlocks(N / threadsPerBlock.x, N / threadsPerBlock.y);
+
+    // Kernel invocation with runtime cluster size
+    {
+        cudaLaunchConfig_t config = {0};
+        // The grid dimension is not affected by cluster launch, and is still enumerated
+        // using number of blocks.
+        // The grid dimension should be a multiple of cluster size.
+        config.gridDim = numBlocks;
+        config.blockDim = threadsPerBlock;
+
+        cudaLaunchAttribute attribute[1];
+        attribute[0].id = cudaLaunchAttributeClusterDimension;
+        attribute[0].val.clusterDim.x = 2; // Cluster size in X-dimension
+        attribute[0].val.clusterDim.y = 1;
+        attribute[0].val.clusterDim.z = 1;
+        config.attrs = attribute;
+        config.numAttrs = 1;
+
+        cudaLaunchKernelEx(&config, cluster_kernel, input, output);
+    }
+}
+```
+
+在 compute capability 9.0 的 GPU 中，集群中的所有线程块都保证在单个GPU处理集群 (GPC) 上共同调度，并允许集群中的线程块使用 Cluster Group API  `cluster.sync()` 执行硬件支持的同步。集群组还提供了成员函数来查询集群组大小，即线程数目的 `num_threads()` 和块数目的 `num_blocks()` API。集群组中线程或块的 rank 可以分别通过 `dim_threads()` 和 `dim_blocks()` API查询。
+
+属于一个集群的线程块可以访问分布式共享内存 (Distributed Shared Memory)。集群中的线程块有能力对分布式共享内存中的任意地址进行读、写和原子操作。[分布式共享内存](#3.2.5. Distributed Shared Memory)给出了在分布式共享内存中执行直方图的示例。
 
 # 3. Programming Interface
 
@@ -178,6 +254,12 @@ int main()
 ### 3.2.4. Shared Memory
 
 
+
+
+
+
+
+### 3.2.5. Distributed Shared Memory
 
 
 
@@ -221,9 +303,9 @@ int main()
 
 
 
+# 16. Compute Capabilities
 
-
-
+## 16.8. Compute Capability 9.0
 
 
 
