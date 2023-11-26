@@ -37,6 +37,14 @@ $ conda install -c pytorch faiss-gpu
 $ conda install -c pytorch faiss-gpu cudatoolkit=10.2 # for CUDA 10.2
 ```
 
+windows 安装 1.7.4，直接查看 [conda 对应的安装信息](https://anaconda.org/conda-forge/faiss-gpu)
+
+```bash
+conda install -c conda-forge faiss-gpu=1.7.4 mkl=2021 blas=1.0=mkl cudatoolkit=11.8
+```
+
+注意：指定 cuda 版本避免与后续安装 torch 不一致
+
 ## 入门指南
 
 ### 准备数据
