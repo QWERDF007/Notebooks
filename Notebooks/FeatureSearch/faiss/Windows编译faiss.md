@@ -51,7 +51,7 @@ set MKLROOT=D:/Software/dev/mkl/mkl
 ## 4. cmake 配置
 
    ```bash
-   cmake -G "Visual Studio 16 2019" -T host=x64 -DFAISS_ENABLE_GPU=ON -DFAISS_ENABLE_PYTHON=OFF -DFAISS_ENABLE_RAFT=OFF -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DBLA_VENDOR=Intel10_64ilp -DCUDAToolkit_ROOT="C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8" -DCMAKE_CUDA_ARCHITECTURES="89;86" -DCMAKE_INSTALL_PREFIX=../install  ..
+   cmake -G "Visual Studio 16 2019" -T host=x64 -DFAISS_ENABLE_GPU=ON -DFAISS_ENABLE_PYTHON=OFF -DFAISS_ENABLE_RAFT=OFF -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DBLA_VENDOR=Intel10_64lp -DCUDAToolkit_ROOT="C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8" -DCMAKE_CUDA_ARCHITECTURES="89;86" -DCMAKE_INSTALL_PREFIX=../install  ..
    ```
 
    - `FAISS_ENABLE_GPU`：是否支持 GPU
@@ -68,4 +68,19 @@ set MKLROOT=D:/Software/dev/mkl/mkl
    cmake --build . --config Release -j --target install
    ```
 
-   
+## FAQ
+
+1. 执行 search 崩溃闪退
+
+   拷贝相应的 dll 文件
+
+   - `faiss.dll`
+   - `mkl_intel_thread.2.dll`
+   - `mkl_core.2.dll`
+   - `libiomp5md.dll`
+
+2. 运行过程被轰炸：Intel MKL ERROR: Parameter 3 was incorrect on entry to SGEMM .
+
+   https://github.com/facebookresearch/faiss/issues/2641#issuecomment-1369095133
+
+3. 
