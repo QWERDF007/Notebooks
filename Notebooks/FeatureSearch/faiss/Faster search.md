@@ -80,7 +80,7 @@ print(I[-5:])                  # neighbors of the 5 last queries
 
 这是正确的结果。请注意，在这种情况下获得完美结果仅仅是数据分布的产物，因为它在 x 轴上有一个强大的成分，这使得它更容易处理。`nprobe` 参数始终是调整结果速度和准确性之间权衡的一种方式。设置 `nprobe = nlist` 给出与暴力搜索相同的结果 (但速度较慢)。
 
-# 更多
+# 进一步阅读
 
 - 上一章：[入门](<Getting started.md>)
 - 下一章：[更低的内存占用](<Lower memory footprint.md>)

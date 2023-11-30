@@ -30,5 +30,13 @@ $$
 
 ## Faiss 文档目录
 
+### Tutorial
+
 - [Installing Faiss](<Installing Faiss.md>)
 - [Getting started](<Getting started.md>)
+- [Faster search](<Faster search.md>)
+- [Lower memory footprint](<Lower memory footprint.md>)
+- [Running on GPUs](<Running on GPUs.md>)
+
+### Basics
+

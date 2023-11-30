@@ -167,7 +167,7 @@ int k = 4;
 
 在 2016 年的机器上执行上述搜索大约需要 3.3 秒。
 
-# 更多
+# 进一步阅读
 
 - 上一章：[安装 Faiss](<Installing Faiss.md>)
 - 下一章：[更快的搜索](<Faster search.md>)
