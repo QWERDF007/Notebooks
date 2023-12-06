@@ -1,4 +1,4 @@
-# 更快的搜索
+# [更快的搜索](https://github.com/facebookresearch/faiss/wiki/Faster-search)
 
 ## 这太慢了，怎样才能让它更快呢？
 
