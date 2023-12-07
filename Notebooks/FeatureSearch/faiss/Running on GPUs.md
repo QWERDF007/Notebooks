@@ -180,5 +180,5 @@ print(I[-5:])                  # neighbors of the 5 last queries
 # 进一部分阅读
 
 - 上一章：[更低的内存占用](<Lower memory footprint.md>)
-- 下一章：
+- 下一章：[指标类型和距离](<MetricType and distances.md>)
 
