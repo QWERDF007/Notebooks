@@ -68,3 +68,7 @@ $$
 对于余弦相似度和内积，只需查询相反的向量即可。
 
 对于 L2 距离，有一个涉及一个附加维度的技巧：[demo_farthest_L2.ipynb](https://gist.github.com/mdouze/c7653aaa8c3549b28bad75bd67543d34#file-demo_farthest_l2-ipynb)
+
+# 进一步阅读
+- 上一章：[在GPU上运行](<Running on GPUs.md>)
+- 下一章: []()
