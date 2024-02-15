@@ -14,6 +14,14 @@
 
 
 
+## 6. Advanced Topics
+
+### 6.1. Version Compatibility
+
+
+
+
+
 ## 9. 使用自定义层扩展 TensorRT
 
 NVIDIA TensorRT 支持许多类型的层，其功能不断扩展；但是，在某些情况下，支持的层可能无法满足模型的特定需求。在这种情况下，可以通过实现自定义层 (通常称为插件) 来扩展 TensorRT。
@@ -265,7 +273,7 @@ err, total_time = cudart.cudaEventElapsedTime(start, end)
 
 在测量性能时，建议您同时记录和监视 GPU 状态和推理工作负载。拥有监视数据可以帮助您在看到意外的性能测量结果时识别可能的根本原因。在推理开始之前，调用 `nvidia-smi -q` 命令以获取 GPU 的详细信息，包括产品名称、功率限制、时钟设置等。然后，在推理工作负载运行时，以并行方式运行 `nvidia-smi dmon -s pcu -f <FILE> -c <COUNT>` 命令，将 GPU 时钟频率、功耗、温度和利用率打印到文件中。调用 `nvidia-smi dmon --help` 以获取有关 nvidia-smi 设备监视工具的更多选项。
 
-#### 13.2.2. GPU Clock Locking and Floating Clock
+#### 13.2.2. GPU 时钟锁定和浮动时钟
 
 默认情况下，GPU 时钟频率是浮动的，这意味着当没有激活的工作负载时，时钟频率处于空闲频率，并在工作负载开始时提升到增强时钟频率。这通常是期许的行为，因为它允许 GPU 在空闲时产生较少的热量，并在有激活的工作负载时以最大速度运行。 
 
@@ -607,4 +615,166 @@ TensorRT 在构建阶段尝试在网络中执行许多不同类型的优化。�
 
 
 
+
+## 14. 故障排除
+
+以下部分帮助回答有关典型用例的最常见问题。
+
+### 14.1. FAQs
+
+**问：如何创建一个针对不同 batch 大小进行优化的engine ?**
+
+答：虽然 TensorRT 允许针对给定批量大小优化的 engine 在任意更小尺寸下运行，但这些较小尺寸的性能无法得到很好的优化。要针对多个不同的批量大小进行优化，请在 `OptProfilerSelector::kOPT` 指定的维度上创建优化配置文件。
+
+
+
+**问：校准表在不同 TensorRT 版本间可移植吗?**
+
+答：不可以。内部实现会不断优化，不同版本间可能会改变。因此，不能保证校准表与不同的 TensorRT 版本二进制兼容。当使用新 TensorRT 版本时，应用程序必须构建新的 `INT8` 校准表。
+
+
+
+**问： engines 在不同 TensorRT 版本间可移植吗?**
+
+答：默认情况下不可以。请参考[版本兼容性](#6.1. Version Compatibility)了解如何配置 engines 实现向前兼容。
+
+
+
+**问：如何选择最佳的工作空间大小?**
+
+答：一些 TensorRT 算法需要在 GPU 上额外的工作空间。`IBuilderConfig::setMemoryPoolLimit()` 方法控制可以分配的最大工作空间量，并防止需要更多工作空间的算法被 `builder` 考虑。在运行时，当创建 `IExecutionContext` 时，空间会自动分配。即使在 `IBuilderConfig::setMemoryPoolLimit()` 中设置的量更大，分配的量也不会超过所需。因此，应用程序应该尽可能为 TensorRT `builder` 提供尽可能多的工作空间；在运行时，TensorRT 只分配所需量，通常更少。
+
+
+
+**问：如何在多个 GPU 上使用 TensorRT ?**
+
+答：每个 `ICudaEngine` 对象在实例化时都会绑定到特定 GPU，无论是通过 `builder` 还是反序列化。要选择 GPU，在调用 builder 或反序列化 engine 之前使用 `cudaSetDevice()`。每个 `IExecutionContext` 与创建它的 engine 绑定在同一个 GPU 上。调用 `execute()` 或 `enqueue()` 时，如果需要，通过调用 `cudaSetDevice()` 确保线程与正确的设备相关联。
+
+> 在内存向 GPU 传递数据时，建议再次指定设备，否则这个复制线程可能不知道到底向哪个 GPU 传递
+>
+> 多卡多线程需要在创建实例和上下文、推理、拷贝数据前指定设备，否则可能会遭遇错误：**Cask Error in checkCaskExecError<false>: 7 (Cask Convolution execution) **
+>
+> 参考：
+>
+> 1. https://github.com/NVIDIA/TensorRT/issues/219#issuecomment-559249117
+> 2. https://github.com/NVIDIA/TensorRT/issues/301#issuecomment-687630290
+> 3. https://blog.csdn.net/qq_36184671/article/details/114115249
+
+
+
+**问：如何从库文件中获取 TensorRT 的版本?**
+
+答：符号表中有一个名为 `tensorrt_version_#_#_#_#` 的符号包含了 TensorRT 的版本号。在 Linux 上获取这个符号的一种方法是使用 `nm` 命令，如下面的例子:
+
+```bash
+nm -D libnvinfer.so.* | grep tensorrt_version
+```
+
+输出类似下面
+
+```
+00000000abcd1234 B tensorrt_version_#_#_#_#
+```
+
+
+
+**问：如果我的网络生成了错误的结果，我该如何排查?**
+
+答：您的网络生成错误结果有几个可能的原因。这里有一些可以帮助诊断问题的故障排除方法:
+
+- 打开日志流中的 `VERBOSE` 级别消息，并检查 TensorRT 的报告。
+
+- 检查您的输入预处理是否准确生成网络所需的输入格式。
+
+- 如果您使用的是降低的精度，请用 `FP32` 运行网络。如果它生成了正确的结果，则较低的精度可能导致网络的动态范围不足。
+
+- 尝试将网络中的中间张量标记为输出，并验证它们是否与您的预期匹配。
+
+  注意：将张量标记为输出可能会抑制优化，从而改变结果。
+
+您可以使用 [NVIDIA Polygraphy](https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy) 来协助调试和诊断。
+
+
+
+**问：如何 在TensorRT 中实现批量标准化?**
+
+答：批量标准化可以在 TensorRT 中使用一系列 `IElementWiseLayer` 来实现。具体而言:
+
+    adjustedScale = scale / sqrt(variance + epsilon)
+    batchNorm = (input + bias - (adjustedScale * mean)) * adjustedScale
+
+
+
+**问：为什么使用 DLA 时我的网络运行速度比不使用 DLA 时慢?**
+
+答：DLA 被设计为最大化能效。根据 DLA 支持的特性和 GPU 支持的特性，任一实现都可能更高效。使用哪个实现取决于您的延迟或吞吐量要求以及功耗预算。由于所有 DLA 引擎独立于 GPU 和彼此独立，您也可以同时使用两种实现以进一步提高网络的吞吐量。
+
+
+
+**问：TensorRT 目前是否支持 INT4 或 INT16 量化?**
+
+答：TensorRT 目前还不支持 `INT4` 或 `INT16` 量化。
+
+
+
+**问：TensorRT 的 UFF 解析器什么时候会支持我的网络所需的 XYZ 层?**
+
+答：UFF 已被废弃。我们建议用户将工作流切换到 ONNX。TensorRT ONNX 解析器是一个开源项目。
+
+
+
+**问：我可以使用多个 TensorRT builder 在不同目标上进行编译吗?**
+
+答：TensorRT 假设它所在的构建设备的所有资源在优化过程中都是可用的。并发使用多个 TensorRT `builder` (例如，多个 `trtexec` 实例) 在不同目标 (DLA0、DLA1 和 GPU) 上进行编译可能会过度订阅系统资源，导致未定义的行为 (即低效计划、构建失败或系统不稳定)。
+
+建议您使用 `trtexec` 和 `--saveEngine` 参数分别为不同目标 (DLA 和 GPU) 编译并保存其 plan 文件。然后，这些 plan 文件可以用于加载 (使用带有 `--loadEngine` 参数的 `trtexec`) 并在各自的目标 (DLA0、DLA1、GPU) 上提交多个推理作业。这种两步过程可以减轻构建阶段的资源过度订阅，同时允许执行 plan 文件而不受 `builder` 干扰。
+
+
+
+**问：哪些层被 Tensor Core 加速?**
+
+答：大多数算力密集的操作将由 tensor cores 加速—卷积、反卷积、全连接和矩阵乘法。在某些情况下，特别是对于小的通道数或小的组尺寸 (group sizes)，可能会选择另一种实现而不是 tensor core 实现，因为它可能更快。
+
+
+
+**问：为什么观察到 reformatting 层，尽管没有警告消息“没有实现遵守无 reformatting 规则”?**
+
+答：无 reformatting 网络输入输出并不意味着整个网络中不插入 reformatting 层。仅意味着网络输入输出张量有可能不需要 reformatting 层。换句话说，TensorRT 可以为内部张量插入 reformatting 层以提高性能。
+
+
+
+### 14.2. 理解错误消息
+
+如果在执行过程中遇到错误，TensorRT 会报告一条错误消息，旨在帮助调试问题。以下部分讨论了开发人员可能遇到的一些常见错误消息。
+
+#### UFF 解析器错误消息
+
+下表捕获了常见的 UFF 解析器错误消息。
+
+| 错误信息                                                     | 描述                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `The input to the Scale Layer is required to have a minimum of 3 dimensions.` | 由于输入尺寸不正确，可能会出现此错误消息。在 UFF 中，输入维度应始终使用规范中未包含的隐式批量维度来指定。 |
+| `Invalid scale mode, nbWeights: <X>                          | 同上                                                         |
+| `kernel weights has count <X> but <Y> was expected`          | 同上                                                         |
+| `<NODE> Axis node has op <OP>, expected Const. The axis must be specified as a Const node.` | 如错误消息所示，轴必须是构建时间常量，以便 UFF 正确解析节点。 |
+
+#### ONNX 解析器错误消息
+
+下表捕获了常见的 ONNX 解析器错误消息。有关特定 ONNX 节点支持的更多信息，请参阅[运营商支持](https://github.com/onnx/onnx/blob/main/docs/Operators.md)文档。
+
+| 错误信息                                                     | 描述                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `<X> must be an initializer!`                                | 这些错误消息意味着 ONNX 节点输入张量在 TensorRT 中预期是初始化器。一个可能的解决方法是使用 TensorRT 的 Polygraphy 工具对模型运行常量折叠：`polygraphy surgeon sanitize model.onnx --fold-constants --output model_folded.onnx` |
+| `!inputs.at(X).is_weights()`                                 | 同上                                                         |
+| `getPluginCreator() could not find Plugin <operator name> version 1` | 这是一个错误，表明 ONNX 解析器没有为特定运算符定义的导入函数，并且在加载的注册表中没有找到该运算符的相应插件。 |
+
+#### TensorRT 核心库错误消息
+
+下表捕获了常见的 TensorRT 核心库错误消息。
+
+|                | 错误信息                                                     | 描述                                                         |
+| -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **安装错误**   | `Cuda initialization failure with error <code>. Please check cuda installation: `http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html. | 如果 CUDA 或 NVIDIA 驱动程序安装损坏，可能会出现此错误消息。请参阅该 URL，了解有关在操作系统上安装 CUDA 和 NVIDIA 驱动程序的说明。 |
+| **生成器错误** | `Internal error: could not find any implementation for node <name>. Try increasing the workspace size with IBuilderConfig::setMemoryPoolLimit().` | 出现此错误消息的原因是网络中的给定节点没有可以在给定工作空间大小下运行的层实现。发生这种情况通常是因为工作空间大小不足，但也可能表明存在错误。如果按照建议增加工作区大小没有帮助，请报告错误（请参阅[报告 TensorRT 问题](https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#reporting-issues)）。 |
+|                | `<layer-name>: (kernel|bias) weights has non-zero count but null ` `values <layer-name>: (kernel|bias) weights has zero count but non-null values` | 当传递给构建器的权重数据结构中的值和计数字段不匹配时，会出现此错误消息。如果计数是 0，那么 `values` 字段必须包含空指针；否则，计数必须非零，并且值必须包含非空指针。 |
 
