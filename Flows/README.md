@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| Flows | 一些流程图 | 4 | [README :link:](<./Flows/README.md>) |
+| Flows | 一些流程图 | 4 | [README :link:](<README.md>) |
 ### What's New ?
 
 <details><summary><em>[点击展开]</em></summary>

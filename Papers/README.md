@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| Papers | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<./Papers/README.md>) |
+| Papers | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<README.md>) |
 ### What's New ?
 
 <details><summary><em>[点击展开]</em></summary>

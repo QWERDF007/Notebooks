@@ -145,18 +145,21 @@ class FolderGenerator(ReadmeGenerator):
     def title(self) -> str:
         return f'## {self.icon} {self.folder}\n\n'
 
-    def content(self, with_whats_new: bool = False):
+    def content(self, link_with_folder: bool = True, with_whats_new: bool = False):
         if with_whats_new:
-            content = self.title() + self.table() + self.whats_new()
+            content = self.title() + self.table(link_with_folder) + self.whats_new()
         else:
-            content = self.title() + self.table()
+            content = self.title() + self.table(link_with_folder)
         return content
     
-    def table(self):
-        return self.table_title() + self.table_content()
+    def table(self, link_with_folder: bool = True):
+        return self.table_title() + self.table_content(link_with_folder)
 
-    def table_content(self):
-        content = f'| {self.folder} | {self.desc} | {self.count()} | [README :link:](<{self.readme}>) |\n'
+    def table_content(self, link_with_folder: bool = True):
+        if link_with_folder:
+            content = f'| {self.folder} | {self.desc} | {self.count()} | [README :link:](<{self.readme}>) |\n'
+        else:
+            content = f'| {self.folder} | {self.desc} | {self.count()} | [README :link:](<README.md>) |\n'
         return content
 
     def table_title(self):
@@ -203,25 +206,25 @@ if __name__ == '__main__':
 
     with open('Papers/README.md', 'w', encoding='utf-8') as f:
         papers_generator = FolderGenerator('Papers', ":book:", '论文翻译, 主要是计算机视觉的相关论文', ['assets'])
-        content = papers_generator.content()
+        content = papers_generator.content(False)
         content += papers_generator.whats_new()
         f.write(content)
     
     with open('Notebooks/README.md', 'w', encoding='utf-8') as f:
         notebooks_generator = FolderGenerator('Notebooks', ":notebook:", '杂七杂八的笔记', ['assets'])
-        content = notebooks_generator.content()
+        content = notebooks_generator.content(False)
         content += notebooks_generator.whats_new()
         f.write(content)
 
     with open('Code/README.md', 'w', encoding='utf-8') as f:
         code_generator = FolderGenerator('Code', ":computer:", '一些修改过的代码以及一些算法实现', ['assets'])
-        content = code_generator.content()
+        content = code_generator.content(False)
         content += code_generator.whats_new()
         f.write(content)
 
     with open('Flows/README.md', 'w', encoding='utf-8') as f:
         flows_generator = FolderGenerator('Flows', ":traffic_light:", '一些流程图', ['assets'])
-        content = flows_generator.content()
+        content = flows_generator.content(False)
         content += flows_generator.whats_new()
         f.write(content)
     
