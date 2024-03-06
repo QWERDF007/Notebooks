@@ -10,7 +10,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| Papers | 论文翻译, 主要是计算机视觉的相关论文 | 70 | [README :link:](<./Papers/README.md>) |
+| Papers | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<./Papers/README.md>) |
 ## :notebook: Notebooks
 
 | 目录 | 描述 | 数量 | 链接 |

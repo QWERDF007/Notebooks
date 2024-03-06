@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| Papers | 论文翻译, 主要是计算机视觉的相关论文 | 70 | [README :link:](<./Papers/README.md>) |
+| Papers | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<./Papers/README.md>) |
 ### What's New ?
 
 <details><summary><em>[点击展开]</em></summary>
@@ -30,35 +30,10 @@
 - 2023-04-17 [Segment Anything.md](<Segmentation/Segment Anything.md>)
 - 2023-04-17 [GroupNormalization.md](<Normalization/GroupNormalization.md>)
 - 2023-04-17 [GAN.md](<GAN/GAN.md>)
-- 2023-04-17 [ESRGAN-9.jpg](<SuperResolution/pics/ESRGAN-9.jpg>)
-- 2023-04-17 [ESRGAN-8.jpg](<SuperResolution/pics/ESRGAN-8.jpg>)
-- 2023-04-17 [ESRGAN-7.jpg](<SuperResolution/pics/ESRGAN-7.jpg>)
-- 2023-04-17 [ESRGAN-6.jpg](<SuperResolution/pics/ESRGAN-6.jpg>)
-- 2023-04-17 [ESRGAN-5.jpg](<SuperResolution/pics/ESRGAN-5.jpg>)
-- 2023-04-17 [ESRGAN-4.jpg](<SuperResolution/pics/ESRGAN-4.jpg>)
-- 2023-04-17 [ESRGAN-3.jpg](<SuperResolution/pics/ESRGAN-3.jpg>)
-- 2023-04-17 [ESRGAN-2.jpg](<SuperResolution/pics/ESRGAN-2.jpg>)
-- 2023-04-17 [ESRGAN-10.jpg](<SuperResolution/pics/ESRGAN-10.jpg>)
-- 2023-04-17 [ESRGAN-1.jpg](<SuperResolution/pics/ESRGAN-1.jpg>)
 - 2023-04-17 [README.md](<SuperResolution/README.md>)
 - 2023-04-17 [ESRGAN.md](<SuperResolution/ESRGAN.md>)
 - 2023-04-17 [Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md](<ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md>)
 - 2023-04-17 [README.md](<ShadowRemoval/README.md>)
-- 2023-04-17 [MAE-T-6.jpg](<SelfSupervised/pics/MAE-T-6.jpg>)
-- 2023-04-17 [MAE-T-5.jpg](<SelfSupervised/pics/MAE-T-5.jpg>)
-- 2023-04-17 [MAE-T-4.jpg](<SelfSupervised/pics/MAE-T-4.jpg>)
-- 2023-04-17 [MAE-T-3.jpg](<SelfSupervised/pics/MAE-T-3.jpg>)
-- 2023-04-17 [MAE-T-2.jpg](<SelfSupervised/pics/MAE-T-2.jpg>)
-- 2023-04-17 [MAE-T-1.jpg](<SelfSupervised/pics/MAE-T-1.jpg>)
-- 2023-04-17 [MAE-9.jpg](<SelfSupervised/pics/MAE-9.jpg>)
-- 2023-04-17 [MAE-8.jpg](<SelfSupervised/pics/MAE-8.jpg>)
-- 2023-04-17 [MAE-7.jpg](<SelfSupervised/pics/MAE-7.jpg>)
-- 2023-04-17 [MAE-6.jpg](<SelfSupervised/pics/MAE-6.jpg>)
-- 2023-04-17 [MAE-5.jpg](<SelfSupervised/pics/MAE-5.jpg>)
-- 2023-04-17 [MAE-4.jpg](<SelfSupervised/pics/MAE-4.jpg>)
-- 2023-04-17 [MAE-3.jpg](<SelfSupervised/pics/MAE-3.jpg>)
-- 2023-04-17 [MAE-2.jpg](<SelfSupervised/pics/MAE-2.jpg>)
-- 2023-04-17 [MAE-1.jpg](<SelfSupervised/pics/MAE-1.jpg>)
 - 2023-04-17 [README.md](<SelfSupervised/README.md>)
 - 2023-04-17 [MAE.md](<SelfSupervised/MAE.md>)
 - 2023-04-17 [DeepLabv3Plus.md](<Segmentation/DeepLabv3Plus.md>)
