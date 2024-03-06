@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
-import importlib
+
+
+FINISHED_FLAG = '<!-- 完成标志, 看不到, 请忽略! -->'
 
 FOLDERS = [
     'Papers',
@@ -89,6 +91,26 @@ def get_files_count(folder : Path, exclude_list: list = []) -> int:
         int: 文件数量
     """
     return len(get_files(folder, exclude_list))
+
+def is_file_finished(file: Path) -> bool:
+    """判断文件是否已完成
+
+    Args:
+        file (Path): 文件路径
+
+    Returns:
+        bool: 是否已完成
+    """
+    if isinstance(file, str):
+        file = Path(file)
+    if not file.suffix == '.md':
+        return False
+    with open(file, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+        if len(lines) == 0:
+            return False
+        last_line = lines[-1]
+        return last_line.strip() == FINISHED_FLAG
 
 
 class ReadmeGenerator(ABC):
@@ -190,11 +212,13 @@ class FolderGenerator(ReadmeGenerator):
         
         mtimes = [get_file_mtime(file) for file in files]
         sorted_files_mtimes = [(mtime,file) for mtime, file in sorted(zip(mtimes, files), reverse=True)]
-
-        
         
         for mtime, file in sorted_files_mtimes:
-            content += f'- {format_mtime(mtime)} [{file.name}](<{file.relative_to(self.folder).as_posix()}>)\n'
+            if file.name != 'README.md' and file.suffix == '.md':
+                check = EMOJI['check'] if is_file_finished(file) else EMOJI['cross']
+                content += f'- {check} {format_mtime(mtime)} [{file.name}](<{file.relative_to(self.folder).as_posix()}>)\n'
+            else:
+                content += f'- {format_mtime(mtime)} [{file.name}](<{file.relative_to(self.folder).as_posix()}>)\n'
 
         content += "\n</details>\n\n"
         return content
