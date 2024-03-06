@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| Code | 一些修改过的代码以及一些算法实现 | 11 | [README :link:](<README.md>) |
+| [Code](./) | 一些修改过的代码以及一些算法实现 | 11 | [README :link:](<README.md>) |
 ### What's New ?
 
 <details><summary><em>[点击展开]</em></summary>

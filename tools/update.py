@@ -157,9 +157,9 @@ class FolderGenerator(ReadmeGenerator):
 
     def table_content(self, link_with_folder: bool = True):
         if link_with_folder:
-            content = f'| {self.folder} | {self.desc} | {self.count()} | [README :link:](<{self.readme}>) |\n'
+            content = f'| [{self.folder}]({self.folder}) | {self.desc} | {self.count()} | [README :link:](<{self.readme}>) |\n'
         else:
-            content = f'| {self.folder} | {self.desc} | {self.count()} | [README :link:](<README.md>) |\n'
+            content = f'| [{self.folder}](./) | {self.desc} | {self.count()} | [README :link:](<README.md>) |\n'
         return content
 
     def table_title(self):
