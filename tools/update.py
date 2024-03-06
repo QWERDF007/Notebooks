@@ -211,7 +211,7 @@ if __name__ == '__main__':
         f.write(content)
     
     with open('Notebooks/README.md', 'w', encoding='utf-8') as f:
-        notebooks_generator = FolderGenerator('Notebooks', ":notebook:", '杂七杂八的笔记', ['assets'])
+        notebooks_generator = FolderGenerator('Notebooks', ":notebook:", '杂七杂八的笔记, 包括一些C++、Python、深度学习的', ['assets'])
         content = notebooks_generator.content(False)
         content += notebooks_generator.whats_new()
         f.write(content)
@@ -237,6 +237,11 @@ if __name__ == '__main__':
     content += flows_generator.content()
     with open('README.md', 'w', encoding='utf-8') as f:
         f.write(content)
+        f.write("\n\n")
+        star_history = "## :star: Star History\n\n" \
+                       "[![Star History Chart](https://api.star-history.com/svg?repos=QWERDF007/Notebooks&type=Date)](https://star-history.com/#QWERDF007/Notebooks&Date)"
+        f.write(star_history)
+        f.write("\n\n")
 
     print("Done!")
 
