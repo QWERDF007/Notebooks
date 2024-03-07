@@ -5,7 +5,7 @@
 | [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<README.md>) |
 ### What's New ?
 
-#### AnomalyDetection (:white_check_mark: : 2 :x: : 0)
+#### AnomalyDetection (:white_check_mark:  2 :x:  0)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -15,7 +15,7 @@
 
 </details>
 
-#### CAM (:white_check_mark: : 0 :x: : 1)
+#### CAM (:white_check_mark:  0 :x:  1)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -24,7 +24,7 @@
 
 </details>
 
-#### Classification (:white_check_mark: : 3 :x: : 2)
+#### Classification (:white_check_mark:  3 :x:  2)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -37,7 +37,7 @@
 
 </details>
 
-#### Deformation (:white_check_mark: : 1 :x: : 0)
+#### Deformation (:white_check_mark:  1 :x:  0)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -46,7 +46,7 @@
 
 </details>
 
-#### Detection (:white_check_mark: : 2 :x: : 5)
+#### Detection (:white_check_mark:  2 :x:  5)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -61,7 +61,7 @@
 
 </details>
 
-#### Diffusion (:white_check_mark: : 0 :x: : 5)
+#### Diffusion (:white_check_mark:  0 :x:  5)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -74,7 +74,7 @@
 
 </details>
 
-#### GAN (:white_check_mark: : 3 :x: : 4)
+#### GAN (:white_check_mark:  3 :x:  4)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -89,7 +89,7 @@
 
 </details>
 
-#### ImageGeneration (:white_check_mark: : 0 :x: : 1)
+#### ImageGeneration (:white_check_mark:  0 :x:  1)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -98,7 +98,7 @@
 
 </details>
 
-#### NLP (:white_check_mark: : 0 :x: : 1)
+#### NLP (:white_check_mark:  0 :x:  1)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -107,7 +107,7 @@
 
 </details>
 
-#### Normalization (:white_check_mark: : 1 :x: : 0)
+#### Normalization (:white_check_mark:  1 :x:  0)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -116,7 +116,7 @@
 
 </details>
 
-#### Segmentation (:white_check_mark: : 3 :x: : 0)
+#### Segmentation (:white_check_mark:  3 :x:  0)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -127,7 +127,7 @@
 
 </details>
 
-#### SelfSupervised (:white_check_mark: : 1 :x: : 0)
+#### SelfSupervised (:white_check_mark:  1 :x:  0)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -136,7 +136,7 @@
 
 </details>
 
-#### ShadowRemoval (:white_check_mark: : 0 :x: : 1)
+#### ShadowRemoval (:white_check_mark:  0 :x:  1)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -145,7 +145,7 @@
 
 </details>
 
-#### SuperResolution (:white_check_mark: : 0 :x: : 1)
+#### SuperResolution (:white_check_mark:  0 :x:  1)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -154,7 +154,7 @@
 
 </details>
 
-#### Transformer (:white_check_mark: : 0 :x: : 2)
+#### Transformer (:white_check_mark:  0 :x:  2)
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
