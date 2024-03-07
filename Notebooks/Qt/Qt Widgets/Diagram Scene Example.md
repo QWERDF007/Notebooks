@@ -1405,3 +1405,7 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 ```
 
 如果选中了该线，我们将绘制两条与箭头线段平行的虚线。我们不使用默认的实现，它使用 `boundingRect()`，因为 `QRect` 边界矩形比线段大得多。
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

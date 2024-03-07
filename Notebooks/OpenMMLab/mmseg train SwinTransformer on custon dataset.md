@@ -225,3 +225,9 @@ python tools/train.py configs/swin/upernet_swin_base_patch4_window7_512x512_160k
 ```
 
 logs and checkpoints will be saved on `WORK_DIR`
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->
