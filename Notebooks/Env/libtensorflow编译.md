@@ -164,3 +164,9 @@ bazel --output_user_root=/home/14T/bazel_build  build --config=opt --config=mono
 将生成的 `libtensorflow_cc.so` 所在目录 `bazel-bin/tensorflow` 的绝对路径添加到项目的 `CMakeList.txt` 的 `link_directories`
 
 最后将 `tensorflow_cc` 添加到 `CMakeLists.txt` 的 `link_libraries` 编译项目即可
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

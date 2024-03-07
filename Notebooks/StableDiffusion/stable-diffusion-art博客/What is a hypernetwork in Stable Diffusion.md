@@ -161,3 +161,6 @@ drawing male leather jacket cyberpunk 2077 on a city street by WoD1 <hypernet:go
 - [NovelAI’s improvements on Stable Diffusion](https://blog.novelai.net/novelai-improvements-on-stable-diffusion-e10d38db82ac) – 请参见 "Hypernetworks" 部分以了解他们的贡献。其他改进也很有趣。
 - [Adding Conditional Control to Text-to-Image Diffusion Models](https://arxiv.org/abs/2302.05543) – 这是ControlNet论文，但第2.1节 (相关工作) 包含了超网络的说明。
 
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

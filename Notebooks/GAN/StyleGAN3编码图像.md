@@ -103,3 +103,9 @@ synth = G.synthesis(w)
 ## 图像插值
 
 对两张图像编码生成的 `w` 进行混合 $w_o = \alpha \cdot w_1 + (1 - \alpha) \cdot w_2$ 。
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

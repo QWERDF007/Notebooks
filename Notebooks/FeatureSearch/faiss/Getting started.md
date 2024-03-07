@@ -172,3 +172,8 @@ int k = 4;
 - 上一章：[安装 Faiss](<Installing Faiss.md>)
 - 下一章：[更快的搜索](<Faster search.md>)
 
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

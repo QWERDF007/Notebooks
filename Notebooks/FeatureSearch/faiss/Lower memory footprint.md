@@ -115,3 +115,9 @@ faiss::Index *index = faiss::index_factory(d, "IVF100,PQ8");
 上一章：[更快的搜索](<Faster search.md>)
 
 下一节：[在 GPU 上运行](<Running on GPUs.md>)
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

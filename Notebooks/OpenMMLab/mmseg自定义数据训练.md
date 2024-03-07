@@ -314,3 +314,8 @@ python tools/test.py ${CONFIG_FILE} ${CHECKPOINT_FILE} [--out ${RESULT_FILE}] [-
 - --show-dir：可视化结果保存到指定目录
 - --eval-options：评估时的可选参数
 
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

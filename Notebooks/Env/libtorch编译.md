@@ -86,3 +86,9 @@ cp -r torch/include build
 [issue#42018](https://github.com/pytorch/pytorch/issues/42018#issuecomment-664526309) 在 `CMakeLists.txt` 添加 `set(CMAKE_LINK_WHAT_YOU_USE TRUE)` 这个也行。
 
 [issue#36437](https://github.com/pytorch/pytorch/issues/36437#issuecomment-612992717)
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

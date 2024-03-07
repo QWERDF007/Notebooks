@@ -217,3 +217,9 @@ python tools/train.py configs/swin/upernet_swin_base_patch4_window7_512x512_160k
 ```
 
 日志和 Checkpoints 会保存到指定的 `WORK_DIR` 内。
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

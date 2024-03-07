@@ -62,3 +62,6 @@ if (QLabel *label = qobject_cast<QLabel *>(obj)) {
 
 另请参见 [QMetaObject](https://doc.qt.io/qt-6/qmetaobject.html)、[Qt 的属性系统](<./The Property System.md>) 和 [信号和槽](<./Signals & Slots.md>)。
 
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

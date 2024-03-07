@@ -10,7 +10,7 @@
 
 这种对数据的需求已经通过自监督预训练在自然语言处理 (NLP) 中成功解决。基于 GPT 中的自回归语言建模和 [BERT](https://arxiv.org/pdf/1810.04805.pdf) 中的掩码自编码的解决方案在概念是很简单：它们移除一部分数据，然后学习预测移除的内容。这些方法现在可以训练包含超过一千亿参数的可泛化的 NLP 模型。
 
-<span id="figure1"><img src= "pics/MAE-1.jpg" style="zoom:100%;"></span>
+<span id="figure1"><img src= "./assets/MAE-1.jpg" style="zoom:100%;"></span>
 
 遮蔽的自编码器的思想，一种更通用的去噪自编码器的形式，自然且适用于计算机视觉。事实上，在 BERT 之前就有与视觉相关的研究。然而，尽管随着 BERT 的成功，对这个想法产生了浓厚的兴趣，但在视觉中自编码方法的进展落后于 NLP。作者问：是什么使视觉和语言之间的遮蔽自编码不同？作者试图从以下角度回答这个问题：
 
@@ -18,9 +18,9 @@
 
 (ii) 语言和视觉的信息密度是不同的。语言是人类生成的具有高度语义的且信息密集的信号。当训练一个模型来预测每个句子中一些缺失的单词时，这个任务似乎会导致复杂的语言理解。相反，图像是具有大量空间冗余的自然信号——例如，通过对部分、对象和场景的很少的高级理解，可以从相邻的 patches 恢复缺失的 patches。为了克服这种差异，并鼓励学习有用的特征，作者展示了一个简单的策略在计算机视觉中效果良好：遮蔽很大一部分随机 patches。这种策略很大程度地减少了冗余，并创建了一项具有挑战性的自监督任务，需要超越低级图像统计的整体理解。要对作者的重建任务有一个定性的认识，参见图 [2](#figure 2) - [4](#figure 4)。
 
-<span id="figure2"><img src= "pics/MAE-2.jpg" style="zoom:100%;"></span>
+<span id="figure2"><img src= "./assets/MAE-2.jpg" style="zoom:100%;"></span>
 
-<img src= "pics/MAE-3.jpg" style="zoom:100%;">
+<img src= "./assets/MAE-3.jpg" style="zoom:100%;">
 
 (iii) 自编码器的解码器，将潜在的表征映射回输入，在重建文本和图像中扮演着不同的角色。在视觉中，解码器重建像素，因此其输出的语义级别低于通常的识别任务。这与语言相反，解码器预测包含丰富语义信息的缺失的词。虽然在 BERT 中，解码器可能不重要 (一个 MLP)，但作者发现对于图像，解码器的设计在确定学习到的潜在的表征的语义级别中起着关键作用。
 
@@ -28,7 +28,7 @@
 
 MAE 学习非常大容量的模型，可以很好地泛化。通过 MAE 预训练，可以在 ImageNet-1K 上训练 ViT-Large/-Huge 等数据饥渴的模型，并提高泛化性能。使用原生的 ViT-Huge 模型，作者在 ImageNet-1K 微调取得了 87.8% 的准确率。这优于之前仅使用 ImageNet-1K 数据的所有结果。作者还评估了目标检测、实例分割和语义分割的迁移学习。在这些任务中，作者的预训练比在对应任务的有监督的预训练取得更好的结果，更重要的是，作者观察到通过扩大模型获得显著受益。这些观察结果与 NLP 中自监督预训练中的观察结果一致，作者希望能够在这域中探索类似的轨迹。
 
-<span id="figure4"><img src= "pics/MAE-4.jpg" style="zoom:100%;"></span>
+<span id="figure4"><img src= "./assets/MAE-4.jpg" style="zoom:100%;"></span>
 
 ## 2. Related Work
 
@@ -60,7 +60,7 @@ MAE 解码器仅在预训练期间用于执行图像重建任务 (仅使用编�
 
 简单实现。MAE 预训练可以高效地实现，不需要任何专门的稀疏操作。首先为每个输入 patch 生成 token (通过具有附加的位置嵌入的线性投影)。接着随机打乱 tokens 列表，并根据遮蔽比例移除列表的最后一部分。此过程为编码器生成 tokens 的一个小子集，相当于无替换地采样 patches。编码之后，将 mask tokens 的列表添加至编码后的 patches 列表，然后 unshuffle 整个列表 (反转随机打乱操作) 以将所有的 tokens 于其目标对齐。解码器应用于此完整的列表 (附加了位置嵌入)。如前所述，不需要稀疏操作。这个简单实现引入的开销可以忽略不计，因为 shuffle 和 unshuffle 操作很快。
 
-<span id="figure5"><img src= "pics/MAE-5.jpg" style="zoom:100%;"></span>
+<span id="figure5"><img src= "./assets/MAE-5.jpg" style="zoom:100%;"></span>
 
 ## 4. ImageNet Experiments
 
@@ -82,7 +82,7 @@ MAE 解码器仅在预训练期间用于执行图像重建任务 (仅使用编�
 
 该模型推测缺失 patches 以产生不同的但合理的输出 ([图 4](#figure4))。它使物体和场景的完全形态变得有意义，这不能简单地通过延伸线条或纹理来完成。作者假设这种类似推理的行为与学习有用的表征有关。
 
-<span id="table1"><img src= "pics/MAE-T-1.jpg" style="zoom:100%;"></span>
+<span id="table1"><img src= "./assets/MAE-T-1.jpg" style="zoom:100%;"></span>
 
 [图 5](#figure5) 还展现了线性探测和微调结果遵循不同的趋势。对于线性探测，准确率随着遮蔽比例稳步提升，直到最高点：准确率差距高达 20% (54.6% vs 73.5%)。对于微调，结果对遮蔽比例不那么敏感，并在很宽范围的遮蔽比例 (40%-80%) 表现良好。图 5 中所有的微调结果都优于从头开始训练 (82.5%)。
 
@@ -96,7 +96,7 @@ MAE 解码器仅在预训练期间用于执行图像重建任务 (仅使用编�
 
 总的来说，默认的 MAE 的解码器是轻量级的。它有 8 个 blocks，宽度为 512-d ([表 1](#table1) 中的灰色部分)。与 ViT-L (24 blocks，1024-d) 相比，它每个 tokens 仅有 9% FLOPs。因此，虽然解码器处理全部的 tokens，它仍然占整体计算的一小部分。
 
-<span id="table2"><img src= "pics/MAE-T-2.jpg" style="zoom:100%;"></span>
+<span id="table2"><img src= "./assets/MAE-T-2.jpg" style="zoom:100%;"></span>
 
 Mask token。MAE 的一个重要设计是跳过编码器中的 mask token，之后将其应用到轻量级的解码器中。表 1c 研究了这种设计。
 
@@ -104,7 +104,7 @@ Mask token。MAE 的一个重要设计是跳过编码器中的 mask token，之�
 
 此外，通过跳过编码器中的 mask token，极大地减少了训练的计算。在[表 1c](#table1) 中，将整体的 FLOPs 减少了 3.3 倍。这使得在作者的实现中加速了 2.8 倍实际时间 (见[表 2](#table2))。对于一个更小的解码器 (1-block)，更大的编码器 (ViT-H) 或两者，实际时间甚至更大 (3.5—4.1 倍)。注意到，对于 75% 的遮蔽比例，加速能大于 4 倍，部分原因是自注意力的复杂度是二次的。此外，内存大大减少，可以训练更大的模型或者通过大批量训练加速。时间和内存效率使 MAE 有利于训练非常大的模型。
 
-<span id="figure6"><img src= "pics/MAE-6.jpg" style="zoom:100%;"></span>
+<span id="figure6"><img src= "./assets/MAE-6.jpg" style="zoom:100%;"></span>
 
 重建目标。作者在[表 1d](#table1) 中比较了不同的重建目标。到目前为止，结果基于没有 (逐个 patch) 归一化的像素。使用归一化的像素可提高准确率。这种逐个 patch 的归一化局部增强了对比度。在另一个变体中，作者在 patch 空间中执行 PCA，并使用最大的 PCA 系数作为目标。这样做会降低准确率。两个实验都表明高频成分在 MAE 中有用。
 
@@ -120,7 +120,7 @@ MAE 使用仅裁剪增强效果很好，无领是固定大小还是随机大小 
 
 在 MAE 中，数据增强的角色主要由随机遮蔽来完成 (下一个消融实验)。每次迭代 masks 都不同，因此无论数据增强如何，它们都会生成新的训练样本。遮蔽让代理任务更难，需要更少的增强来正则化训练。
 
-<span id="figure7"><img src= "pics/MAE-7.jpg" style="zoom:100%;"></span>
+<span id="figure7"><img src= "./assets/MAE-7.jpg" style="zoom:100%;"></span>
 
 Mask 采样策略。在[表 1f](#table1) 中，作者比较了不同的 mask 采样策略，如[图 6](#figure6) 所示。
 
@@ -132,9 +132,9 @@ BEiT 中提出的 block-wise 遮蔽策略倾向于移除大的 blocks ([图 6 �
 
 训练计划表。到目前为止，作者的消融实验是基于 800 epochs 的预训练。[图 7](#figure7) 展示了训练计划长度的影响。随着训练时间延长准确率稳步提升。事实上，作者在 1600 epochs 时也没观察到线性探测精度的饱和。这种行为与对比学习方法不同，例如，MoCo v3 在 ViT-L 的 300 epochs 时饱和。注意到，MAE 编码器在每个 epoch 仅看到 25% 的 patch，而在对比学习中，编码器每个 epoch 看到 200% (两个裁剪) 或甚至更多 (多个裁剪) patches。
 
-<span id="table3"><img src= "pics/MAE-T-3.jpg" style="zoom:100%;"></span>
+<span id="table3"><img src= "./assets/MAE-T-3.jpg" style="zoom:100%;"></span>
 
-<span id="figure8"><img src= "pics/MAE-8.jpg" style="zoom:100%;"></span>
+<span id="figure8"><img src= "./assets/MAE-8.jpg" style="zoom:100%;"></span>
 
 ### 4.2. Comparisons with Previous Results
 
@@ -144,7 +144,7 @@ MAE 能轻松扩展，并从更大的模型中已经展现出稳定提升。作�
 
 与 BEiT 相比，MAE 更准确，同时更简单和更快。与 BEiT 预测 tokens 相反，MAE 重建像素：BEiT 报告在使用 ViT-B 重建像素时降低了 1.8%。MAE 不需要 dVAE 预训练。此外，由于[表 1c](#table1) 中的原因，MAE 比 BEiT 快很多 (每个 epoch 3.5 倍)。
 
-<span id="figure9"><img src= "pics/MAE-9.jpg" style="zoom:100%;"></span>
+<span id="figure9"><img src= "./assets/MAE-9.jpg" style="zoom:100%;"></span>
 
 [表 3](#table3) 中的 MAE 模型经过 1600 个 epoch 的预训练以获得更好的准确率 ([图 7](#figure7))。即便如此，如果它们在相同的硬件中训练，MAE 的总预训练时间少于其他所有方法。例如，对于 ViT-L，使用同样的 128 个 TPU-v3 核心，MAE 训练 1600 个 epochs 时间是 31 小时，而 MoCo v3 训练 300 个 epochs 时间是 36 小时。
 
@@ -160,7 +160,7 @@ MAE 能轻松扩展，并从更大的模型中已经展现出稳定提升。作�
 
 在[图 9](#figure9) 作者还与 MoCo v3 做了比较，这是一种 ViT-L 结果可用的对比方法。它比 MAE 具有更高的线性探测精度。然而，它所有的局部微调结果都比 MAE 差。调整 4 个 blocks 时差距是 2.6%。这些结果表明，MAE 表征的线性可分性较差，但它们是更强的非线性特征，并且在调整非线性头时表现良好。
 
-<span id="table4"><img src= "pics/MAE-T-4.jpg" style="zoom:100%;"></span>
+<span id="table4"><img src= "./assets/MAE-T-4.jpg" style="zoom:100%;"></span>
 
 这些观察结果表明，线性可分性不是评估表征质量的唯一标准。还观察到，线性探测和迁移学习的性能的相关性不是很好，例如，用于目标检测。据作者所知，在 NLP 中不经常用线性评估对预训练进行基准测试。
 
@@ -178,9 +178,9 @@ MAE 能轻松扩展，并从更大的模型中已经展现出稳定提升。作�
 
 Pixels vs. tokens。[表 6](#table6) 给出了像素和 tokens 作为 MAE 的重建目标的全面比较。虽然使用 dVAE tokens 比 使用未归一化的像素更好，但它在统计上类似于作者研究的所有任务和模型中仅使用归一化的像素。这再次表明 MAE 不需要 tokenization。
 
-<span id="table5"><img src= "pics/MAE-T-5.jpg" style="zoom:100%;"></span>
+<span id="table5"><img src= "./assets/MAE-T-5.jpg" style="zoom:100%;"></span>
 
-<span id="table6"><img src= "pics/MAE-T-6.jpg" style="zoom:100%;"></span>
+<span id="table6"><img src= "./assets/MAE-T-6.jpg" style="zoom:100%;"></span>
 
 ## 6. Discussion and Conclusion
 
@@ -190,3 +190,6 @@ Pixels vs. tokens。[表 6](#table6) 给出了像素和 tokens 作为 MAE 的重
 
 更广泛的影响。所提出的方法根据训练数据集学到的统计信息预测内容，因此将反映这些数据中的偏差，包括具有负面社会影响的偏差。改模型可能会生成不存在的内容。在基于这项工作生成图像时，这些问题值得进一步研究和考虑。
 
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

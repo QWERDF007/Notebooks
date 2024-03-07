@@ -152,3 +152,7 @@ Notebook 将把模型保存到您的 Google Drive 中。如果您选择fp16（�
 - [Dreambooth training guide – nitrosocke](https://github.com/nitrosocke/dreambooth-training-guide)
 - [BlueFaux’s dreamBooth guide](https://docs.google.com/document/d/1xHSHEohmCOLlhdCY0ox4EARFKKU29XbFd8ji8UgjGn4/edit)
 - [The research paper](https://arxiv.org/abs/2208.12242)
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

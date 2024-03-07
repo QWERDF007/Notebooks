@@ -83,3 +83,8 @@ python main.py --input_dir input/face --im_path1 41.png --im_path2 7.png --im_pa
 
 <img src="assets/barbershop_concat.png" title="图1">>
 
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

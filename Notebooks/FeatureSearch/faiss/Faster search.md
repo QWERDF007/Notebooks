@@ -85,3 +85,8 @@ print(I[-5:])                  # neighbors of the 5 last queries
 - 上一章：[入门](<Getting started.md>)
 - 下一章：[更低的内存占用](<Lower memory footprint.md>)
 
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->
