@@ -288,3 +288,7 @@ $$
 <img src="./assets/patchcore_tableS6.png">
 
 **表 S6**：使用不同 backbone 在 MVTec 上的异常检测性能，用 AUROC 测量。
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

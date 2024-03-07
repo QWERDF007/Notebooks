@@ -15,7 +15,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Notebooks](Notebooks) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 83 | [README :link:](<./Notebooks/README.md>) |
+| [Notebooks](Notebooks) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 81 | [README :link:](<./Notebooks/README.md>) |
 ## :computer: Code
 
 | 目录 | 描述 | 数量 | 链接 |

@@ -60,7 +60,7 @@ def get_file_mtime_str(file: Path, format: str ='%Y-%m-%d') -> str:
     """
     return format_mtime(get_file_mtime(file), format)
 
-def get_files(folder : Path, exclude_list: list = []) -> list:
+def get_files(folder : Path, exclude_list: list = [], recursive: bool = True) -> list:
     """递归遍历文件夹，获取所有文件，剔除传入的排除列表
 
     Args:
@@ -76,9 +76,32 @@ def get_files(folder : Path, exclude_list: list = []) -> list:
     for file in folder.iterdir():
         if file.is_file() and file.name not in exclude_list:
             files.append(file)
-        elif file.is_dir() and file.name not in exclude_list:
+        elif file.is_dir() and recursive and file.name not in exclude_list:
             files.extend(get_files(file, exclude_list))
     return files
+
+def get_folders(folder : Path, exclude_list: list = [], recursive: bool = True, sort: bool = True) -> list:
+    
+    """递归遍历文件夹，获取所有目录，剔除传入的排除列表
+
+    Args:
+        folder (Path): 要递归的目录
+        exclude_list (list, optional): 剔除列表. 默认 [].
+
+    Returns:
+        list: 递归目录下所有目录列表
+    """
+    folders = []
+    if isinstance(folder, str):
+        folder = Path(folder)
+    for file in folder.iterdir():
+        if file.is_dir() and file.name not in exclude_list:
+            folders.append(file)
+            if recursive:
+                folders.extend(get_folders(file, exclude_list))
+    if sort:
+        folders.sort(key=lambda x: x.name)
+    return folders
 
 def get_files_count(folder : Path, exclude_list: list = []) -> int:
     """获取目录下的文件数量，剔除排除列表
@@ -109,8 +132,8 @@ def is_file_finished(file: Path) -> bool:
         lines = f.readlines()
         if len(lines) == 0:
             return False
-        last_line = lines[-1]
-        return last_line.strip() == FINISHED_FLAG
+        last_10_lines = [line.strip() for line in lines[-10:]]
+        return FINISHED_FLAG in last_10_lines
 
 
 class ReadmeGenerator(ABC):
@@ -203,24 +226,48 @@ class FolderGenerator(ReadmeGenerator):
     
     def whats_new(self) -> str:
         """获取目录下最新文件的内容"""
-        files = get_files(self.folder, self.exclude_list)
-        content = "### What's New ?\n\n"
-        content += "<details><summary><em>[点击展开]</em></summary>\n"\
-                   "<br>\n\n"
-        if len(files) == 0:
+
+        content = ''
+        folders =  get_folders(self.folder, self.exclude_list, recursive=False)
+        if len(folders) == 0:
             return content
         
-        mtimes = [get_file_mtime(file) for file in files]
-        sorted_files_mtimes = [(mtime,file) for mtime, file in sorted(zip(mtimes, files), reverse=True)]
+        content += "### What's New ?\n\n"
+        for folder in folders:
+            
+            files = get_files(folder, self.exclude_list)
+            files_num = len(files)
+            _title = f"#### {folder.name} ({files_num}) \n\n"
+            _content = "<details><summary><em>[点击展开]</em></summary>\n"\
+                       "<br>\n\n"
+            if len(files) == 0:
+                _content += "</details>\n\n"
+                content += _title + _content
+                continue
         
-        for mtime, file in sorted_files_mtimes:
-            if file.name != 'README.md' and file.suffix == '.md':
-                check = EMOJI['check'] if is_file_finished(file) else EMOJI['cross']
-                content += f'- {check} {format_mtime(mtime)} [{file.name}](<{file.relative_to(self.folder).as_posix()}>)\n'
-            else:
-                content += f'- {format_mtime(mtime)} [{file.name}](<{file.relative_to(self.folder).as_posix()}>)\n'
-
-        content += "\n</details>\n\n"
+            mtimes = [get_file_mtime(file) for file in files]
+            sorted_files_mtimes = [(mtime,file) for mtime, file in sorted(zip(mtimes, files), reverse=True)]
+            
+            finished_num, unfinished_num = 0, 0
+            for mtime, file in sorted_files_mtimes:
+                if file.name == 'README.md':
+                    continue
+                parent_name = file.parent.name
+                name = f'{parent_name}/{file.name}' if parent_name != 'Notebooks' else file.name
+                link = file.relative_to(self.folder).as_posix()
+                if file.suffix == '.md':
+                    if is_file_finished(file):
+                        check = EMOJI['check']
+                        finished_num += 1  
+                    else:
+                        check = EMOJI['cross']
+                        unfinished_num += 1
+                    _content += f'- {check} {format_mtime(mtime)} [{name}](<{link}>)\n'
+                else:
+                    _content += f'- {format_mtime(mtime)} [{name}](<{link}>)\n'
+            _content += "\n</details>\n\n"
+            _title = f"#### {folder.name} ({EMOJI['check']} : {finished_num} {EMOJI['cross']} : {unfinished_num})\n\n"
+            content += _title + _content
         return content
 
 

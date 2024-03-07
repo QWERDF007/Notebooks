@@ -10,13 +10,13 @@
 
 单幅图像超分辨率 (SISR) 作为一个基础的低阶视觉问题，越来越受到研究界和 AI 公司的关注。 SISR 旨在从一幅低分辨率 (LR) 的图像中恢复高分辨率 (HR) 的图像。由于 Dong 等人提出的开创性工作 SRCNN，深度卷积网络 (CNN) 方法带来了蓬勃发展。各种网络架构设计和训练策略持续不断地改善 SR 的性能，特别是峰值信噪比 (PSNR)。然而，因为 PSNR 指标从根本上与人类观察者的主观评价不一致，这些面向 PSNR 的方法往往在没有足够的高频细节的情况下，输出过于平滑的结果。
 
-<span id="figure1"><img src= "pics/ESRGAN-1.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure1"><img src= "./assets/ESRGAN-1.jpg" style="zoom:100%;" title="figure 1"></span>
 
 已经提出几种感知驱动的方法来提高 SR 结果的视觉质量。例如，[感知损失](https://arxiv.org/pdf/1603.08155.pdf)被提出来，在特征空间而不是在像素空间中优化超分辨率模型。将[生成对抗网络](https://arxiv.org/pdf/1406.2661.pdf)引入 SR 来鼓励网络支持看起来更像自然图像的解决方案。[进一步结合语义图像以改善恢复的纹理细节](https://arxiv.org/pdf/1804.02815.pdf)。追求视觉质量上令人愉悦的结果的里程碑之一是 SRGAN。基本模型由[残差块](https://arxiv.org/pdf/1512.03385.pdf)构建，并在 GAN 框架中使用感知损失优化。通过所有这些技术，相对于面向 PSNR 的方法，SRGAN 显著地提升了重建的整体视觉质量。
 
 然而，如[图 1](#figure1) 所示，SRGAN 结果和真实结果之间仍然存在明显差距。在本研究中，作者重新审视了 SRGAN 的关键组件，并在三个方面改进了模型。第一，作者通过引入具有更高容量和更容易训练的 Residual-in-Residual Dense Block (RDDB) 来改进网络结构。作者还移除了[Enhanced Deep Residual Networks for Single Image Super-Resolution](https://arxiv.org/pdf/1707.02921.pdf)中的[批量归一化 (BN)](https://arxiv.org/pdf/1502.03167.pdf) 层，并使用残差缩放和更小的初始化来使训练非常深的网络更容易。第二，作者使用 Relativistic average GAN (RaGAN) 改进鉴别器，它学习判断 “一幅图像是否比其他更加真实” 而不是 “一幅图像是真的还是假的”。实验表明，这种改进有助于生成器恢复更加逼真的纹理细节。第三，作者通过使用激活函数之前的 VGG 特征而不是像 SRGAN 在激活函数之后，提出一种改进的感知损失。作者凭经验发现调整后的感知损失提供了更加清晰的边界和更多视觉上令人愉悦的结果，如 4.4 节中所示。大量的实验表明，被称为 ESRGAN 的增强型 SRGAN，在清晰度和细节方面一致优于最先进的方法 (见[图 1](#figure1) 和[图 7](#figure7))。
 
-<span id="figure2"><img src= "pics/ESRGAN-2.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure2"><img src= "./assets/ESRGAN-2.jpg" style="zoom:100%;" title="figure 1"></span>
 
 作者采用 ESRGAN 的变体参加 PRIM-SR 挑战。该挑战是第一个以感知质量感知方式的超分辨率比赛，其作者声称失真和感知质量是相互矛盾的。感知质量是由非参考度量的 Ma's score 和 NIQE 来判断的。即感知指标 $=\frac{1}{2}((10 - Ma) + NIQE)$。低的感知指标代表更好的感知质量。
 
@@ -40,13 +40,13 @@
 
 作者主要的目标是改善超分辨率的整体感知质量。在本节中，作者首先描述提出的网络架构，然后讨论鉴别器和感知损失的改进。最后，作者描述了平衡感知质量和 PSNR 的网络插值策略。
 
-<span id="figure3"><img src= "pics/ESRGAN-3.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure3"><img src= "./assets/ESRGAN-3.jpg" style="zoom:100%;" title="figure 1"></span>
 
 ### 3.1 Network Architecture
 
 为了进一步提升 SRGAN 复原的图像的质量，作者主要对生成器 G 的结构做了两个修改：1) 移除所有 BN 层；2) 用提出的 Residual-in-Residual Dense Block (RRDB) 替换原始的基础块，它结合了如[图 4](#figure4) 所示的多层残差网络和全连接。
 
-<span id="figure4"><img src= "pics/ESRGAN-4.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure4"><img src= "./assets/ESRGAN-4.jpg" style="zoom:100%;" title="figure 1"></span>
 
 在不同的面向 PSNR 的任务中 (包括[超分辨率](https://arxiv.org/pdf/1707.02921.pdf)和[去模糊](https://arxiv.org/pdf/1612.02177.pdf))，移除所有 BN 层已经被证明可以提升性能和减少感知计算复杂度。BN 层在训练期间的使用小批量样本的均值和方差对特征归一化，并在测试期间使用整个训练集的估计的均值和方差。当训练集和测试集的统计数据差异很大时，BN 层往往会引入令人不悦的伪影，并限制泛化能力。作者凭经验观察到，在网络更深并在 GAN 框架下训练时，BN 层更可能带来伪影。这些伪影偶尔会出现在迭代和不同设置中，违背了在训练上稳定的性能的需求。因此，移除 BN 层帮助改善泛化能力，并减少计算复杂度和内存。
 
@@ -60,7 +60,7 @@
 
 除了改进生成器的结构，作者还增强了基于相对 GAN 的鉴别器。与 SRGAN 中的标准鉴别器 D 估计输入图像 $x$ 是真实和自然的概率不同，相对鉴别器尝试预测真实图像 $x_r$ 比虚假图像 $x_f$ 更加真实的概率，如[图 5](#figure5) 所示。
 
-<span id="figure5"><img src= "pics/ESRGAN-5.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure5"><img src= "./assets/ESRGAN-5.jpg" style="zoom:100%;" title="figure 1"></span>
 
 具体来说，作者用相对平均鉴别器替换标准鉴别器 RaD，表示为 $D_{Ra}$ 。SRGAN 中的标准鉴别器可以表示为 $D(x) = \sigma(C(x))$，其中 $\sigma$ 是 sigmoid 函数，而 $C(x)$ 是未变换的鉴别器的输出。然后将 RaD 用公式表示为 $D_{Ra}(x_r,x_f) = \sigma(C(x_r) - E_{x_f}[C(x_f)])$，其中 $E_{x_f}[\cdot]$ 表示对一个小批量中的所有假数据求平均的操作。然后鉴别器的损失定义为：
 $$
@@ -90,7 +90,7 @@ $$
 
 <span id="3">VGG19-54 的 54 表示特征在第五个最大池化之前的第四个卷积层获取，代表高级特征，类似地，22 表示低级特征。</span>
 
-<span id="figure6"><img src= "pics/ESRGAN-6.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure6"><img src= "./assets/ESRGAN-6.jpg" style="zoom:100%;" title="figure 1"></span>
 
 ### 3.4 Network Interpolation
 
@@ -124,7 +124,7 @@ $$
 
 作者在几个公共基准数据集上将他的最终模型与最先进的面向 PSNR 的方法 (包括 SRCNN，EDSR 和 RCAN) 以及感知驱动的方法 (包括SRGAN 和 EnhanceNet) 进行比较。由于没有有效的和标准的感知质量度量，作者在[图 7](#figure7) 展示了一些定性结果。PSNR (在YCbCr 颜色空间的亮度通道上评估) 和 PIRM-SR 挑战中用的感知指数也被提供用于参考。
 
-<span id="figure7"><img src= "pics/ESRGAN-7.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure7"><img src= "./assets/ESRGAN-7.jpg" style="zoom:100%;" title="figure 1"></span>
 
 从[图 7](#figure7) 可以看出，作者提出的 ESRGAN 在清晰度和细节方面都优于之前的方法。例如，ESRGAN 可以产生比面向 PSNR 的方法更清晰和更自然的狒狒胡须和草纹理 (见图 43074)，后者往往会产生模糊的结果，也比基于 GAN 的方法好，其纹理不自然并且包含令人不快的噪声。ESRGAN 能够在建筑中生成更详细的结构 (见图 102061)，而其他方法要么无法产生足够的细节 (SRGAN)，要么添加不必要的纹理 (EnhanceNet)。此外，以前基于 GAN 的方法有时会引入伪影，例如 SRGAN 会在脸上增加皱纹。作者的 ESRGAN 消除了这些伪影并产生了自然的结果。
 
@@ -140,9 +140,9 @@ $$
 
 RaGAN。RaGAN 使用一个改进的相对鉴别器，这被证明是有利于学习更清晰的边缘和更详细的纹理。例如，在[图 8](#figure8) 的第 5 列，生成的图像比左侧的图像更清晰，纹理更丰富 (见狒狒，图 39 和图 43074)。
 
-<span id="figure8"><img src= "pics/ESRGAN-8.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure8"><img src= "./assets/ESRGAN-8.jpg" style="zoom:100%;" title="figure 1"></span>
 
-<span id="figure9"><img src= "pics/ESRGAN-9.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure9"><img src= "./assets/ESRGAN-9.jpg" style="zoom:100%;" title="figure 1"></span>
 
 带有 RRDB 的更深的网络。带有所提出的 RRDB 的更深的网络可以进一步提升恢复的纹理，特别是对于像[图 8](#figure8) 中图 6 的屋顶，因为深的模型有很强的表征能力来捕获语义信息。此外，作者还发现更深的模型能减少如[图 8](#figure8) 中图20 这样令人不快的噪声。
 
@@ -156,7 +156,7 @@ RaGAN。RaGAN 使用一个改进的相对鉴别器，这被证明是有利于学
 
 有趣的是，在[图 10](#figure10) 种观察到网络插值策略提供了一种平衡感知质量和保真度的平衡控制。
 
-<span id="figure10"><img src= "pics/ESRGAN-10.jpg" style="zoom:100%;" title="figure 1"></span>
+<span id="figure10"><img src= "./assets/ESRGAN-10.jpg" style="zoom:100%;" title="figure 1"></span>
 
 ### 4.6 The PIRM-SR Chanllenge
 
