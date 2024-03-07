@@ -8,7 +8,9 @@
 #### AnomalyDetection (2) 
 
 - :white_check_mark: : 2
- - :x: : 0)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 0)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [AnomalyDetection/SimpleNet.md](<AnomalyDetection/SimpleNet.md>)
@@ -19,7 +21,9 @@
 #### CAM (1) 
 
 - :white_check_mark: : 0
- - :x: : 1)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 1)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-01-18 [CAM/CAM.md](<CAM/CAM.md>)
@@ -29,7 +33,9 @@
 #### Classification (6) 
 
 - :white_check_mark: : 3
- - :x: : 2)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 2)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Classification/AlexNet.md](<Classification/AlexNet.md>)
@@ -43,7 +49,9 @@
 #### Deformation (2) 
 
 - :white_check_mark: : 1
- - :x: : 0)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 0)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Deformation/MLS.md](<Deformation/MLS.md>)
@@ -53,7 +61,9 @@
 #### Detection (7) 
 
 - :white_check_mark: : 2
- - :x: : 5)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 5)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Detection/Faster R-CNN.md](<Detection/Faster R-CNN.md>)
@@ -69,7 +79,9 @@
 #### Diffusion (5) 
 
 - :white_check_mark: : 0
- - :x: : 5)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 5)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-02-22 [Diffusion/FiT.md](<Diffusion/FiT.md>)
@@ -83,7 +95,9 @@
 #### GAN (7) 
 
 - :white_check_mark: : 3
- - :x: : 4)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 4)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [GAN/DatasetGAN.md](<GAN/DatasetGAN.md>)
@@ -99,7 +113,9 @@
 #### ImageGeneration (1) 
 
 - :white_check_mark: : 0
- - :x: : 1)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 1)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-02-01 [ImageGeneration/PhotoMaker.md](<ImageGeneration/PhotoMaker.md>)
@@ -109,7 +125,9 @@
 #### NLP (1) 
 
 - :white_check_mark: : 0
- - :x: : 1)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 1)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2023-04-17 [NLP/Transformer.md](<NLP/Transformer.md>)
@@ -119,7 +137,9 @@
 #### Normalization (1) 
 
 - :white_check_mark: : 1
- - :x: : 0)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 0)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Normalization/GroupNormalization.md](<Normalization/GroupNormalization.md>)
@@ -129,7 +149,9 @@
 #### Segmentation (3) 
 
 - :white_check_mark: : 3
- - :x: : 0)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 0)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Segmentation/Segment Anything.md](<Segmentation/Segment Anything.md>)
@@ -141,7 +163,9 @@
 #### SelfSupervised (2) 
 
 - :white_check_mark: : 1
- - :x: : 0)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 0)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [SelfSupervised/MAE.md](<SelfSupervised/MAE.md>)
@@ -151,7 +175,9 @@
 #### ShadowRemoval (2) 
 
 - :white_check_mark: : 0
- - :x: : 1)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 1)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2023-04-17 [ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md](<ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md>)
@@ -161,7 +187,9 @@
 #### SuperResolution (2) 
 
 - :white_check_mark: : 0
- - :x: : 1)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 1)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-03-07 [SuperResolution/ESRGAN.md](<SuperResolution/ESRGAN.md>)
@@ -171,7 +199,9 @@
 #### Transformer (2) 
 
 - :white_check_mark: : 0
- - :x: : 2)<details><summary><em>[点击展开]</em></summary>
+ - :x: : 2)
+
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-02-23 [Transformer/A Survey on Visual Transformer.md](<Transformer/A Survey on Visual Transformer.md>)
