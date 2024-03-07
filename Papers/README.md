@@ -5,9 +5,10 @@
 | [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<README.md>) |
 ### What's New ?
 
-#### AnomalyDetection (:white_check_mark:  2 :x:  0)
+#### AnomalyDetection (2) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 2
+ - :x: : 0)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [AnomalyDetection/SimpleNet.md](<AnomalyDetection/SimpleNet.md>)
@@ -15,18 +16,20 @@
 
 </details>
 
-#### CAM (:white_check_mark:  0 :x:  1)
+#### CAM (1) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 1)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-01-18 [CAM/CAM.md](<CAM/CAM.md>)
 
 </details>
 
-#### Classification (:white_check_mark:  3 :x:  2)
+#### Classification (6) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 3
+ - :x: : 2)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Classification/AlexNet.md](<Classification/AlexNet.md>)
@@ -37,18 +40,20 @@
 
 </details>
 
-#### Deformation (:white_check_mark:  1 :x:  0)
+#### Deformation (2) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 1
+ - :x: : 0)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Deformation/MLS.md](<Deformation/MLS.md>)
 
 </details>
 
-#### Detection (:white_check_mark:  2 :x:  5)
+#### Detection (7) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 2
+ - :x: : 5)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Detection/Faster R-CNN.md](<Detection/Faster R-CNN.md>)
@@ -61,9 +66,10 @@
 
 </details>
 
-#### Diffusion (:white_check_mark:  0 :x:  5)
+#### Diffusion (5) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 5)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-02-22 [Diffusion/FiT.md](<Diffusion/FiT.md>)
@@ -74,9 +80,10 @@
 
 </details>
 
-#### GAN (:white_check_mark:  3 :x:  4)
+#### GAN (7) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 3
+ - :x: : 4)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [GAN/DatasetGAN.md](<GAN/DatasetGAN.md>)
@@ -89,36 +96,40 @@
 
 </details>
 
-#### ImageGeneration (:white_check_mark:  0 :x:  1)
+#### ImageGeneration (1) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 1)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-02-01 [ImageGeneration/PhotoMaker.md](<ImageGeneration/PhotoMaker.md>)
 
 </details>
 
-#### NLP (:white_check_mark:  0 :x:  1)
+#### NLP (1) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 1)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2023-04-17 [NLP/Transformer.md](<NLP/Transformer.md>)
 
 </details>
 
-#### Normalization (:white_check_mark:  1 :x:  0)
+#### Normalization (1) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 1
+ - :x: : 0)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Normalization/GroupNormalization.md](<Normalization/GroupNormalization.md>)
 
 </details>
 
-#### Segmentation (:white_check_mark:  3 :x:  0)
+#### Segmentation (3) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 3
+ - :x: : 0)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [Segmentation/Segment Anything.md](<Segmentation/Segment Anything.md>)
@@ -127,36 +138,40 @@
 
 </details>
 
-#### SelfSupervised (:white_check_mark:  1 :x:  0)
+#### SelfSupervised (2) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 1
+ - :x: : 0)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :white_check_mark: 2024-03-07 [SelfSupervised/MAE.md](<SelfSupervised/MAE.md>)
 
 </details>
 
-#### ShadowRemoval (:white_check_mark:  0 :x:  1)
+#### ShadowRemoval (2) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 1)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2023-04-17 [ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md](<ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md>)
 
 </details>
 
-#### SuperResolution (:white_check_mark:  0 :x:  1)
+#### SuperResolution (2) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 1)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-03-07 [SuperResolution/ESRGAN.md](<SuperResolution/ESRGAN.md>)
 
 </details>
 
-#### Transformer (:white_check_mark:  0 :x:  2)
+#### Transformer (2) 
 
-<details><summary><em>[点击展开]</em></summary>
+- :white_check_mark: : 0
+ - :x: : 2)<details><summary><em>[点击展开]</em></summary>
 <br>
 
 - :x: 2024-02-23 [Transformer/A Survey on Visual Transformer.md](<Transformer/A Survey on Visual Transformer.md>)
