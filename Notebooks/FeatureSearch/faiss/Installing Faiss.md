@@ -154,3 +154,9 @@ conda install -c conda-forge faiss-gpu=1.7.4 mkl=2021 blas=1.0=mkl cudatoolkit=1
 
 - 上一章：[Home](<Faiss-Home.md>)
 - 下一章：[入门](<Getting started.md>)
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->
