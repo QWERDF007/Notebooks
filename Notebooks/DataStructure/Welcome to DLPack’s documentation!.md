@@ -57,3 +57,9 @@ DLPack 的主要设计理念是最小主义。DLPack 放弃了 `allocator`、`de
 # Reference
 
 [下一篇：C API (`dlpack.h`)](<./C API (dlpack.h).md>)
+
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->

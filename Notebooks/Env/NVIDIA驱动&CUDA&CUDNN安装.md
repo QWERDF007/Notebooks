@@ -57,3 +57,8 @@ sudo cp -r cuda/include/* /usr/local/cuda/include
 sudo cp -r cuda/lib64/* /usr/local/cuda/lib64
 ```
 
+
+
+
+
+<!-- 完成标志, 看不到, 请忽略! -->
