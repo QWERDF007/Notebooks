@@ -8,7 +8,7 @@
 #### AnomalyDetection (2) 
 
 - :white_check_mark: : 2
- - :x: : 0)
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -21,7 +21,7 @@
 #### CAM (1) 
 
 - :white_check_mark: : 0
- - :x: : 1)
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -33,7 +33,7 @@
 #### Classification (6) 
 
 - :white_check_mark: : 3
- - :x: : 2)
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -49,7 +49,7 @@
 #### Deformation (2) 
 
 - :white_check_mark: : 1
- - :x: : 0)
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -61,7 +61,7 @@
 #### Detection (7) 
 
 - :white_check_mark: : 2
- - :x: : 5)
+ - :x: : 5
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -79,7 +79,7 @@
 #### Diffusion (5) 
 
 - :white_check_mark: : 0
- - :x: : 5)
+ - :x: : 5
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -95,7 +95,7 @@
 #### GAN (7) 
 
 - :white_check_mark: : 3
- - :x: : 4)
+ - :x: : 4
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -113,7 +113,7 @@
 #### ImageGeneration (1) 
 
 - :white_check_mark: : 0
- - :x: : 1)
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -125,7 +125,7 @@
 #### NLP (1) 
 
 - :white_check_mark: : 0
- - :x: : 1)
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -137,7 +137,7 @@
 #### Normalization (1) 
 
 - :white_check_mark: : 1
- - :x: : 0)
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -149,7 +149,7 @@
 #### Segmentation (3) 
 
 - :white_check_mark: : 3
- - :x: : 0)
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -163,7 +163,7 @@
 #### SelfSupervised (2) 
 
 - :white_check_mark: : 1
- - :x: : 0)
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -175,7 +175,7 @@
 #### ShadowRemoval (2) 
 
 - :white_check_mark: : 0
- - :x: : 1)
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -187,7 +187,7 @@
 #### SuperResolution (2) 
 
 - :white_check_mark: : 0
- - :x: : 1)
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -199,7 +199,7 @@
 #### Transformer (2) 
 
 - :white_check_mark: : 0
- - :x: : 2)
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>

@@ -5,7 +5,10 @@
 | [Code](./) | 一些修改过的代码以及一些算法实现 | 11 | [README :link:](<README.md>) |
 ### What's New ?
 
-#### EditGAN (:white_check_mark: : 0 :x: : 0)
+#### EditGAN (2) 
+
+- :white_check_mark: : 0
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -15,7 +18,10 @@
 
 </details>
 
-#### mls (:white_check_mark: : 0 :x: : 0)
+#### mls (4) 
+
+- :white_check_mark: : 0
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -27,7 +33,10 @@
 
 </details>
 
-#### stylegan3-encoder (:white_check_mark: : 0 :x: : 0)
+#### stylegan3-encoder (1) 
+
+- :white_check_mark: : 0
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -36,7 +45,10 @@
 
 </details>
 
-#### xception (:white_check_mark: : 0 :x: : 0)
+#### xception (3) 
+
+- :white_check_mark: : 0
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>

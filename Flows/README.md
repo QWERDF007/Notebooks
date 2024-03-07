@@ -5,7 +5,10 @@
 | [Flows](./) | 一些流程图 | 4 | [README :link:](<README.md>) |
 ### What's New ?
 
-#### AnomalyDetection (:white_check_mark: : 0 :x: : 0)
+#### AnomalyDetection (1) 
+
+- :white_check_mark: : 0
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>

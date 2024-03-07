@@ -266,8 +266,8 @@ class FolderGenerator(ReadmeGenerator):
                 else:
                     _content += f'- {format_mtime(mtime)} [{name}](<{link}>)\n'
             _content += "\n</details>\n\n"
-            _title = f"#### {folder.name} ({EMOJI['check']} : {finished_num} {EMOJI['cross']} : {unfinished_num})\n\n"
-            content += _title + _content
+            _check = f"- {EMOJI['check']} : {finished_num}\n - {EMOJI['cross']} : {unfinished_num}\n\n"
+            content += _title + _check + _content
         return content
 
 

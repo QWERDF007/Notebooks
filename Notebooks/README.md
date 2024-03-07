@@ -5,7 +5,10 @@
 | [Notebooks](./) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 81 | [README :link:](<README.md>) |
 ### What's New ?
 
-#### AnomalyDetection (:white_check_mark: : 0 :x: : 1)
+#### AnomalyDetection (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -14,7 +17,10 @@
 
 </details>
 
-#### Classification (:white_check_mark: : 0 :x: : 1)
+#### Classification (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -23,7 +29,10 @@
 
 </details>
 
-#### Cpp (:white_check_mark: : 1 :x: : 1)
+#### Cpp (4) 
+
+- :white_check_mark: : 1
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -33,7 +42,10 @@
 
 </details>
 
-#### DataStructure (:white_check_mark: : 1 :x: : 1)
+#### DataStructure (2) 
+
+- :white_check_mark: : 1
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -43,7 +55,10 @@
 
 </details>
 
-#### Detection (:white_check_mark: : 1 :x: : 2)
+#### Detection (4) 
+
+- :white_check_mark: : 1
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -55,7 +70,10 @@
 
 </details>
 
-#### Env (:white_check_mark: : 5 :x: : 0)
+#### Env (5) 
+
+- :white_check_mark: : 5
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -68,7 +86,10 @@
 
 </details>
 
-#### FeatureSearch (:white_check_mark: : 7 :x: : 2)
+#### FeatureSearch (9) 
+
+- :white_check_mark: : 7
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -85,7 +106,10 @@
 
 </details>
 
-#### GAN (:white_check_mark: : 3 :x: : 0)
+#### GAN (3) 
+
+- :white_check_mark: : 3
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -96,7 +120,10 @@
 
 </details>
 
-#### Git (:white_check_mark: : 1 :x: : 3)
+#### Git (4) 
+
+- :white_check_mark: : 1
+ - :x: : 3
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -108,7 +135,10 @@
 
 </details>
 
-#### Misc (:white_check_mark: : 1 :x: : 1)
+#### Misc (2) 
+
+- :white_check_mark: : 1
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -118,7 +148,10 @@
 
 </details>
 
-#### Nvidia (:white_check_mark: : 0 :x: : 4)
+#### Nvidia (4) 
+
+- :white_check_mark: : 0
+ - :x: : 4
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -130,7 +163,10 @@
 
 </details>
 
-#### OpenMMLab (:white_check_mark: : 5 :x: : 0)
+#### OpenMMLab (6) 
+
+- :white_check_mark: : 5
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -143,7 +179,10 @@
 
 </details>
 
-#### Python (:white_check_mark: : 0 :x: : 1)
+#### Python (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -152,7 +191,10 @@
 
 </details>
 
-#### Qt (:white_check_mark: : 11 :x: : 7)
+#### Qt (19) 
+
+- :white_check_mark: : 11
+ - :x: : 7
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -178,7 +220,10 @@
 
 </details>
 
-#### Serving (:white_check_mark: : 1 :x: : 2)
+#### Serving (4) 
+
+- :white_check_mark: : 1
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -189,7 +234,10 @@
 
 </details>
 
-#### StableDiffusion (:white_check_mark: : 2 :x: : 5)
+#### StableDiffusion (7) 
+
+- :white_check_mark: : 2
+ - :x: : 5
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -204,7 +252,10 @@
 
 </details>
 
-#### opencv (:white_check_mark: : 0 :x: : 1)
+#### opencv (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -213,7 +264,10 @@
 
 </details>
 
-#### pybind11 (:white_check_mark: : 0 :x: : 1)
+#### pybind11 (2) 
+
+- :white_check_mark: : 0
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
@@ -222,7 +276,10 @@
 
 </details>
 
-#### 炼丹 (:white_check_mark: : 0 :x: : 1)
+#### 炼丹 (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
