@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 45 | [README :link:](<README.md>) |
+| [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 46 | [README :link:](<README.md>) |
 ### What's New ?
 
 #### AnomalyDetection (2) 
@@ -58,14 +58,15 @@
 
 </details>
 
-#### Detection (7) 
+#### Detection (8) 
 
-- :white_check_mark: : 2
+- :white_check_mark: : 3
  - :x: : 5
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
+- :white_check_mark: 2024-03-14 [Detection/yolov9.md](<Detection/yolov9.md>)
 - :white_check_mark: 2024-03-07 [Detection/Faster R-CNN.md](<Detection/Faster R-CNN.md>)
 - :white_check_mark: 2024-03-06 [Detection/yolo综述.md](<Detection/yolo综述.md>)
 - :x: 2024-02-29 [Detection/DINOv2.md](<Detection/DINOv2.md>)
