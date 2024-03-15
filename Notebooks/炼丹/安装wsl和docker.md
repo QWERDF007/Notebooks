@@ -146,15 +146,11 @@ wsl --install --web-download -d Ubuntu-20.04
 
 
 
-# docker
-
-wsl 启动 Ubuntu
+### wsl 启动 Ubuntu
 
 ```
 wsl -d Ubuntu-20.04 --user pc
 ```
-
-## 安装
 
 ### 更改镜像源
 
@@ -199,7 +195,13 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
+# docker
+
+## 安装
+
 ### 清理 & 安装依赖
+
+按照[wsl 安装 Ubuntu](#wsl 安装 Ubuntu) 中的[更改镜像源](#更改镜像源)更新镜像，加速 Linux各种包的下载速度。
 
 如果安装过旧版本，需要先卸载之前的旧版本：
 
@@ -247,6 +249,26 @@ sudo apt-get update
 
 ```bash
 sudo apt-get install ./docker-desktop-<version>-<arch>.deb
+```
+
+### 设置国内镜像源
+
+打开 Docker 的配置文件 `/etc/docker/daemon.json`（如果文件不存在则需要创建），添加以下内容：
+
+```json
+{
+  "registry-mirrors": ["https://docker.mirrors.tuna.tsinghua.edu.cn"]
+}
+```
+
+重启 Docker 服务
+
+```bash
+sudo systemctl restart docker
+```
+
+```bash
+sudo systemctl daemon-reload
 ```
 
 ## 验证
