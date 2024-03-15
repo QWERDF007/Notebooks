@@ -4,7 +4,7 @@ win11 自带 wsl，其他安装参考网上资料
 
 ## 基本命令
 
-<details open><summary><em>[点击展开]</em></summary>
+<details><summary><em>[点击展开]</em></summary>
 <br>
 
 ### 更新 WSL
