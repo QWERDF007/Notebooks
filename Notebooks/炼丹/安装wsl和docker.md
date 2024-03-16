@@ -201,7 +201,9 @@ sudo apt-get upgrade
 
 ### 清理 & 安装依赖
 
-按照[wsl 安装 Ubuntu](#wsl 安装 Ubuntu) 中的[更改镜像源](#更改镜像源)更新镜像，加速 Linux各种包的下载速度。
+window 建议使用 wsl，按照 [wsl 安装 Ubuntu](#wsl 安装 Ubuntu) 安装 Ubuntu 子系统，然后按照[更改镜像源](#更改镜像源)更新镜像，加速 Linux各种包的下载速度。
+
+Ubuntu 直接按照下述内容安装。
 
 如果安装过旧版本，需要先卸载之前的旧版本：
 
@@ -241,7 +243,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
-### 安装 docker
+### 安装 docker-desktop
 
 ```bash
 sudo apt-get update
@@ -381,13 +383,22 @@ sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin do
 
   https://stackoverflow.com/a/48957722
 
-  ```
+  ```bash
   sudo groupadd docker
+  ```
+  
+  ```bash
   sudo usermod -aG docker pc
+  ```
+  
+  ```
   newgrp docker
+  ```
+  
+  ```
   docker run hello-world
   ```
-
+  
   
 
 
