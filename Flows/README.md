@@ -13,7 +13,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- 2023-11-14 [AnomalyDetection/PatchCore.drawio](<AnomalyDetection/PatchCore.drawio>)
+- 2024-03-15 [AnomalyDetection/PatchCore.drawio](<AnomalyDetection/PatchCore.drawio>)
 
 </details>
 

@@ -10,12 +10,12 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Papers](Papers) | 论文翻译, 主要是计算机视觉的相关论文 | 46 | [README :link:](<./Papers/README.md>) |
+| [Papers](Papers) | 论文翻译, 主要是计算机视觉的相关论文 | 49 | [README :link:](<./Papers/README.md>) |
 ## :notebook: Notebooks
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Notebooks](Notebooks) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 81 | [README :link:](<./Notebooks/README.md>) |
+| [Notebooks](Notebooks) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 85 | [README :link:](<./Notebooks/README.md>) |
 ## :computer: Code
 
 | 目录 | 描述 | 数量 | 链接 |

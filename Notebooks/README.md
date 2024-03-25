@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Notebooks](./) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 81 | [README :link:](<README.md>) |
+| [Notebooks](./) | 杂七杂八的笔记, 包括一些C++、Python、深度学习的 | 85 | [README :link:](<README.md>) |
 ### What's New ?
 
 #### AnomalyDetection (1) 
@@ -135,16 +135,24 @@
 
 </details>
 
-#### Misc (2) 
+#### LLMs (3) 
 
-- :white_check_mark: : 1
- - :x: : 1
+- :white_check_mark: : 3
+ - :x: : 0
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :white_check_mark: 2024-03-07 [Misc/ReLU的inplace影响.md](<Misc/ReLU的inplace影响.md>)
-- :x: 2023-10-17 [Misc/机器学习术语表.md](<Misc/机器学习术语表.md>)
+- :white_check_mark: 2024-03-19 [LLMs/本地docker部署Ollama.md](<LLMs/本地docker部署Ollama.md>)
+- :white_check_mark: 2024-03-18 [LLMs/安装wsl和docker.md](<LLMs/安装wsl和docker.md>)
+- :white_check_mark: 2024-03-18 [LLMs/docker设置根目录.md](<LLMs/docker设置根目录.md>)
+
+</details>
+
+#### Misc (0) 
+
+<details><summary><em>[点击展开]</em></summary>
+<br>
 
 </details>
 
@@ -179,14 +187,15 @@
 
 </details>
 
-#### Python (1) 
+#### Python (2) 
 
 - :white_check_mark: : 0
- - :x: : 1
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
+- :x: 2024-03-14 [绘图/seaborn随笔.md](<Python/绘图/seaborn随笔.md>)
 - :x: 2024-02-19 [Python/随笔.md](<Python/随笔.md>)
 
 </details>
@@ -276,15 +285,17 @@
 
 </details>
 
-#### 炼丹 (1) 
+#### 炼丹 (3) 
 
-- :white_check_mark: : 0
- - :x: : 1
+- :white_check_mark: : 1
+ - :x: : 2
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-03-06 [炼丹/Deep Learning Tuning Playbook.md](<炼丹/Deep Learning Tuning Playbook.md>)
+- :x: 2024-03-15 [炼丹/Deep Learning Tuning Playbook.md](<炼丹/Deep Learning Tuning Playbook.md>)
+- :x: 2024-03-12 [炼丹/机器学习术语表.md](<炼丹/机器学习术语表.md>)
+- :white_check_mark: 2024-03-07 [炼丹/ReLU的inplace影响.md](<炼丹/ReLU的inplace影响.md>)
 
 </details>
 

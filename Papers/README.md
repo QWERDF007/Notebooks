@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 46 | [README :link:](<README.md>) |
+| [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 49 | [README :link:](<README.md>) |
 ### What's New ?
 
 #### AnomalyDetection (2) 
@@ -66,13 +66,13 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
+- :x: 2024-03-25 [Detection/yolov2.md](<Detection/yolov2.md>)
 - :white_check_mark: 2024-03-14 [Detection/yolov9.md](<Detection/yolov9.md>)
 - :white_check_mark: 2024-03-07 [Detection/Faster R-CNN.md](<Detection/Faster R-CNN.md>)
 - :white_check_mark: 2024-03-06 [Detection/yolo综述.md](<Detection/yolo综述.md>)
 - :x: 2024-02-29 [Detection/DINOv2.md](<Detection/DINOv2.md>)
 - :x: 2023-11-20 [Detection/R-CNN.md](<Detection/R-CNN.md>)
 - :x: 2023-11-20 [Detection/Fast R-CNN.md](<Detection/Fast R-CNN.md>)
-- :x: 2023-04-17 [Detection/yolov2.md](<Detection/yolov2.md>)
 - :x: 2023-04-17 [Detection/yolov1.md](<Detection/yolov1.md>)
 
 </details>
@@ -120,6 +120,42 @@
 <br>
 
 - :x: 2024-02-01 [ImageGeneration/PhotoMaker.md](<ImageGeneration/PhotoMaker.md>)
+
+</details>
+
+#### IncrementalLearning (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
+
+<details><summary><em>[点击展开]</em></summary>
+<br>
+
+- :x: 2024-03-21 [IncrementalLearning/Deep Class-Incremental Learning - A Survey.md](<IncrementalLearning/Deep Class-Incremental Learning - A Survey.md>)
+
+</details>
+
+#### LLMs (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
+
+<details><summary><em>[点击展开]</em></summary>
+<br>
+
+- :x: 2024-03-19 [LLMs/LLama2.md](<LLMs/LLama2.md>)
+
+</details>
+
+#### MultiTask (1) 
+
+- :white_check_mark: : 0
+ - :x: : 1
+
+<details><summary><em>[点击展开]</em></summary>
+<br>
+
+- :x: 2024-03-20 [MultiTask/General Object Foundation Model for Images and Videos at Scale.md](<MultiTask/General Object Foundation Model for Images and Videos at Scale.md>)
 
 </details>
 
