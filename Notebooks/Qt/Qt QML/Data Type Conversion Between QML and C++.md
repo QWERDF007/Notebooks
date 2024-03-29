@@ -242,7 +242,7 @@ QML 透明地支持某些 C++ 序列类型，使其表现得像 JavaScript `Arra
 | `QVector<int>`                      | integer value 0                                      |
 | `QVector<qreal> `                   | real value 0.0                                       |
 | `QVector<bool>`                     | boolean value `false`                                |
-| std::vector<int>                    | integer value 0                                      |
+| `std::vector<int>`                  | integer value 0                                      |
 | `std::vector<qreal>`                | real value 0.0                                       |
 | `std::vector<bool>`                 | boolean value `false`                                |
 
