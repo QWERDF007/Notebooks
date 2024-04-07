@@ -2,7 +2,7 @@
 
 | 目录 | 描述 | 数量 | 链接 |
 | --- | --- | --- | --- |
-| [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 49 | [README :link:](<README.md>) |
+| [Papers](./) | 论文翻译, 主要是计算机视觉的相关论文 | 50 | [README :link:](<README.md>) |
 ### What's New ?
 
 #### AnomalyDetection (2) 
@@ -26,7 +26,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-01-18 [CAM/CAM.md](<CAM/CAM.md>)
+- :x: 2024-02-19 [CAM/CAM.md](<CAM/CAM.md>)
 
 </details>
 
@@ -38,11 +38,11 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :white_check_mark: 2024-03-07 [Classification/AlexNet.md](<Classification/AlexNet.md>)
-- :white_check_mark: 2024-03-07 [Classification/ResNet.md](<Classification/ResNet.md>)
 - :white_check_mark: 2024-03-07 [Classification/VGG.md](<Classification/VGG.md>)
-- :x: 2023-04-17 [Classification/Xception.md](<Classification/Xception.md>)
-- :x: 2023-04-17 [Classification/MobileNet.md](<Classification/MobileNet.md>)
+- :white_check_mark: 2024-03-07 [Classification/ResNet.md](<Classification/ResNet.md>)
+- :white_check_mark: 2024-03-07 [Classification/AlexNet.md](<Classification/AlexNet.md>)
+- :x: 2022-11-15 [Classification/Xception.md](<Classification/Xception.md>)
+- :x: 2022-11-15 [Classification/MobileNet.md](<Classification/MobileNet.md>)
 
 </details>
 
@@ -58,22 +58,23 @@
 
 </details>
 
-#### Detection (8) 
+#### Detection (9) 
 
-- :white_check_mark: : 3
+- :white_check_mark: : 4
  - :x: : 5
 
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-03-25 [Detection/yolov2.md](<Detection/yolov2.md>)
-- :white_check_mark: 2024-03-14 [Detection/yolov9.md](<Detection/yolov9.md>)
+- :x: 2024-04-07 [Detection/YOLO-World.md](<Detection/YOLO-World.md>)
+- :white_check_mark: 2024-04-07 [Detection/yolov2.md](<Detection/yolov2.md>)
+- :white_check_mark: 2024-03-15 [Detection/yolov9.md](<Detection/yolov9.md>)
+- :white_check_mark: 2024-03-07 [Detection/yolo综述.md](<Detection/yolo综述.md>)
 - :white_check_mark: 2024-03-07 [Detection/Faster R-CNN.md](<Detection/Faster R-CNN.md>)
-- :white_check_mark: 2024-03-06 [Detection/yolo综述.md](<Detection/yolo综述.md>)
-- :x: 2024-02-29 [Detection/DINOv2.md](<Detection/DINOv2.md>)
+- :x: 2024-03-07 [Detection/DINOv2.md](<Detection/DINOv2.md>)
 - :x: 2023-11-20 [Detection/R-CNN.md](<Detection/R-CNN.md>)
-- :x: 2023-11-20 [Detection/Fast R-CNN.md](<Detection/Fast R-CNN.md>)
-- :x: 2023-04-17 [Detection/yolov1.md](<Detection/yolov1.md>)
+- :x: 2023-11-18 [Detection/Fast R-CNN.md](<Detection/Fast R-CNN.md>)
+- :x: 2022-11-15 [Detection/yolov1.md](<Detection/yolov1.md>)
 
 </details>
 
@@ -85,10 +86,10 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-02-22 [Diffusion/FiT.md](<Diffusion/FiT.md>)
-- :x: 2024-02-22 [Diffusion/DiTs.md](<Diffusion/DiTs.md>)
-- :x: 2023-04-21 [Diffusion/StableDiffusion.md](<Diffusion/StableDiffusion.md>)
+- :x: 2024-03-07 [Diffusion/FiT.md](<Diffusion/FiT.md>)
+- :x: 2024-03-07 [Diffusion/DiTs.md](<Diffusion/DiTs.md>)
 - :x: 2023-04-21 [Diffusion/ControlNet.md](<Diffusion/ControlNet.md>)
+- :x: 2023-04-21 [Diffusion/StableDiffusion.md](<Diffusion/StableDiffusion.md>)
 - :x: 2023-04-20 [Diffusion/DDPM.md](<Diffusion/DDPM.md>)
 
 </details>
@@ -101,13 +102,13 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :white_check_mark: 2024-03-07 [GAN/DatasetGAN.md](<GAN/DatasetGAN.md>)
-- :white_check_mark: 2024-03-07 [GAN/GAN.md](<GAN/GAN.md>)
 - :white_check_mark: 2024-03-07 [GAN/StyleGAN.md](<GAN/StyleGAN.md>)
-- :x: 2023-04-17 [GAN/StyleGAN3Editing.md](<GAN/StyleGAN3Editing.md>)
-- :x: 2023-04-17 [GAN/SemanticStyleGAN.md](<GAN/SemanticStyleGAN.md>)
-- :x: 2023-04-17 [GAN/HyperStyle.md](<GAN/HyperStyle.md>)
-- :x: 2023-04-17 [GAN/GANgealing.md](<GAN/GANgealing.md>)
+- :white_check_mark: 2024-03-07 [GAN/GAN.md](<GAN/GAN.md>)
+- :white_check_mark: 2024-03-07 [GAN/DatasetGAN.md](<GAN/DatasetGAN.md>)
+- :x: 2022-11-15 [GAN/StyleGAN3Editing.md](<GAN/StyleGAN3Editing.md>)
+- :x: 2022-11-15 [GAN/SemanticStyleGAN.md](<GAN/SemanticStyleGAN.md>)
+- :x: 2022-11-15 [GAN/HyperStyle.md](<GAN/HyperStyle.md>)
+- :x: 2022-11-15 [GAN/GANgealing.md](<GAN/GANgealing.md>)
 
 </details>
 
@@ -119,7 +120,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-02-01 [ImageGeneration/PhotoMaker.md](<ImageGeneration/PhotoMaker.md>)
+- :x: 2024-02-19 [ImageGeneration/PhotoMaker.md](<ImageGeneration/PhotoMaker.md>)
 
 </details>
 
@@ -131,7 +132,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-03-21 [IncrementalLearning/Deep Class-Incremental Learning - A Survey.md](<IncrementalLearning/Deep Class-Incremental Learning - A Survey.md>)
+- :x: 2024-03-31 [IncrementalLearning/Deep Class-Incremental Learning - A Survey.md](<IncrementalLearning/Deep Class-Incremental Learning - A Survey.md>)
 
 </details>
 
@@ -143,7 +144,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-03-19 [LLMs/LLama2.md](<LLMs/LLama2.md>)
+- :x: 2024-03-31 [LLMs/LLama2.md](<LLMs/LLama2.md>)
 
 </details>
 
@@ -155,7 +156,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-03-20 [MultiTask/General Object Foundation Model for Images and Videos at Scale.md](<MultiTask/General Object Foundation Model for Images and Videos at Scale.md>)
+- :x: 2024-03-31 [MultiTask/General Object Foundation Model for Images and Videos at Scale.md](<MultiTask/General Object Foundation Model for Images and Videos at Scale.md>)
 
 </details>
 
@@ -167,7 +168,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2023-04-17 [NLP/Transformer.md](<NLP/Transformer.md>)
+- :x: 2022-11-15 [NLP/Transformer.md](<NLP/Transformer.md>)
 
 </details>
 
@@ -217,7 +218,7 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2023-04-17 [ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md](<ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md>)
+- :x: 2022-11-15 [ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md](<ShadowRemoval/Towards Ghost-free Shadow Removal via Dual Hierarchical Aggregation Network and Shadow Matting GAN.md>)
 
 </details>
 
@@ -241,8 +242,8 @@
 <details><summary><em>[点击展开]</em></summary>
 <br>
 
-- :x: 2024-02-23 [Transformer/A Survey on Visual Transformer.md](<Transformer/A Survey on Visual Transformer.md>)
-- :x: 2024-02-23 [Transformer/Transformers in Vision—A Survey.md](<Transformer/Transformers in Vision—A Survey.md>)
+- :x: 2024-03-07 [Transformer/Transformers in Vision—A Survey.md](<Transformer/Transformers in Vision—A Survey.md>)
+- :x: 2024-03-07 [Transformer/A Survey on Visual Transformer.md](<Transformer/A Survey on Visual Transformer.md>)
 
 </details>
 
