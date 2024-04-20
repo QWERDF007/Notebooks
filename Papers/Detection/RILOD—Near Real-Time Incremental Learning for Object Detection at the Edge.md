@@ -1,0 +1,1 @@
+# [RILOD: Near Real-Time Incremental Learning for Object Detection at the Edge](https://arxiv.org/abs/1904.00781#:~:text=The%20key%20component%20of%20RILOD,data%20of%20new%20object%20classes.)
