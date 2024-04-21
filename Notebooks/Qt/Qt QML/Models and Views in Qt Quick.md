@@ -34,7 +34,7 @@
 
 假设一个特定俱乐部想要使用其品牌颜色装饰其成员列表。成员列表在一个 `model` 中，`delegate` 将显示模型的内容。
 
-```qml
+```javascript
 ListModel {
     id: nameModel
     ListElement { name: "Alice" }
@@ -55,7 +55,7 @@ Component {
 
 俱乐部可以通过将可视对象绑定到 `header` 和 `footer` 属性来装饰成员列表。可视对象可以内联定义，在另外一个文件中，或者在一个 `Component` 类型中。
 
-```qml
+```javascript
 ListView {
     anchors.fill: parent
     clip: true
@@ -107,7 +107,7 @@ Gradient {
 
 列表可能包含一个列表，其中显示人名和人所属的团队。
 
-```qml
+```javascript
 ListModel {
     id: nameModel
     ListElement { name: "Alice"; team: "Crypto" }
@@ -128,6 +128,35 @@ Component {
 ```
 
 `ListView` 类型具有 `section` 附加属性，可以将相邻和相关类型组合成一个分区。`section.property` 确定使用哪个列表类型属性作为分区。`section.criteria` 可以指定如何显示分区名称，而 `section.delegate` 类似于视图的 `delegate` 属性。
+
+```javascript
+ListView {
+    anchors.fill: parent
+    model: nameModel
+    delegate: nameDelegate
+    focus: true
+    highlight: Rectangle {
+        color: "lightblue"
+        width: parent.width
+    }
+    section {
+        property: "team"
+        criteria: ViewSection.FullString
+        delegate: Rectangle {
+            color: "#b0dfb0"
+            width: parent.width
+            height: childrenRect.height + 4
+            Text { anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 16
+                font.bold: true
+                text: section
+            }
+        }
+    }
+}
+```
+
+
 
 <img src="./assets/listview-section.png"/>
 
@@ -151,9 +180,13 @@ Component {
 
 <img src="./assets/listview-setup.png"/>
 
+### Positioning of View Delegates
+
+视图的类型决定了项目如何定位。ListView 会根据方向将项目定位成一条直线，而 GridView 则可以将它们排列成二维网格。不建议直接绑定到 x 和 y 坐标上，因为视图的布局行为始终优先于任何位置绑定。
+
 ### Accessing Views and Models from Delegates
 
-委托绑定的列表视图可以通过 `ListView.view` 属性从委托中访问。同样，`GridView` 的 `GridView.view` 对于委托也是可用的。因此，相应的模型及其属性可以通过 `ListView.view.model` 访问。此外，模型中定义的任何信号或方法也是可访问的。
+委托绑定的 `ListView `可以通过 `ListView.view` 属性从委托中访问。同样，`GridView` 的 `GridView.view` 对于委托也是可用的。因此，相应的模型及其属性可以通过 `ListView.view.model` 访问。此外，模型中定义的任何信号或方法也是可访问的。
 
 当您想要为多个视图使用相同的委托时，此机制非常有用，但您希望每个视图的装饰或其他功能不同，并且您希望这些不同的设置是每个视图的属性。同样，访问或显示模型的某些属性可能很有趣。
 
@@ -264,19 +297,53 @@ Item {
 }
 ```
 
-上下文属性对于工具来说是不可见的，并防止 Qt Quick 编译器优化您的代码。它们使推断委托期望的特定数据变得更加困难。没有办法从 QML 显式填充 QML 上下文。如果您的组件希望通过 QML 上下文传递数据，则只能在通过本机方式提供正确上下文的地方使用它。这可以是您自己的 C++ 代码或周围元素的特定实现。相反，可以从 QML 以多种方式或通过本机方式设置必需属性。因此，通过 QML 上下文传递数据会降低组件的可重用性。
+上下文属性对于工具不可见，会阻止 Qt Quick 编译器优化您的代码。它们使您更难推理委托期望的特定数据。没有办法显式地从 QML 填充 QML 上下文。如果您的组件希望通过 QML 上下文传递数据，则只能在通过原生方式提供正确上下文的位置使用它。这可以是您自己的 C++ 代码或周围元素的特定实现。相反，必需属性可以通过 QML 或原生方式以多种方式设置。因此，通过 QML 上下文传递数据会降低组件的可重用性。
 
-如果模型的属性与委托的属性之间存在命名冲突，则可以使用限定模型名称访问角色。例如，如果 `Text` 类型具有（非必需）`type` 或 `age` 属性，则上面示例中的文本将显示这些属性值，而不是模型项中的 `type` 和 `age` 的值。在这种情况下，可以将属性引用为 `model.type` 和 `model.age`，以确保委托显示模型项中的属性值。为了使其工作，您需要在委托中要求一个 `model` 属性（除非您使用上下文属性）。
+如果模型的属性和委托的属性之间存在命名冲突，则可以使用限定的模型名称来访问角色。例如，如果 `Text` 类型具有 (非必需的) `type` 或 `age` 属性，则上述示例中的文本将显示这些属性值，而不是来自模型项的 `type` 和 `age` 值。在这种情况下，可以使用 `model.type` 和 `model.age` 代替来确保委托显示来自模型项的属性值。为此，您需要在委托中要求一个 `model` 属性 (除非您使用上下文属性)。
 
-委托还可以访问包含模型中项目索引的一个特殊的 `index` 角色。请注意，如果从模型中删除项目，则此索引设置为 -1。如果绑定到 `index` 角色，请确保逻辑考虑到索引可能为 -1，即该项目不再有效。（通常，该项目很快就会被销毁，但在某些视图中可以通过 `delayRemove` 附加属性延迟委托销毁。）
+委托还可以使用包含模型中项目索引的特殊 `index` 角色。请注意，如果项目从模型中删除，则此索引设置为 -1。如果您绑定到 `index` 角色，请确保逻辑考虑到索引可能为 -1 的可能性，即该项目不再有效。(通常项目将很快被销毁，但可以通过某些视图中的 `delayRemove` 附加属性延迟委托销毁。)
 
-没有命名角色的模型（例如下面显示的 `ListModel`）将通过 `modelData` 角色提供数据。对于只有一个角色的模型，也提供 `modelData` 角色。在这种情况下，`modelData` 角色包含与命名角色相同的数据。
+请记住您可以将整数或数组用作模型：
 
-> 注意：如果委托包含必需属性，则无法访问 `model`、`index` 和 `modelData` 角色，除非它还具有名称匹配的必需属性。
+```javascript
+Repeater {
+    model: 5
+    Text {
+        required property int modelData
+        text: modelData
+    }
+}
+```
 
-QML 在内置 QML 类型集中提供了几种数据模型类型。此外，可以使用 Qt C++ 创建模型，然后使其可用于 `QQmlEngine`，以供 QML 组件使用。有关创建这些模型的信息，请访问 [使用 C++ 模型与 Qt Quick 视图](<./Using C++ Models with Qt Quick Views.md>) 和 [创建 QML 类型](<./The QML Type System.md>) 文章。
+```javascript
+Repeater {
+    model: ["one", "two", "three"]
+    Text {
+        required property string modelData
+        text: modelData
+    }
+}
+```
 
-可以使用一个 Repeater 实现来自模型的项目的定位。
+此类模型为每个委托实例提供一个单独的匿名数据块。访问此数据块是使用 `modelData` 的主要原因，但其他模型也提供 `modelData`。
+
+通过 `model` 角色提供的对象具有一个空名称的属性。这个匿名属性持有 `modelData`。此外，通过 `model` 角色提供的对象还具有另一个名为 `modelData` 的属性。此属性已弃用，也持有 `modelData`。
+
+除了 `model` 角色之外，还提供了 `modelData` 角色。`modelData` 角色保存与 `modelData` 属性和通过 `model` 角色提供的对象的匿名属性相同的数据。
+
+`model` 和访问 `modelData` 的各种方法之间的区别如下：
+
+- 没有命名角色的模型（例如整数或字符串数组）通过 `modelData` 角色提供其数据。在这种情况下，`modelData` 角色不一定包含对象。对于整数模型，它将包含一个整数（当前模型项的索引）。对于字符串数组，它将包含一个字符串。`model` 角色仍然包含一个对象，但没有任何用于命名角色的属性。不过，`model` 仍然包含其惯用的 `modelData` 和匿名属性。
+- 如果模型只有一个命名角色，则 `modelData` 角色包含与命名角色相同的数据。它不一定是一个对象，并且不会像通常那样将命名角色作为一个命名属性包含在内。`model` 角色仍然包含一个对象，其中包含命名角色作为属性，以及在这种情况下 `modelData` 和匿名属性。
+- 对于具有多个角色的模型，`modelData` 角色仅作为必需属性提供，而不是上下文属性。这是由于与 Qt 旧版本向后兼容的原因。
+
+`model` 上的匿名属性允许您干净地编写委托，这些委托接收其模型数据和应该作为来自外部的属性的角色名称。您可以提供没有或只有一个命名角色的模型，以及一个空字符串作为角色。然后，简单地访问 `model[role]` 的绑定将按照您的期望执行。您不必为此添加特殊代码。
+
+> 注意：如果委托包含必需属性，除非它也具有匹配名称的必需属性，否则 `model`、`index` 和 `modelData` 角色不可访问。
+
+QML 在内置的 QML 类型集中提供了几种数据模型类型。此外，可以使用 Qt C++ 创建模型，然后使其可用供 QML 组件通过 QQmlEngine 使用。有关创建这些模型的信息，请参阅 [Using C++ Models with Qt Quick Views](<Using C++ Models with Qt Quick Views.md>) 和 [creating QML types](<The QML Type System.md>) 文章。
+
+可以使用 Repeater 来实现基于模型的项目定位。
 
 ### List Model
 
@@ -452,6 +519,12 @@ Rectangle {
 可以在 C++ 中定义模型，然后使其可用于 QML。此机制对于将现有 C++ 数据模型或其他复杂数据集暴露到 QML 中非常有用。
 
 有关信息，请访问 [使用 C++ 模型与 Qt Quick 视图](<./Using C++ Models with Qt Quick Views.md>)。
+
+### Array models
+
+您可以将 JavaScript 数组和各种 QML 列表用作模型。列表的元素将按照上面概述的规则通过 `model` 和 `modelData` 提供：单个数据（例如整数或字符串）作为单个 `modelData` 提供。结构化数据（例如 JavaScript 对象或 QObject）作为结构化 `model` 和 `modelData` 提供。
+
+如果您将它们请求为必需属性，则还可以使用单独的模型角色。由于我们无法预先知道数组中会出现哪些对象，因此委托中的任何必需属性都将被填充，可能会将 `undefined` 强制转换为所需类型。不过，单个模型角色不会通过 QML 上下文提供。它们会屏蔽所有其他上下文属性。
 
 ## Repeaters
 
