@@ -44,16 +44,17 @@ YOLO 在准确性方面仍然落后于最先进的检测系统。虽然它可以
 
 > $(x,y)$ 是相对于网格单元左上角的偏移量，处于 0 到 1之间，高宽相对于图像高宽，也处于 0 到 1之间。
 
-每个网格单元还预测 $C$ 个有条件的类别概率，$\rm Pr(Class_i | Object)$ 。这些概率是在网格单元包含目标的条件下的。不管有多少个框 $B$ ，每个网格仅预测一组类别概率。
+每个网格单元还预测 $C$ 个有条件的类别概率， $\rm Pr(Class_i | Object)$ 。这些概率是在网格单元包含目标的条件下的。不管有多少个框 $B$ ，每个网格仅预测一组类别概率。
 
 在测试时我们将有条件的类别概率与每个独立的框的置信度相乘，
 
 $$
 \large \rm Pr(Class_i | Obejct) * Pr(Obejct) * IOU_{pred}^{truth} = Pr(Class_i) * IOU_{pred}^{truth} \tag{1}
 $$
+
 它为每个框提供了类别相关的置信度分数。这些分数同时编码了该类别出现在框中的概率和预测的框与目标的匹配程度。
 
-在 $\rm P{\scriptsize ASCAL} \ VOC$ 上评估时，我们使用 $S = 7$，$B = 2$ 。PASCAL VOC 有 20 个类别，所以 $C = 20$ 。我们最后的预测是一个 $7 \times 7 \ times 30$ 的张量。
+在 $\rm P{\scriptsize ASCAL} \ VOC$ 上评估时，我们使用 $S = 7$， $B = 2$ 。PASCAL VOC 有 20 个类别，所以 $C = 20$ 。我们最后的预测是一个 $7 \times 7 \times 30$ 的张量 (Tensor)。
 
 <img src="assets/yolov1_fig2.png" title="图2">
 
@@ -82,6 +83,7 @@ $$
 我们最后一层同时预测类别概率和边界框坐标。我们以图像的宽度和高度对边界框的宽度和高度进行归一化，使它们落在 0 到 1之间。我们将边界框的 $x$ 和 $y$ 坐标参数化为特定的网格单元的位置的偏移量，因此它们也在 0 到 1 之间。
 
 我们最后一层使用线性激活函数，其他层都使用以下的渗漏整流线性激活 ( Leaky ReLU)：
+
 $$
 \begin{equation}
 \phi(x)=\left\{
@@ -103,6 +105,7 @@ $$
 YOLO 为每个网格单元预测多个边界框。在训练时，我们希望每个目标只有一个边界框预测器对其负责。我们根据哪个预测与真实值具有最高的 IOU 来分配一个预测器负责预测这个目标。这导致边界框预测器专门化。每个预测器都能更好地预测特定的尺寸、长宽比或目标的类别，从而提高整体的召回率。
 
 训练期间，我们优化以下多个部分的损失函数：
+
 $$
 \lambda_{coord} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left [ (x_i - \hat{x}_i)^2 + (y_i - \hat{y}_i)^2 \right ]  \\ + \lambda_{coord} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left [ \left(\sqrt{w_i} - \sqrt{\hat{w}_i}\right)^2 + \left(\sqrt{h_i} - \sqrt{\hat{h}_i} \right)^2 \right ] \\ 
 + \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left(C_i - \hat{C}_i \right)^2 + \lambda_{noobj} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{noobj} \left(C_i - \hat{C}_i \right)^2 \\ 
