@@ -107,9 +107,7 @@ YOLO 为每个网格单元预测多个边界框。在训练时，我们希望每
 训练期间，我们优化以下多个部分的损失函数：
 
 $$
-\lambda_{coord} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left [ (x_i - \hat{x}_i)^2 + (y_i - \hat{y}_i)^2 \right ]  \\ + \lambda_{coord} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left [ \left(\sqrt{w_i} - \sqrt{\hat{w}_i}\right)^2 + \left(\sqrt{h_i} - \sqrt{\hat{h}_i} \right)^2 \right ] \\ 
-+ \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left(C_i - \hat{C}_i \right)^2 + \lambda_{noobj} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{noobj} \left(C_i - \hat{C}_i \right)^2 \\ 
-+ \sum_{i = 0}^{S^2} \mathbb{1}_{i}^{obj} \sum_{c \in classes}(p_i(c) - \hat{p}_i(c))^2 \tag{3}
+\lambda_{coord} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left [ (x_i - \hat{x}_i)^2 + (y_i - \hat{y}_i)^2 \right ]  \\ + \lambda_{coord} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left [ \left(\sqrt{w_i} - \sqrt{\hat{w}_i}\right)^2 + \left(\sqrt{h_i} - \sqrt{\hat{h}_i} \right)^2 \right ] \\ + \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{obj} \left(C_i - \hat{C}_i \right)^2 + \lambda_{noobj} \sum_{i = 0}^{S^2} \sum_{j=0}^B \mathbb{1}_{ij}^{noobj} \left(C_i - \hat{C}_i \right)^2 \\ + \sum_{i = 0}^{S^2} \mathbb{1}_{i}^{obj} \sum_{c \in classes}(p_i(c) - \hat{p}_i(c))^2 \tag{3}
 $$
 
 其中 $\mathbb{1}_{i}^{obj}$ 表示目标是否出现在单元格 $i$ 中，$\mathbb{1}_{ij}^{obj}$ 表示第 $i$ 个单元格中的第 $j$ 个边界框预测器 "负责" 该预测。
