@@ -103,13 +103,13 @@ $$
 对于边界框回归，我们采用了 [5] 中的 4 个坐标的参数化：
 
 $$
-\large t_x = (x - x_a) / w_a, \quad t_y = (y - y_a) / h_a, \\
-\large t_w = \log(w/w_a), \quad t_h = \log(h / h_a), \\
-\large t_x^{ * } = (x^{ * } - x_a) / w_a, \quad t_y^{ * } = (y^{ * } - y_a) / h_a, \\
+\large t_x = (x - x_a) / w_a, \quad t_y = (y - y_a) / h_a, \\ 
+\large t_w = \log(w/w_a), \quad t_h = \log(h / h_a), \\ 
+\large t_x^{ * } = (x^{ * } - x_a) / w_a, \quad t_y^{ * } = (y^{ * } - y_a) / h_a, \\ 
 \large t_w^{ * } = \log(w^{ * }/w_a), \quad t_h^{ * } = \log(h^{ * } / h_a) \\ \tag{2}
 $$
 
-其中 $x, y, w, h$ 分别表示框的中心坐标和宽高。变量 $x$ 、$x_a$ 和 $x^{ * }$ 分别为预测框、锚框和标注框 ( $y$ 、$w$ 、$h$ 同理) 的参数。这可以被认为是从锚框到附近的标注框的边界框回归。
+其中 $x, y, w, h$ 分别表示框的中心坐标和宽高。变量 $x$ 、 $x_a$ 和 $x^{ * }$ 分别为预测框、锚框和标注框 ( $y$ 、 $w$ 、 $h$ 同理) 的参数。这可以被认为是从锚框到附近的标注框的边界框回归。
 
 然而，我们的方法以不同于之前基于 RoI 方法 (SSPnet 和 Fast R-CNN) 的方式实现边界框回归。在 SSPnet 和 Fast R-CNN 中，做边界框回归时的输入为任意大小 RoI 池化之后的特征图，所有大小的 RoIs 回归权重共享。在我们的公式中，被用于回归的特征为特征图上 $3 \times 3$ 的空间区域。为了考虑不同的大小，学习了 k 个边界框回归器。每个回归器负责一种尺度和长宽比，并且 k 个回归器不共享权重。因此，即使特征是固定大小/尺度的，也仍然可以预测各种大小的框，这要归功于锚框设计。
 
@@ -162,7 +162,7 @@ RPN 可以通过反向传播和随机梯度下降 (SGD) 进行端到端的训练
 
 <img src="./assets/faster-rcnn-table4.jpg" title="表 4">
 
-表4：PASCAL VOC 2012测试集上的检测结果。检测器是Fast R-CNN和VGG-16。训练数据：“07”：VOC 2007 trainval，“07++12”：VOC 2007 trainval+test和VOC 2012 trainval的并集。对于 RPN，Fast R-CNN 的训练时候选框为 2000。$\dagger$ ：http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html。 $\ddagger$ ：http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html。§：http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html。
+表4：PASCAL VOC 2012测试集上的检测结果。检测器是Fast R-CNN和VGG-16。训练数据：“07”：VOC 2007 trainval，“07++12”：VOC 2007 trainval+test和VOC 2012 trainval的并集。对于 RPN，Fast R-CNN 的训练时候选框为 2000。 $\dagger$ ：http://host.robots.ox.ac.uk:8080/anonymous/HZJTQA.html。 $\ddagger$ ：http://host.robots.ox.ac.uk:8080/anonymous/YNPLXB.html。§：http://host.robots.ox.ac.uk:8080/anonymous/XEDH10.html。
 
 <img src="./assets/faster-rcnn-table5.jpg" title="表 5">
 
