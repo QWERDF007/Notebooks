@@ -103,10 +103,12 @@ $$
 对于边界框回归，我们采用了 [5] 中的 4 个坐标的参数化：
 
 $$
-\large t_x = (x - x_a) / w_a, \quad t_y = (y - y_a) / h_a, \\ 
-\large t_w = \log(w/w_a), \quad t_h = \log(h / h_a), \\ 
-\large t_x^{ * } = (x^{ * } - x_a) / w_a, \quad t_y^{ * } = (y^{ * } - y_a) / h_a, \\ 
-\large t_w^{ * } = \log(w^{ * }/w_a), \quad t_h^{ * } = \log(h^{ * } / h_a) \\ \tag{2}
+\begin{matrix}
+t_x = (x - x_a) / w_a,  &  \quad t_y = (y - y_a) / h_a, \\
+t_w = \log(w/w_a),  & \quad t_h = \log(h / h_a), \\
+t_x^{ * } = (x^{ * } - x_a) / w_a,  & \quad t_y^{ * } = (y^{ * } - y_a) / h_a, \\
+t_w^{ * } = \log(w^{ * }/w_a),  & \quad t_h^{ * } = \log(h^{ * } / h_a)
+\end{matrix} \tag{2}
 $$
 
 其中 $x, y, w, h$ 分别表示框的中心坐标和宽高。变量 $x$ 、 $x_a$ 和 $x^{ * }$ 分别为预测框、锚框和标注框 ( $y$ 、 $w$ 、 $h$ 同理) 的参数。这可以被认为是从锚框到附近的标注框的边界框回归。
