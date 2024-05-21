@@ -55,7 +55,7 @@ brew包管理器 (macOS 上的 Homebrew，或 Linux 上的 Linuxbrew)有一个 [
 [这里](https://repology.org/project/python:pybind11/versions) 列出了可以找到 pybind11 的其他位置；这些由各种打包程序和社区维护。
 
 <div style="text-align: left;">  
-    <a href="<README.md>" style="margin-right: 100px;">README</a>     
+    <a href="<../README.md>" style="margin-right: 100px;">README</a>     
     <a href="<First steps.md>">First steps</a> 
 </div>
 
