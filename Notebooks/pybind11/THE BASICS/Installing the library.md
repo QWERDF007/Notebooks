@@ -54,23 +54,8 @@ brew包管理器 (macOS 上的 Homebrew，或 Linux 上的 Linuxbrew)有一个 [
 
 [这里](https://repology.org/project/python:pybind11/versions) 列出了可以找到 pybind11 的其他位置；这些由各种打包程序和社区维护。
 
-<div class="related-pages">
-  <a class="prev-page" href="README.html">
-    <svg><use href="#svg-arrow-right"></use></svg>
-    <div class="page-info">
-      <div class="context">
-        <span>Previous</span>
-      </div>
-      <div class="title">Upgrade guide</div>
-    </div>
-  </a>
-  <a class="next-page" href="<First steps.md>">
-    <div class="page-info">
-      <div class="context">
-        <span>Next</span>
-      </div>
-      <div class="title">First steps</div>
-    </div>
-    <svg><use href="#svg-arrow-right"></use></svg>
-  </a>
+<div style="text-align: left;">  
+    <a href="<README.md>" style="margin-right: 100px;">README</a>     
+    <a href="<First steps.md>">First steps</a> 
 </div>
+
