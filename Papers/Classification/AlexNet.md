@@ -121,11 +121,10 @@ $$
 我们使用随机梯度下降来训练我们的模型，批量大小为 128，动量 0.9 ，权重衰减 0.0005。我们发现这个很小的权重衰减对于模型的学习是很重要的。换句话说，权重衰减在这不仅仅是一个正则化：它减少了模型的训练误差。权重 $w$ 的更新规则是：
 
 $$
-\begin{matrix}
-v_{i+1} & := 0.9 \cdot v_i - 0.0005 \cdot \epsilon \cdot w - 
-\epsilon \left \langle  \frac{\partial{L}}{\partial{w}} | _{w_i} \right \rangle _{D_{i}} \\
+\begin{aligned}	
+v_{i+1} & := 0.9 \cdot v_i - 0.0005 \cdot \epsilon \cdot w - \epsilon \left \langle  \frac{\partial L}{\partial w} |_{w_i} \right \rangle _{D_{i}} \\
 w_{i+1} & :=   w_i + v_{i+1}
-\end{matrix}
+\end{aligned}
 $$
 
 其中 $i$ 是迭代索引， $v$ 是动量变量， $\epsilon$ 是学习率， $\left \langle  \frac{\partial L}{\partial w} |_{w_i} \right \rangle _{D_{i}}$ 是目标函数 $L$ 对 $w$ 的导数在 $w_i$ 处的值，在第 $i$ 个批量 $D_i$ 上的平均值。
