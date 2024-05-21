@@ -6,11 +6,11 @@ Boost.Python 的主要问题以及创建这样一个类似项目的原因——�
 
 可以将此库视为 Boost.Python 的一个微小的自包含版本，其中与绑定生成无关的所有内容都被剔除。如果不考虑注释，核心头文件只需要大约 4K 行代码，并依赖于Python (3.6+ 或 PyPy) 和 C++ 标准库。这个紧凑的实现在一定程度上得益于一些新的 C++11 语言特性 (具体来说:元组、lambda 函数和变参模板)。自其创建以来，这个库在许多方面已经超越了 Boost.Python，在许多常见情况下导致了大大简化的绑定代码。
 
-参考文档和教程提供在 https://pybind11.readthedocs.io/en/latest。本手册的PDF版本可在[此处](https://pybind11.readthedocs.io/_/downloads/en/latest/pdf/)获得。源代码始终可在 https://github.com/pybind/pybind11 获得。
+参考文档和教程提供在 [pybind11.readthedocs.io](https://pybind11.readthedocs.io/en/latest)。本手册的PDF版本可在[此处](https://pybind11.readthedocs.io/_/downloads/en/latest/pdf/)获得。源代码可在 [github.com/pybind/pybind11](https://github.com/pybind/pybind11) 获得。
 
 ## Core features
 
-pybind11可以将以下核心 C++ 特性映射到Python:
+pybind11 可以将以下核心 C++ 特性映射到 Python:
 
 * 接受和返回按值、引用或指针传递的自定义数据结构的函数
 * 实例方法和静态方法 
