@@ -2,7 +2,7 @@
 
 获取 `pybind11` 源代码的方法有几种，它位于 GitHub 上的 `pybind/pybind11`。pybind11 开发人员建议以这里列出的前三种方法中的一种获取 pybind11，即子模块、PyPI 或 conda-forge。
 
-## Include as a submodule
+## 作为子模块包含
 
 当您在 Git 中处理项目时，可以将 pybind11 存储库用作子模块。从您的 git 仓库，使用:
 
@@ -13,8 +13,8 @@
 
 从这里，您现在可以包含 `extern/pybind11/include`，或者可以直接从本地文件夹使用 pybind11 提供的各种集成工具(请参阅 [构建系统]())。
 
-Include with PyPI
-------------------------
+## 通过 PyPI 包含
+
 
 您可以使用 Pip 从 PyPI 下载源代码和 CMake 文件作为 Python 包。只需使用:
 
@@ -26,13 +26,13 @@ Include with PyPI
 
 如果您正在使用系统 Python 进行安装，这不推荐，因为它会向 `/usr/local/include/pybind11` 和 `/usr/local/share/cmake/pybind11` 添加文件，因此，除非这就是您想要的，否则建议仅将其用于虚拟环境或您的 `pyproject.toml` 文件(请参阅 [构建系统]())。
 
-## Include with conda-forge
+## 通过 conda-forge 包含
 
 您可以通过 [conda-forge](https://github.com/conda-forge/pybind11-feedstock) 的 conda 使用 pybind11:
 
     conda install -c conda-forge pybind11
 
-## Include with vcpkg
+## 通过 vcpkg 包含
 
 您可以使用 Microsoft [vcpkg](https://github.com/Microsoft/vcpkg/) 依赖关系管理器下载和安装 pybind11:
 
@@ -44,18 +44,18 @@ Include with PyPI
 
 vcpkg 中的 pybind11 端口由 Microsoft 团队成员和社区贡献者保持最新。如果版本过期，请在 vcpkg 存储库上创建问题或拉取请求。
 
-## Global install with brew
+## 使用 brew 进行全局安装
 
 brew包管理器 (macOS 上的 Homebrew，或 Linux 上的 Linuxbrew)有一个 [pybind11 包](https://github.com/Homebrew/homebrew-core/blob/master/Formula/pybind11.rb)。要安装:
 
     brew install pybind11
 
-## Other options
+## 其他选项
 
 [这里](https://repology.org/project/python:pybind11/versions) 列出了可以找到 pybind11 的其他位置；这些由各种打包程序和社区维护。
 
 <div style="text-align: left;">  
-    <a href="../README.md" style="margin-right: 100px;">README</a>     
+    <a href="README.md" style="margin-right: 100px;">README</a>     
     <a href="First steps.md">First steps</a> 
 </div>
 
