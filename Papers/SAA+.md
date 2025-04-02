@@ -123,7 +123,7 @@ $$
 由于预训练的语言—视觉数据集 [41] 和目标异常分割数据集 [4, 58] 之间的领域差距，使用提示 “defect” 等由基础模型 [23] 生成的预测可能不可靠。为了校准各个预测的置信度分数，我们提出了模仿人类直觉的异常显著性提示。具体来说，**人类可以通过异常区域与其周围区域的差异 [40] 来识别异常区域，即视觉显著性包含指示异常程度的宝贵信息**。因此，我们通过计算对应像素特征 ( $\mathbf{f}$ ) 与其 N 个最近邻居之间的平均距离来计算输入图像的显著性映射 ( $\mathrm{s}$ )：
 
 $$
-\large \mathrm{s}_{ij} \coloneqq \frac{1}{N} \sum_{\mathbf{f} \in N_p(\mathbf{f}_{ij})} (1 - \langle\mathbf{f}_{ij}, \mathbf{f}\rangle), \tag{5}
+\large \mathrm{s}_{ij} \coloneqq \frac{1}{N} \sum_{\mathbf{f} \in N_p ( \mathbf{f}_{ij} ) } (1 - \langle\mathbf{f}_{ij}, \mathbf{f}\rangle), \tag{5}
 $$
 
 其中 $(i, j)$ 表示像素位置， $N_p(\mathbf{f}_{ij})$ 表示对应像素的 N 个最近邻居， $\langle \cdot, \cdot \rangle$ 表示余弦相似度。我们使用来自大型图像数据集 [59] 的预训练 CNN 来提取图像特征，确保特征的描述性。显著性映射指示一个区域与其他区域的差异程度。显著性提示 $\mathcal{P}^S$ 定义为相应区域掩码内的指数平均显著性值：
