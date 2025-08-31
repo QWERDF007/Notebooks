@@ -1250,9 +1250,47 @@ assert(x == 1);
 
 使用逻辑域有助于应用程序的组合。栈中较低层级的单个内核启动，例如来自 NCCL 的启动，可以选择一个语义逻辑域，而无需担心周围的应用程序架构。较高层级可以通过映射来控制逻辑域。如果未设置，逻辑域的默认值为默认域，并且默认映射是将默认域映射到 0，将远程域映射到 1（在域数量大于 1 的 GPU 上）。特定的库可以在 CUDA 12.0 及更高版本中用远程域标记启动；例如，NCCL 2.16 就会这样做。这共同为常见应用程序提供了一种开箱即用的有益使用模式，无需在其他组件、框架或应用程序级别进行代码更改。另一种使用模式，例如在一个使用 `nvshmem` 或内核类型没有明确分离的应用程序中，可以对并行流进行分区。流 A 可以将两个逻辑域都映射到物理域 0，流 B 映射到 1，依此类推。
 
+```c++
+// Example of launching a kernel with the remote logical domain
+cudaLaunchAttribute domainAttr;
+domainAttr.id = cudaLaunchAttrMemSyncDomain;
+domainAttr.val = cudaLaunchMemSyncDomainRemote;
+cudaLaunchConfig_t config;
+// Fill out other config fields
+config.attrs = &domainAttr;
+config.numAttrs = 1;
+cudaLaunchKernelEx(&config, myKernel, kernelArg1, kernelArg2...);
+```
+
+```c++
+// Example of setting a mapping for a stream
+// (This mapping is the default for streams starting on Hopper if not
+// explicitly set, and provided for illustration)
+cudaLaunchAttributeValue mapAttr;
+mapAttr.memSyncDomainMap.default_ = 0;
+mapAttr.memSyncDomainMap.remote = 1;
+cudaStreamSetAttribute(stream, cudaLaunchAttributeMemSyncDomainMap, &mapAttr);
+```
+
+```c++
+// Example of mapping different streams to different physical domains, ignoring
+// logical domain settings
+cudaLaunchAttributeValue mapAttr;
+mapAttr.memSyncDomainMap.default_ = 0;
+mapAttr.memSyncDomainMap.remote = 0;
+cudaStreamSetAttribute(streamA, cudaLaunchAttributeMemSyncDomainMap, &mapAttr);
+mapAttr.memSyncDomainMap.default_ = 1;
+mapAttr.memSyncDomainMap.remote = 1;
+cudaStreamSetAttribute(streamB, cudaLaunchAttributeMemSyncDomainMap, &mapAttr);
+```
+
+与其他启动属性一样，这些属性在 CUDA 流、使用 `cudaLaunchKernelEx` 的单个启动以及 CUDA 图中的内核节点上都是统一暴露的。如上所述，典型的用法是在流级别设置映射，并在启动级别（或在一段流使用区域上）设置逻辑域。
+
+在流捕获期间，这两个属性都会被拷贝到图节点中。CUDA 图会从节点本身获取这两个属性，这本质上是一种间接指定物理域的方式。在启动 CUDA 图时，在流上设置的与域相关的属性不会在图的执行中使用。
+
 ### 6.2.8. 异步并发执行
 
-CUDA 将以下操作作为独立的任务暴露出来，它们可以彼此并发运行：
+CUDA 将以下操作作为独立的任务，它们可以彼此并发运行：
 
 - 主机上的计算；
 - 设备上的计算；
@@ -1261,19 +1299,19 @@ CUDA 将以下操作作为独立的任务暴露出来，它们可以彼此并发
 - 在给定设备内存内部的内存传输；
 - 设备之间的内存传输。
 
-这些操作之间达到的并发水平将取决于设备的特性集和计算能力，具体如下所述。
+这些操作之间达到的并发水平取决于设备的特性集和计算能力，具体如下所述。
 
 #### 6.2.8.1. 主机和设备之间的并发执行
 
-主机与设备之间的并发执行通过异步库函数来实现，这些函数在设备完成请求的任务之前就将控制权返回给主机线程。使用异步调用，许多设备操作可以被一起排队，以便在可用的设备资源准备就绪时由 CUDA 驱动程序执行。这减轻了主机线程管理设备的许多责任，使其可以自由地执行其他任务。以下设备操作相对于主机是异步的：
+主机与设备之间的并发执行是通过异步库函数实现的，这些函数在设备完成请求的任务之前就将控制权返回给主机线程。使用异步调用，许多设备操作可以被一起排队，以便在可用的设备资源就绪时由 CUDA 驱动程序执行。这减轻了主机线程管理设备的许多责任，使其可以自由地执行其他任务。以下设备操作相对于主机是异步的：
 
 - 内核启动；
 - 单个设备内存内部的内存拷贝；
-- 从主机到设备、大小为 64KB 或更小的内存块拷贝；
-- 以 `Async` 为后缀的内存拷贝函数执行的操作；
+- 从主机到设备、大小为 64 KB 或更小的内存块拷贝；
+- 以 `Async` 为后缀的函数执行的内存拷贝；
 - 内存设置函数调用。
 
-程序员可以通过将环境变量 `CUDA_LAUNCH_BLOCKING` 设置为 1，来全局禁用系统上所有 CUDA 应用程序的内核启动异步性。此功能仅用于调试目的，不应作为使生产软件可靠运行的方式。
+程序员可以通过将环境变量 `CUDA_LAUNCH_BLOCKING` 设置为 1，来全局禁用系统上所有 CUDA 应用程序的内核启动异步性。此功能仅用于调试目的，不应用于使生产软件可靠运行。
 
 如果通过性能分析器（Nsight Compute）收集硬件计数器，内核启动是同步的，除非启用了并发内核分析。如果 `Async` 内存拷贝涉及的主机内存不是页锁定的，它们也可能是同步的。
 
@@ -1430,37 +1468,37 @@ cudaStreamCreateWithPriority(&st_high, cudaStreamNonBlocking, priority_high);
 cudaStreamCreateWithPriority(&st_low, cudaStreamNonBlocking, priority_low);
 ```
 
-#### 3.2.8.6. 程序化依赖启动和同步
+#### 6.2.8.6. 程序化依赖启动与同步
 
-程序化依赖启动机制允许依赖的二级内核在依赖它的主内核在同一 CUDA 流中完成执行之前启动。从计算能力 9.0 的设备开始可用，当二级内核可以完成不依赖于主内核结果的重大工作时，此技术可以提供性能优势。
+程序化依赖启动（Programmatic Dependent Launch）机制允许一个依赖于主（primary）内核的次级（secondary）内核在同一个 CUDA 流中，于主内核执行完成之前启动。该技术从计算能力 9.0 及以上的设备开始可用，当次级内核可以完成不依赖于主内核结果的重要工作时，可以带来性能上的优势。
 
-##### 3.2.8.6.1. 背景
+##### 6.2.8.6.1. 背景
 
-CUDA 应用程序通过在 GPU 上启动和执行多个内核来利用 GPU。图 10 显示了典型的 GPU 活动时间线。
+CUDA 应用程序通过在 GPU 上启动和执行多个内核来利用 GPU。一个典型的 GPU 活动时间线如图 10 所示。
 
 <img src="./assets/gpu-activity.jpg">
 
-图 10：GPU 活动时间线
+**图 10**：GPU 活动时间线
 
-在这里，`secondary_kernel` 在 `primary_kernel` 完成执行后启动。序列化执行通常是必要的，因为 `secondary_kernel` 依赖于 `primary_kernel` 生成的结果数据。如果 `secondary_kernel` 不依赖于 `primary_kernel`，则可以通过使用 CUDA 流并发启动两者。即使 `secondary_kernel` 依赖于 `primary_kernel`，也存在一些并发执行的可能性。例如，几乎所有内核在执行过程中都有一些 *preamble* 部分，在此期间执行诸如清零缓冲区或加载常数值等任务。
+这里，`secondary_kernel` 在 `primary_kernel` 完成执行后才启动。通常需要这种串行执行，因为 `secondary_kernel` 依赖于 `primary_kernel` 产生的结果数据。如果 `secondary_kernel` 不依赖于 `primary_kernel`，两者都可以通过使用 Streams 并发启动。即使 `secondary_kernel` 依赖于 `primary_kernel`，也存在一些并发执行的潜力。例如，几乎所有内核都有某种前导（preamble）部分，在此期间会执行诸如清零缓冲区或加载常量值等任务。
 
 <img src="./assets/secondary-kernel-preamble.jpg">
 
-图 11：`secondary_kernel` 的前言部分
+**图 11**：`secondary_kernel` 的前言部分
 
-图 11 显示了可以并发执行而不会影响应用程序的 `secondary_kernel` 的部分。请注意，并发启动还可以让我们隐藏 `secondary_kernel` 的启动延迟在 `primary_kernel` 的执行背后。
+图 11 展示了 `secondary_kernel` 中可以并发执行而不影响应用程序的部分。请注意，并发启动还允许我们将 `secondary_kernel` 的启动延迟隐藏在 `primary_kernel` 的执行之后。
 
 <img src="./assets/preamble-overlap.jpg">
 
-图 12：并发执行 `primary_kernel` 和 `secondary_kernel`
+**图 12**：并发执行 `primary_kernel` 和 `secondary_kernel`
 
-图 12 显示了 primary_kernel 和 secondary_kernel 的并发执行，可以使用程序化依赖启动实现。
+图 12 所示的 `secondary_kernel` 的并发启动和执行，可以通过程序化依赖启动来实现。
 
-程序化依赖启动对 CUDA 内核启动 API 引入了更改，如下节所述。这些 API 需要至少计算能力 9.0 才能提供重叠执行。
+程序化依赖启动引入了对 CUDA 内核启动 API 的更改，如下一节所述。这些 API 要求至少计算能力 9.0 才能提供重叠执行。
 
-##### 3.2.8.6.2. API 描述
+##### 6.2.8.6.2. API 描述
 
-在程序化依赖启动中，主内核和次内核在同一个 CUDA 流中启动。当主内核准备好启动次内核时，它应该使用所有线程块执行 `cudaTriggerProgrammaticLaunchCompletion`。次内核必须使用可扩展的启动 API 启动，如下所示。
+在程序化依赖启动中，一个主内核和一个次级内核在同一个 CUDA 流中启动。当主内核准备好让次级内核启动时，它应该让所有线程块都执行 `cudaTriggerProgrammaticLaunchCompletion`。次级内核必须使用可扩展的启动 API 来启动，如下所示。
 
 ```c++
 __global__ void primary_kernel() {
@@ -1492,41 +1530,41 @@ primary_kernel<<<grid_dim, block_dim, 0, stream>>>();
 cudaLaunchKernelEx(&configSecondary, secondary_kernel);
 ```
 
-当使用 `cudaLaunchAttributeProgrammaticStreamSerialization` 属性启动次级内核时，CUDA 驱动程序可以安全地提前启动次级内核，而不必等待主内核的完成和内存刷新才能启动次级内核。
+当次级内核使用 `cudaLaunchAttributeProgrammaticStreamSerialization` 属性启动时，CUDA 驱动程序可以安全地提前启动次级内核，而无需等待主内核完成和内存刷新后再启动。
 
-CUDA 驱动程序可以在所有主线程块启动并执行 `cudaTriggerProgrammaticLaunchCompletion` 后启动次级内核。如果主内核不执行触发器，它会在主内核中的所有线程块退出后隐式发生。
+当所有主线程块都已启动并执行了 `cudaTriggerProgrammaticLaunchCompletion` 时，CUDA 驱动程序就可以启动次级内核。如果主内核没有执行此触发器，它将在主内核中所有线程块退出后隐式发生。
 
-在任一情况下，次级线程块可能在主内核写入的数据可见之前启动。因此，当次级内核配置为程序化依赖启动时，它必须始终使用 `cudaGridDependencySynchronize` 或其他方式来验证主内核的结果数据可用。
+无论在哪种情况下，次级线程块都可能在主内核写入的数据可见之前启动。因此，当次级内核配置了程序化依赖启动时，它必须始终使用 `cudaGridDependencySynchronize` 或其他方式来验证来自主内核的结果数据是否可用。
 
-请注意，这些方法提供了主内核和次级内核并发执行的机会，但是这种行为是机会性的，不能保证导致并发内核执行。以这种方式依赖并发执行是不安全的，可能导致死锁。
+请注意，这些方法为主内核和次级内核提供了并发执行的机会，但这种行为是机会性的，并不能保证一定能实现内核并发执行。依赖这种方式的并发执行是不安全的，并可能导致死锁。
 
-##### 3.2.8.6.3. 在 CUDA 图中使用
+##### 6.2.8.6.3. 在 CUDA 图中使用
 
-程序化依赖启动可以通过流捕获或直接通过边缘数据在 CUDA 图中使用。要在具有边缘数据的 CUDA 图中编程此功能，请在连接两个内核节点的边上使用 `cudaGraphDependencyType` 值 `cudaGraphDependencyTypeProgrammatic`。这种边缘类型使上游内核对下游内核中的 `cudaGridDependencySynchronize()` 可见。这种类型必须与 `cudaGraphKernelNodePortLaunchCompletion` 或 `cudaGraphKernelNodePortProgrammatic` 的输出端口一起使用。
+程序化依赖启动可以通过[流捕获]()在 [CUDA 图](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-graphs)中使用，也可以通过[边数据](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#edge-data)直接使用。要在具有边数据的 CUDA 图中对该功能进行编程，请在连接两个内核节点的边上使用 `cudaGraphDependencyType` 的值 `cudaGraphDependencyTypeProgrammatic`。这种边类型使得上游内核对于下游内核中的 `cudaGridDependencySynchronize()` 可见。该类型必须与 `cudaGraphKernelNodePortLaunchCompletion` 或 `cudaGraphKernelNodePortProgrammatic` 之一的出端口一起使用。
 
-流捕获的结果图等效项如下[HERE](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#use-in-cuda-graphs)：
+流捕获所得到的等效图[如下](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#use-in-cuda-graphs)：
 
 
 
-#### 3.2.8.7. CUDA 图
+#### 6.2.8.7. CUDA 图
 
-CUDA Graphs 提出了一种在 CUDA 中提交工作的新模型。图是一系列由依赖关系连接的操作，例如 kernel 启动，其定义与其执行是分开的。这允许图被定义一次，然后重复启动。将图的定义与其执行分开可以实现许多优化：首先，与 stream 相比，CPU 启动成本降低了，因为大部分设置工作是提前完成的；其次，将整个工作流呈现给 CUDA，可以实现使用 stream 的分段工作提交机制无法实现的优化。
+CUDA 图为 CUDA 中的工作提交提供了一种新的模型。图是一系列由依赖关系连接的操作，例如内核启动，它的定义与执行是分开的。这使得一个图可以被定义一次，然后重复启动。将图的定义与其执行分离可以实现多项优化：首先，与流相比，CPU 启动开销得以降低，因为大部分设置工作都是提前完成的；其次，将整个工作流呈现给 CUDA 使得一些使用分段式工作提交机制的流无法实现的优化成为可能。
 
-要了解图可能实现的优化，请考虑 stream 中发生的情况：当您将一个 kernel 放入 stream 时，主机驱动程序会执行一系列操作，为在 GPU 上执行该 kernel 做准备。这些操作对于设置和启动 kernel 是必需的，是每次发出 kernel 时必须支付的开销成本。对于执行时间较短的 GPU kernel，此开销成本可能占总端到端执行时间的很大一部分。
+要了解图所能实现的优化，可以考虑流中的情况：当您将一个内核放入流中时，主机驱动程序会执行一系列操作，为该内核在 GPU 上的执行做准备。这些设置和启动内核所需的开销，必须为发出的每个内核支付。对于一个执行时间较短的 GPU 内核来说，这项开销可能占到整体端到端执行时间的很大一部分。
 
-使用图的工作提交分为三个不同的阶段：定义、实例化和执行。
+使用图的工作提交被分为三个不同的阶段：定义、实例化和执行。
 
-- 在定义阶段，程序会创建一个图中的操作及其之间依赖关系的描述。
-- 实例化会获取图模板的快照，验证它，并执行大部分工作的设置和初始化，目的是最大限度地减少启动时需要做的工作。结果实例被称为**可执行图**。
-- 可执行图可以像任何其他 CUDA 工作一样启动到 stream 中。它可以启动任意次数而无需重复实例化。
+- 在定义阶段，程序创建图中的操作及其相互依赖关系的描述。
+- 实例化会获取图模板的快照，对其进行验证，并执行大部分设置和工作初始化，目的是最大程度地减少启动时所需的操作。由此产生的实例被称为可执行图（executable graph）。
+- 可执行图可以像任何其他 CUDA 工作一样，被启动到一个流中。它可以被启动任意多次，而无需重复实例化。
 
-##### 3.2.8.7.1. 图结构
+##### 6.2.8.7.1. 图结构
 
-操作形成图中的节点。操作之间的依赖关系是边。这些依赖关系限制了操作的执行顺序。
+一个操作构成图中的一个节点。操作之间的依赖关系是边。这些依赖关系约束了操作的执行顺序。
 
-一旦依赖的节点完成，就可以随时调度操作。调度由 CUDA 系统决定。
+一旦一个操作所依赖的节点完成，它就可以在任何时候被调度。具体的调度由 CUDA 系统决定。
 
-###### 3.2.8.7.1.1. 节点类型
+###### 6.2.8.7.1.1. 节点类型
 
 图节点可以是：
 
@@ -1546,17 +1584,17 @@ CUDA Graphs 提出了一种在 CUDA 中提交工作的新模型。图是一系�
 
 图 13：子图示例
 
-###### 3.2.8.7.1.2. 边缘数据
+###### 6.2.8.7.1.2. 边数据
 
-CUDA 12.3 引入了 CUDA 图上的边缘数据。边缘数据修改由边指定的依赖关系，由三个部分组成：输出端口、输入端口和类型。输出端口指定何时触发关联的边。输入端口指定节点的哪个部分依赖于关联的边。类型修改端点之间的关系。
+CUDA 12.3 在 CUDA 图中引入了边数据 （edge data）。边数据用于修改由边指定的依赖关系，并由三部分组成：出端口（outgoing port）、入端口（incoming port）和类型（type）。出端口指定相关边何时被触发。入端口指定节点中的哪一部分依赖于相关边。类型则修改端点之间的关系。
 
-端口值特定于节点类型和方向，边缘类型可能限于特定节点类型。在所有情况下，零初始化的边缘数据表示默认行为。输出端口 0 等待整个任务，输入端口 0 阻塞整个任务，边缘类型 0 与具有内存同步行为的完整依赖相关联。
+端口值特定于节点类型和方向，而边类型可能仅限于特定的节点类型。在所有情况下，零初始化的边数据表示默认行为。出端口 0 会等待整个任务，入端口 0 会阻塞整个任务，而边类型 0 与具有内存同步行为的完整依赖关系相关联。
 
-边缘数据可以通过与关联节点并行的数组在各种图 API 中可选指定。如果它作为输入参数省略，则使用零初始化数据。如果它作为输出（查询）参数省略，则 API 在忽略的边缘数据全部为零初始化时接受它，并在调用将丢弃信息时返回 `cudaErrorLossyQuery`。
+边数据在各种图 API 中是可选的，通过与相关节点平行的数组来指定。如果作为输入参数省略，则使用零初始化的数据。如果作为输出（查询）参数省略，如果被忽略的边数据全部为零初始化，API 会接受该操作；如果调用会丢弃信息，则返回 `cudaErrorLossyQuery` 错误。
 
-边缘数据也可用于某些流捕获 API：`cudaStreamBeginCaptureToGraph()`、`cudaStreamGetCaptureInfo()` 和 `cudaStreamUpdateCaptureDependencies()`。在这些情况下，还没有下游节点。数据与悬挂边（半边）关联，该边将连接到未来的捕获节点或在流捕获终止时被丢弃。请注意，某些边缘类型不会等待上游节点的完全完成。在考虑流捕获是否已完全重新加入原始流时，忽略这些边，并且不能在捕获结束时丢弃。请参阅创建使用流捕获的图。
+边数据在某些流捕获 API 中也可用：`cudaStreamBeginCaptureToGraph()`、`cudaStreamGetCaptureInfo()` 和 `cudaStreamUpdateCaptureDependencies()`。在这些情况下，尚没有下游节点。数据与一条悬空边（dangling edge，也称作半边）相关联，该边将在未来被捕获的节点连接，或在流捕获终止时被丢弃。请注意，某些边类型并不等待上游节点的完全完成。在考虑流捕获是否已完全重新加入到原始流时，这些边会被忽略，并且不能在捕获结束时被丢弃。详见[使用流捕获创建图](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#creating-a-graph-using-stream-capture)。
 
-目前，没有节点类型定义额外的输入端口，只有内核节点定义额外的输出端口。有一种非默认依赖类型 `cudaGraphDependencyTypeProgrammatic`，它可以在两个内核节点之间启用程序化依赖启动。
+目前，没有节点类型定义额外的入端口，只有内核节点定义了额外的出端口。目前有一个非默认的依赖类型，即 `cudaGraphDependencyTypeProgrammatic`，它能在两个内核节点之间启用[程序化依赖启动](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#programmatic-dependent-launch-and-synchronization)。
 
 ##### 3.2.8.7.2. 使用图 API 创建图
 
